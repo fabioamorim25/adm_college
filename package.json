@@ -1,0 +1,15 @@
+{
+  "name": "adm_college",
+  "version": "1.0.0",
+  "description": "Sistema de controle centralizado para faculdade",
+  "main": "server.js",
+  "workspaces":{
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": "https://github.com/fabioamorim25/adm_college.git",
+  "author": "Fábio Amorim <fabiosantosamorim2@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
