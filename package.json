@@ -3,13 +3,21 @@
   "version": "1.0.0",
   "description": "Sistema de controle centralizado para faculdade",
   "main": "server.js",
-  "workspaces":{
+  "workspaces": {
     "packages": [
       "packages/*"
     ]
   },
+  "scripts": {
+    "server": "nodemon packages/server/src/server.js",
+    "web": "cd packages/web/src/ && yarn start",
+    "start": "concurrently \"cd packages/web/src/ && yarn start\" \"cd packages/server/src/ && yarn start\""
+  },
   "repository": "https://github.com/fabioamorim25/adm_college.git",
   "author": "Fábio Amorim <fabiosantosamorim2@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
 }
