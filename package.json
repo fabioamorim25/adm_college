@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "server": "nodemon packages/server/src/server.js",
+    "server": "cd packages/server/ && yarn start",
     "web": "cd packages/web/src/ && yarn start",
     "start": "concurrently \"cd packages/web/src/ && yarn start\" \"cd packages/server/src/ && yarn start\""
   },

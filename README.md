@@ -30,6 +30,7 @@ Informações gerais:
     <a href ="#features">Features</a> -
     <a href ="#ilustração">Ilustração</a> - 
     <a href ="#pré-requisitos">Pré-requisitos</a> -
+    <a href ="#database">Database</a> -
     <a href ="#tecnologias_framework">Tecnologias/framework</a> -
     <a href ="#autor">Autor</a>
   </p>
@@ -55,7 +56,7 @@ Informações gerais:
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e o [Mongo db compass](https://www.mongodb.com/try/download/compass). Para receber as mensagem de teste para recuperação da conta, sera usado [Mailtrap](https://mailtrap.io/). Além disto é bom ter um editor para trabalhar com o código como [VScode](https://code.visualstudio.com/)
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). Para receber as mensagem de teste para recuperação da conta, sera usado [Mailtrap](https://mailtrap.io/). Além disto é bom ter um editor para trabalhar com o código como [VScode](https://code.visualstudio.com/)
 
 
 ### ⚙️ Rodando o sistema
@@ -67,11 +68,21 @@ $ git clone <https://github.com/fabioamorim25/adm_college.git>
 #Acesse a pasta do projeto no terminal/cmd
 $ cd adm_college
 # Instale as deprendências
-$ npm install
-# Execute a aplicação em modo de desenvolvimento
-$ npm start
-#O cliente iniciará na porta:3000 - acesse <http://>
+$ yarn install
+# Execute a aplicação server e web
+$ yarn start
+  # A web iniciará na porta:3000 - acesse <http://localhost:3000>
+  # O server iniciará na porta:5000 - acesse origem <http://localhost:5000>
 ```
+
+### Database
+
+#### - Modelo Conceitual
+<div align= "center">
+  <img title="modelo conceitual" src ="./.github/databaseInicial.png"/> 
+</div>
+
+<br>
 
 ### 🛠️Tecnologias_framework
 
