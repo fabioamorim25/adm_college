@@ -1,12 +1,9 @@
-const express = require ('express');
+import express from 'express';
+import routes from './app/routes'
 const app = express();
 
 
-
-
-
-require('./app/routes/index')(app);
-
+routes(app)
 
 
 

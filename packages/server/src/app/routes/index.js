@@ -1,6 +1,5 @@
-const fs = require('fs');//carregar arquivos
-const path = require('path');//endereços de pastas
-
+import fs from 'fs';
+import path from 'path';
 
 module.exports =(app) =>{
     fs
