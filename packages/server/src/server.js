@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
 import app from './app/app';
-dotenv.config();
+import sequelize from './database/index'
 
+dotenv.config();
 
 
 
