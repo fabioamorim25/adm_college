@@ -73,15 +73,24 @@ $ yarn install
 $ yarn start
   # A web iniciará na porta:3000 - acesse <http://localhost:3000>
   # O server iniciará na porta:5000 - acesse origem <http://localhost:5000>
+
+# Execute apenas o server
+$ yarn server
+# Execute apenas a web
+$ yarn web
 ```
 
 ### Database
 
 #### - Modelo Conceitual
 <div align= "center">
-  <img title="modelo conceitual" src ="./.github/databaseInicial.png"/> 
+  <img title="modelo conceitual" src ="./.github/modeloConceitual.png"/> 
 </div>
 
+#### - Modelo Logico (Aplicando a 1°,2° e 3° forma normal)
+<div align= "center">
+  <img title="modelo logico" src ="./.github/modeloLogico.png"/> 
+</div>
 <br>
 
 ### 🛠️Tecnologias_framework
