@@ -193,3 +193,15 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 						FROM curso
 						WHERE cur_name = 'Física'	
 					);
+			-- encontra a quantidade de alunos em cada curso
+			SELECT materia.mat_name, COUNT(aluno.alu_id) as mat_quantidade_aluno
+			FROM materia
+				LEFT JOIN aluno ON aluno.alu_id = materia.mat_id
+				GROUP BY materia.mat_name;
+
+					
+
+
+-- apagar todos os dados de um tabela. mantendo apenas sua estrutura
+TRUNCATE materia;
+DROP TABLE materia;

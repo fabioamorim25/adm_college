@@ -84,12 +84,12 @@ $ yarn web
 
 #### - Modelo Conceitual
 <div align= "center">
-  <img title="modelo conceitual" src ="./.github/modeloConceitual.png"/> 
+  <img title="modelo conceitual" src ="./.github/modelDatabase/modeloConceitual.png"/> 
 </div>
 
 #### - Modelo Logico (Aplicando a 1°,2° e 3° forma normal)
 <div align= "center">
-  <img title="modelo logico" src ="./.github/modeloLogico.png"/> 
+  <img title="modelo logico" src ="./.github/modelDatabase/modeloLogico.png"/> 
 </div>
 <br>
 
