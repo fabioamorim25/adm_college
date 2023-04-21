@@ -177,7 +177,7 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 
 
 	-- consultas mais complexas: 
-		--V-retornar todos os alunos que mora em um determinado rua	
+		--retornar todos os alunos que mora em um determinado rua	
 		SELECT aluno.*
 		FROM aluno
 		WHERE alu_id IN (
@@ -185,35 +185,16 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
     		FROM endereco
    			WHERE end_rua = 'Rua das Flores'	
 		);
-			--V--retornar todos os alunos que estão matriculado em um curso
+			--retornar todos os alunos que estão matriculado em um curso
 			SELECT *
 			FROM aluno		
 			WHERE alu_curso = 'Matemática';
 			
-				-- retonar todas as materias que um curso possui 		
-				SELECT *
-					FROM materia		
-					WHERE mat_id IN (
-						SELECT cur_id
-						FROM curso
-						WHERE cur_name = 'Matemática'
-					);
 			
-		
-			
-			
-			
-			
-			-- encontra a quantidade de alunos em cada curso
-			SELECT materia.mat_name, COUNT(aluno.alu_id) as mat_quantidade_aluno
-			FROM materia
-				LEFT JOIN aluno ON aluno.alu_id = materia.mat_id
-				GROUP BY materia.mat_name;
-
 					
 
 -- CRUD
-	--Atualizar um dado da Tabela (atualizar o nome do aluno [])
+	--Atualizar um dado da Tabela (atualizar o nome do aluno)
 	UPDATE aluno
 	SET alu_name ='Francisco josé da silva'
 	WHERE alu_id = 1; -- A Cláusula sera que: Para ter essa atualização o id do aluno deve ter o valor 1
@@ -238,36 +219,13 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 	
 	
 	
-	-- 	retornar todos os dados de todas as tabelas que possui um determinado aluno
-	SELECT *
-	FROM aluno
-	JOIN historico ON aluno.id = historico.aluno_id
-	JOIN materia ON historico.materia_id = materia.id
-	WHERE aluno.alu_nome = 'Lucas Silva Santos';
-	
-	SELECT *
-	FROM aluno
-	JOIN endereco ON aluno.alu_id = endereco.alu_id
-	JOIN aluno_materia ON aluno.alu_id = aluno_materia.alu_id
--- 	JOIN materia ON aluno_materia.mat_id = materia.mat_id
--- 	JOIN curso_materia ON materia.mat_id = curso_materia.mat_id
--- 	JOIN curso ON curso_materia.cur_id = curso.cur_id
-	WHERE aluno.alu_name = 'Lucas Silva Santos';
-
-	
-
-
-
-
--- apagar todos os dados de um tabela. mantendo apenas sua estrutura
-TRUNCATE materia;
-DROP TABLE materia;
 
 
 
 
 
---VERIFICAÇÕES E ALTERAÇÕES DO
+
+--VERIFICAÇÕES E ALTERAÇÕES DOS ATRIBUTOS E TABELAS
 	--verificar qual nome de uma tabela apenas sabendo um dos atributos
 		SELECT table_name
 		FROM information_schema.columns
