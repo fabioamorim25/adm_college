@@ -83,7 +83,7 @@ CREATE TABLE professor_materia(
 );
 
 CREATE TABLE aluno_materia(
-	al_mat INTEGER,
+	frequencia INTEGER,
 	alu_id INTEGER,
 	FOREIGN KEY (alu_id) REFERENCES aluno (alu_id),
 	mat_id INTEGER,
@@ -162,37 +162,48 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 		SELECT * FROM curso;
 		SELECT * FROM departamento;
 		SELECT * FROM professor_materia;
+		SELECT * FROM aluno_materia;
+		SELECT * FROM materia_materia;
 		-- retornar duas tabelas juntas (identificando as duas tabelas pelo id de cada uma).(nao importa se as tabelas tem alguma relação)
 		SELECT *
 		FROM aluno
 		JOIN endereco
 		ON aluno.alu_id = endereco.end_id;
 
+
+
+
+
+
+
 	-- consultas mais complexas: 
-		-- retornar todos os alunos que mora em um determinado rua	
+		--V-retornar todos os alunos que mora em um determinado rua	
 		SELECT aluno.*
 		FROM aluno
 		WHERE alu_id IN (
   		 	SELECT end_id
     		FROM endereco
-   			WHERE end_rua = 'Avenida Paulista'	
+   			WHERE end_rua = 'Rua das Flores'	
 		);
-			--retornar todos os alunos que estão matriculado em um curso
-			SELECT aluno.*
+			--V--retornar todos os alunos que estão matriculado em um curso
+			SELECT *
 			FROM aluno		
-			WHERE alu_id IN (
-				SELECT cur_id
-				FROM curso
-				WHERE cur_name = 'História'	
-			);
+			WHERE alu_curso = 'Matemática';
+			
 				-- retonar todas as materias que um curso possui 		
 				SELECT *
 					FROM materia		
 					WHERE mat_id IN (
 						SELECT cur_id
 						FROM curso
-						WHERE cur_name = 'Física'	
+						WHERE cur_name = 'Matemática'
 					);
+			
+		
+			
+			
+			
+			
 			-- encontra a quantidade de alunos em cada curso
 			SELECT materia.mat_name, COUNT(aluno.alu_id) as mat_quantidade_aluno
 			FROM materia
@@ -201,7 +212,68 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 
 					
 
+-- CRUD
+	--Atualizar um dado da Tabela (atualizar o nome do aluno [])
+	UPDATE aluno
+	SET alu_name ='Francisco josé da silva'
+	WHERE alu_id = 1; -- A Cláusula sera que: Para ter essa atualização o id do aluno deve ter o valor 1
+
+	-- Criar um novo aluno na tabela aluno
+	INSERT INTO aluno (alu_name, alu_matricula, alu_curso, alu_status, alu_periodo, alu_name_mae, alu_name_pai, alu_phone, alu_email, alu_password, cur_id)
+	VALUES ('Lucas Silva Santos', 8781133, 'Matemática', true, 2,'Sandra Silva Lima','Lucas Silva Lima' ,983549944,'silva.lima@universidade.com','123senha' ,1)
+		INSERT INTO aluno_materia (alu_id, mat_id)
+		VALUES (6, 1); 
+			INSERT INTO endereco (end_rua, end_city, end_bairro, end_number, end_complemento, alu_id)
+			VALUES ('Rua das Flores', 'São Paulo', 'Jardim das Rosas', 123, 'Apto 101', 6);
+		
+			--Criar um novo professor,materia dada e curso relacionado
+			INSERT INTO professor (prof_name, prof_phone, prof_email, prof_password, prof_status, dp_id) 
+			VALUES ('Lucas santos', 935432223, 'lucas.santos@universidade.com', 's23', true, 1);
+				INSERT INTO materia (mat_name, mat_turno, mat_professor, mat_quantidade_aluno, mat_obrigatoriedade, mat_descricao,mat_av1,mat_av2,mat_av3,mat_nota_final,mat_hora_inicial,mat_hora_final,dp_id)
+				VALUES ('Cálculo II', 'Manhã', 'Lucas santos', 3, true, 'cálculo integral',10,5.5,1,16.5/2,'01:00:00','03:00:00', 1);
+					INSERT INTO professor_materia (prof_id, mat_id) 
+					VALUES (6,6);
+						INSERT INTO curso_materia (mat_id, cur_id)
+						VALUES (6, 1);
+	
+	
+	
+	-- 	retornar todos os dados de todas as tabelas que possui um determinado aluno
+	SELECT *
+	FROM aluno
+	JOIN historico ON aluno.id = historico.aluno_id
+	JOIN materia ON historico.materia_id = materia.id
+	WHERE aluno.alu_nome = 'Lucas Silva Santos';
+	
+	SELECT *
+	FROM aluno
+	JOIN endereco ON aluno.alu_id = endereco.alu_id
+	JOIN aluno_materia ON aluno.alu_id = aluno_materia.alu_id
+-- 	JOIN materia ON aluno_materia.mat_id = materia.mat_id
+-- 	JOIN curso_materia ON materia.mat_id = curso_materia.mat_id
+-- 	JOIN curso ON curso_materia.cur_id = curso.cur_id
+	WHERE aluno.alu_name = 'Lucas Silva Santos';
+
+	
+
+
+
 
 -- apagar todos os dados de um tabela. mantendo apenas sua estrutura
 TRUNCATE materia;
 DROP TABLE materia;
+
+
+
+
+
+--VERIFICAÇÕES E ALTERAÇÕES DO
+	--verificar qual nome de uma tabela apenas sabendo um dos atributos
+		SELECT table_name
+		FROM information_schema.columns
+		WHERE column_name = 'al_mat';
+	-- atualizar o nome de um atributo de uma tabela
+		ALTER TABLE aluno_materia
+		RENAME COLUMN alu_mat TO frequencia;
+		
+		
