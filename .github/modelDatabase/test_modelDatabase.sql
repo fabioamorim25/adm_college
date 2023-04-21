@@ -71,6 +71,7 @@ CREATE TABLE materia(
 
 CREATE TABLE materia_materia(
 	idPre_requisito INTEGER,
+	FOREIGN KEY (mat_id) REFERENCES materia(mat_id)
 	mat_id INTEGER,
 	FOREIGN KEY (mat_id) REFERENCES materia(mat_id)
 );
@@ -99,7 +100,7 @@ CREATE TABLE curso_materia(
 
 
 
--- CRIAR DADOS PARA TODAS AS TABELAS
+-- CRIAR DADOS PARA TODAS AS TABELAS------------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO departamento (dp_name, dp_email, dp_password) 
 VALUES ('departamento','matematica@universidade.com','senha123');
 
@@ -148,11 +149,9 @@ VALUES (1, 2), (2, 3), (3, 4), (4, 5), (5, 1);
  
 INSERT INTO curso_materia (mat_id, cur_id)
 VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
---CONSULTAS NO BANCO DE DADOS:
+--CONSULTAS NO BANCO DE DADOS:----------------------------------------------------------------------------------------------------
 	-- consultas simples:
 		-- consultar todos os dados de uma tabela
 		SELECT * FROM professor;
@@ -164,20 +163,14 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 		SELECT * FROM professor_materia;
 		SELECT * FROM aluno_materia;
 		SELECT * FROM materia_materia;
-		-- retornar duas tabelas juntas (identificando as duas tabelas pelo id de cada uma).(nao importa se as tabelas tem alguma relação)
+-- retornar duas tabelas juntas (identificando as duas tabelas pelo id de cada uma).(nao importa se as tabelas tem alguma relação)
 		SELECT *
-		FROM aluno
-		JOIN endereco
-		ON aluno.alu_id = endereco.end_id;
+			FROM aluno
+			JOIN endereco
+			ON aluno.alu_id = endereco.end_id;
 
-
-
-
-
-
-
-	-- consultas mais complexas: 
-		--retornar todos os alunos que mora em um determinado rua	
+------ consultas mais complexas: -----------------------------------------------------------------
+--retornar todos os alunos que mora em um determinado rua	
 		SELECT aluno.*
 		FROM aluno
 		WHERE alu_id IN (
@@ -185,15 +178,67 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
     		FROM endereco
    			WHERE end_rua = 'Rua das Flores'	
 		);
-			--retornar todos os alunos que estão matriculado em um curso
-			SELECT *
+--retornar todos os dados dos alunos que estão matriculado em um curso
+		SELECT *
 			FROM aluno		
 			WHERE alu_curso = 'Matemática';
+-- retornar apenas o nome dos alunos que estão matriculado em um curso
+		SELECT alu_name FROM aluno
+			INNER JOIN curso ON aluno.cur_id = curso.cur_id
+			WHERE curso.cur_name = 'Matemática';
+--selecionar todos os professores que lecionam uma determinada matéria
+		SELECT prof_name FROM professor
+			INNER JOIN professor_materia ON professor.prof_id = professor_materia.prof_id
+			INNER JOIN materia ON professor_materia.mat_id = materia.mat_id
+			WHERE materia.mat_name ='Cálculo I';
+--retornar todos os professores de um determinado departamento:
+		SELECT prof_name FROM professor
+			INNER JOIN departamento ON professor.dp_id = departamento.dp_id
+			WHERE departamento.dp_name = 'departamento';
+-- retonar todas as materias que um curso possui 						
+		SELECT mat_name FROM materia
+			INNER JOIN curso_materia ON materia.mat_id = curso_materia.mat_id
+			INNER JOIN curso ON curso_materia.cur_id = curso.cur_id
+			WHERE curso.cur_name = 'Matemática';
+-- 	retornar todos os dados de todas as tabelas que possui um determinado aluno	
+		SELECT *
+			FROM aluno
+			JOIN endereco ON aluno.alu_id = endereco.alu_id
+			JOIN aluno_materia ON aluno.alu_id = aluno_materia.alu_id
+			JOIN materia ON aluno_materia.mat_id = materia.mat_id
+			JOIN curso_materia ON materia.mat_id = curso_materia.mat_id
+			JOIN curso ON curso_materia.cur_id = curso.cur_id
+			WHERE aluno.alu_name = 'Lucas Silva Santos';
+-- encontra a quantidade de alunos em cada curso
+		SELECT curso.cur_name, COUNT(aluno.alu_id) as quantidade_alunos
+			FROM aluno
+			INNER JOIN curso ON aluno.cur_id = curso.cur_id
+			GROUP BY curso.cur_name;
+-- retornar todas as materias que são pré requisito para uma determinada materia
+		SELECT p.mat_name AS pre_requisito
+			FROM materia_materia mm
+			JOIN materia m ON mm.mat_id = m.mat_id
+			JOIN materia p ON mm.idPre_requisito = p.mat_id
+			WHERE m.mat_name ='Cálculo II';
+-- retornar todas as materias que são pré requisito uma das outras
+		SELECT m.mat_name AS materia, p.mat_name AS pre_requisito
+			FROM materia_materia mm
+			JOIN materia m ON mm.mat_id = m.mat_id
+			JOIN materia p ON mm.idPre_requisito = p.mat_id;
+-- encontrar a média de notas dos alunos em cada matéria
+		SELECT materia.mat_name, AVG((materia.mat_av1 + materia.mat_av2 + materia.mat_av3)/3) as media_notas
+			FROM aluno_materia
+			INNER JOIN aluno ON aluno_materia.alu_id = aluno.alu_id
+			INNER JOIN materia ON aluno_materia.mat_id = materia.mat_id
+			GROUP BY materia.mat_name;
 			
-			
-					
-
--- CRUD
+--	selecionar todos os alunos com frequência abaixo de um determinado valor em uma determinada matéria:
+		SELECT alu_name FROM aluno_materia
+			INNER JOIN aluno ON aluno_materia.alu_id = aluno.alu_id
+			INNER JOIN materia ON aluno_materia.mat_id = materia.mat_id
+			WHERE materia.mat_name = 'Matemática' AND aluno_materia.frequencia < 20; --alterar o valor 20 e a matéria 
+ 
+-- CRUD---------------------------------------------------------------------------------------------------------------------------------------------------------
 	--Atualizar um dado da Tabela (atualizar o nome do aluno)
 	UPDATE aluno
 	SET alu_name ='Francisco josé da silva'
@@ -216,16 +261,18 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 					VALUES (6,6);
 						INSERT INTO curso_materia (mat_id, cur_id)
 						VALUES (6, 1);
+								INSERT INTO materia_materia (idPre_requisito, mat_id)
+								VALUES (1, 6);
+								
+									-- apagar todas as materias de um professor
+									DELETE FROM materia
+										WHERE mat_professor = 'NOME_DO_PROFESSOR';
+										
+											-- apagar todas as materias do banco
+											DELETE FROM materia
+												WHERE mat_name = 'NOME_DA_MATERIA';
 	
-	
-	
-
-
-
-
-
-
---VERIFICAÇÕES E ALTERAÇÕES DOS ATRIBUTOS E TABELAS
+--VERIFICAÇÕES E ALTERAÇÕES:----------------------------------------------------------------------------------------
 	--verificar qual nome de uma tabela apenas sabendo um dos atributos
 		SELECT table_name
 		FROM information_schema.columns
@@ -233,5 +280,15 @@ VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 	-- atualizar o nome de um atributo de uma tabela
 		ALTER TABLE aluno_materia
 		RENAME COLUMN alu_mat TO frequencia;
+				
 		
-		
+-- maior consulta para testar o sequelize-----------------------------------------------------------------
+	SELECT aluno.alu_name, curso.cur_name, departamento.dp_name, materia.mat_name, professor.prof_name
+		FROM aluno
+		INNER JOIN curso ON aluno.cur_id = curso.cur_id
+		INNER JOIN departamento ON curso.dp_id = departamento.dp_id
+		INNER JOIN aluno_materia ON aluno.alu_id = aluno_materia.alu_id
+		INNER JOIN materia ON aluno_materia.mat_id = materia.mat_id
+		INNER JOIN professor_materia ON materia.mat_id = professor_materia.mat_id
+		INNER JOIN professor ON professor_materia.prof_id = professor.prof_id;	
+----------------------------------------------------------------------------------------------------------
