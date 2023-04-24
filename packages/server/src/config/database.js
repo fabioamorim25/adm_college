@@ -1,11 +1,20 @@
-import database from '../../config/database.json';
+const databaseConfig = require('../../config/database.json');
 
-export const dialect = database.DIALECT;
-export const host = database.HOST;
-export const username = database.USERNAME;
-export const password = database.PASSWORD;
-export const database = database.DATABASE;
-export const define = {
+const dialect = databaseConfig.DIALECT;
+const host = databaseConfig.HOST;
+const username = databaseConfig.USERNAME;
+const password = databaseConfig.PASSWORD;
+const database = databaseConfig.DATABASE;
+const define = {
   timestamps: true,
   underscored: true
+};
+
+module.exports = {
+  dialect,
+  host,
+  username,
+  password,
+  database,
+  define
 };

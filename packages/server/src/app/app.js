@@ -7,4 +7,4 @@ routes(app)
 
 
 
-module.exports = app;
+export default app;
