@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   class Departament extends Model {
     static associate(models) {
-      // define association here
+      Departament.hasMany(models.Prof,{foreignKey:'dep_id', as:'prof'})
     }
   }
   Departament.init({

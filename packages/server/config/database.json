@@ -3,5 +3,5 @@
     "HOST":"127.0.0.1",
     "USERNAME":"postgres",
     "PASSWORD":"12345",
-    "DATABASE":"db_admcollege"
+    "DATABASE":"postgres"
 }
