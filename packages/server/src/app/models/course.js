@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Course.belongsTo(models.Departament, {foreignKey:'dep_id', as:'departament'})
       Course.hasMany(models.Student, {foreignKey:'cou_id', as:'student'})
+      Course.belongsToMany(models.Subject, {foreignKey:'cou_id', through:'Course_Subjects', as:'subject'})
     }
   }
 

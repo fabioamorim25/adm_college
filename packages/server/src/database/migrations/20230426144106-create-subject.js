@@ -34,9 +34,6 @@ module.exports = {
       sub_mandatory: {
         type: Sequelize.BOOLEAN
       },
-      sub_student_count: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

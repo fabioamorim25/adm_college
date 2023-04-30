@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Subject.belongsTo(models.Departament,{foreignKey:'dep_id', as:'departament'})
       Subject.belongsToMany(models.Prof, {foreignKey:'sub_id', through:'Prof_Subjects', as:'profs'})
+      Subject.belongsToMany(models.Course, {foreignKey:'sub_id', through:'Course_Subjects', as:'course'})
     }
   }
   Subject.init({
@@ -16,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     sub_stop_time: DataTypes.DATE,
     sub_description: DataTypes.TEXT,
     sub_mandatory: DataTypes.BOOLEAN,
-    sub_student_count: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Subject',
