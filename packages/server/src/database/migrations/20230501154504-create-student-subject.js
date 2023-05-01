@@ -2,17 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Course_Subjects', {
+    await queryInterface.createTable('Student_Subjects', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      cou_id: {
+      stu_id: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        references:{model: 'Courses', key:'id'},
+        references:{model: 'Students', key:'id'},
         onUpdate: 'CASCADE', 
         onDelete:'CASCADE',
       },
@@ -22,6 +22,24 @@ module.exports = {
         references:{model: 'Subjects', key:'id'},
         onUpdate: 'CASCADE', 
         onDelete:'CASCADE',
+      },
+      av1: {
+        type: Sequelize.FLOAT
+      },
+      av2: {
+        type: Sequelize.FLOAT
+      },
+      av3: {
+        type: Sequelize.FLOAT
+      },
+      final_grade: {
+        type: Sequelize.FLOAT
+      },
+      attendance: {
+        type: Sequelize.INTEGER
+      },
+      student_count:{
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Course_Subjects');
+    await queryInterface.dropTable('Student_Subjects');
   }
 };
