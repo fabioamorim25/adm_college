@@ -91,6 +91,11 @@ $ yarn web
 <div align= "center">
   <img title="modelo logico" src ="./.github/modelDatabase/modeloLogico.png"/> 
 </div>
+
+#### - Modelo Logico no Sequelize
+<div align= "center">
+  <img title="modelo logico final" src ="./.github/modelDatabase/modeloFinalSequelize.png"/> 
+</div>
 <br>
 
 ### 🛠️Tecnologias_framework
