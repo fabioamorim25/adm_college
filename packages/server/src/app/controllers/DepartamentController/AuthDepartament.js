@@ -1,9 +1,9 @@
 
+import { Departaments } from '../../models/';
 
 
 
-const AuthDepartament = {
- Register:async( req,res)=>{
+const Register = async(req,res)=>{
 
     const {name,email,password} = req.body;
 
@@ -11,7 +11,8 @@ const AuthDepartament = {
     
 
 
-
+        //const departament = await Departaments.create({name,email,password});
+        //return res.json({departament})
 
        
 
@@ -25,7 +26,6 @@ const AuthDepartament = {
 
 }
 
-}
 
 
-export default AuthDepartament;
+export default {Register}
