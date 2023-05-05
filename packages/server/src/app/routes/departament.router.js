@@ -1,10 +1,16 @@
 import express from 'express';
+import AuthDepartament from '../controllers/DepartamentController/AuthDepartament';
+
+
+
+
 const router = express.Router();
 
 
 //AUTENTICAÇÃO DEPARTAMENTO
-router.post('/logIn')
-router.post('/register/')
+router.post('/register', AuthDepartament.Register);
+
+
 
 
 
