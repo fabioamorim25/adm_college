@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       Subject.belongsToMany(models.Course, {foreignKey:'sub_id', through:'Course_Subjects', as:'course'})
       Subject.belongsToMany(models.Student,{foreignKey:'sub_id', through:'Student_Subjects', as:'students'})
       Subject.belongsToMany(models.Subject, {foreignKey:'id_Subject', through:'Subject_Subjects', as:'subject'})
-      Subject.belongsToMany(models.Subject, {foreignKey:'id_PreRequisite', through:'Subject_Subjects', as:'subject'})
+      Subject.belongsToMany(models.Subject, {foreignKey:'id_PreRequisite', through:'Subject_Subjects', as:'subject_preRequisite'})
     }
   }
   Subject.init({

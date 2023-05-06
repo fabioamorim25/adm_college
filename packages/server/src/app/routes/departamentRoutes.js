@@ -1,5 +1,5 @@
 import {Router} from 'express';
-
+import AuthDepartament from '../controllers/DepartamentController/AuthDepartament'
 
 
 const departamentRoutes = Router();
@@ -7,7 +7,7 @@ const departamentRoutes = Router();
 
 
 //AUTENTICAÇÃO DEPARTAMENTO
-departamentRoutes.post('/register');
+departamentRoutes.post('/register', AuthDepartament.Register);
 
 
 
