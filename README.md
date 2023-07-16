@@ -56,7 +56,7 @@ Informações gerais:
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). Para receber as mensagem de teste para recuperação da conta, sera usado [Mailtrap](https://mailtrap.io/). Além disto é bom ter um editor para trabalhar com o código como [VScode](https://code.visualstudio.com/)
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Docker](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). Para receber as mensagem de teste para recuperação da conta, sera usado [Mailtrap](https://mailtrap.io/). Além disto é bom ter um editor para trabalhar com o código como [VScode](https://code.visualstudio.com/)
 
 
 ### ⚙️ Rodando o sistema
@@ -65,19 +65,36 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 #Clone este repositório
 $ git clone <https://github.com/fabioamorim25/adm_college.git>
 
+#Instalar dependencias --------------------
 #Acesse a pasta do projeto no terminal/cmd
 $ cd adm_college
 # Instale as deprendências
 $ yarn install
-# Execute a aplicação server e web
-$ yarn start
-  # A web iniciará na porta:3000 - acesse <http://localhost:3000>
-  # O server iniciará na porta:5000 - acesse origem <http://localhost:5000>
 
+#Configurar o banco de dados -----------------------------------
+# Iniciar o docker (não precisa ter a imagem do postgreSQL)
+
+# No terminal: iniciar as configurações do docker compose
+$ docker-compose up -d
+
+#Configurar o DBeaver ou pgAdmin 4 com os dados do banco
+# POSTGRES_USER=postgres , POSTGRES_PASSWORD=12345 , PORTS= 5432
+
+# No DBeaver ou pgAdmin 4: iniciar as tabelas 
+$ npx sequelize-cli db:migrate
+
+# Execute a aplicação server e web ----------------------------------------
+
+# A web iniciará na porta:3000 - acesse <http://localhost:3000>
+# O server iniciará na porta:5000 - acesse origem <http://localhost:5000>
+  
+# Execute web e server
+$ yarn start
 # Execute apenas o server
 $ yarn server
 # Execute apenas a web
 $ yarn web
+
 ```
 
 ### Database
