@@ -11,7 +11,7 @@
   "scripts": {
     "server": "cd packages/server/ && yarn start",
     "web": "cd packages/web/src/ && yarn start",
-    "start": "concurrently \"cd packages/web/src/ && yarn dev\" \"cd packages/server/src/ && yarn start\""
+    "start": "concurrently \"cd packages/web/src/ && yarn start\" \"cd packages/server/src/ && yarn start\""
   },
   "repository": "https://github.com/fabioamorim25/adm_college.git",
   "author": "Fábio Amorim <fabiosantosamorim2@gmail.com>",

@@ -1,7 +1,0 @@
-{
-    "DIALECT": "postgres",
-    "HOST":"127.0.0.1",
-    "USERNAME":"postgres",
-    "PASSWORD":"12345",
-    "DATABASE":"postgres"
-}

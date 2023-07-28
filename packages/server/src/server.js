@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import app from './app/app';
-import sequelize from './database/index'
+import { prisma } from './lib/prisma';
 
 dotenv.config();
 

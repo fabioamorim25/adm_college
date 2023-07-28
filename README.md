@@ -71,17 +71,9 @@ $ cd adm_college
 # Instale as deprendências
 $ yarn install
 
-#Configurar o banco de dados -----------------------------------
-# Iniciar o docker (não precisa ter a imagem do postgreSQL)
-
-# No terminal: iniciar as configurações do docker compose
-$ docker-compose up -d
-
-#Configurar o DBeaver ou pgAdmin 4 com os dados do banco
-# POSTGRES_USER=postgres , POSTGRES_PASSWORD=12345 , PORTS= 5432
-
-# No DBeaver ou pgAdmin 4: iniciar as tabelas 
-$ npx sequelize-cli db:migrate
+#Configurar o batabase -----------------------------------
+# ver as tabelas e os dados do batabase
+$ yarn prisma studio
 
 # Execute a aplicação server e web ----------------------------------------
 
@@ -126,7 +118,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 #### Back end
 - [Node.js](https://nodejs.org/en/)
 - [Express js](https://expressjs.com/pt-br/)
-- [Sequelize](https://)
+- [Prisma](https://)
 - [Nodemailer](https://nodemailer.com/about/)
 
 
