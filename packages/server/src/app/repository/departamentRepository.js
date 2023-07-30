@@ -1,4 +1,4 @@
-import {prisma} from '../../lib/prisma'
+import {prisma} from '../../lib/prismaClient'
 
 // CRIAR O DOCUMENTO E RETONAR OS DADOS (menos a senha)
 export const createDepartament = async(dep_name, dep_email, dep_password)=>{
