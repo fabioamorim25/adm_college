@@ -16,6 +16,7 @@ model Departament {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Course       Course[]
+  Prof       Prof[]
 
   @@map("departaments")
 }
@@ -28,4 +29,17 @@ model Course {
   departament   Departament @relation(fields: [departamentId], references: [id])
 
   @@map("courses")
+}
+
+model Prof{
+  id            String      @id @default(uuid())
+  prof_name String
+  prof_status Boolean
+  prof_email String @unique
+  prof_password String
+  prof_phone String
+  departamentId String
+  departament   Departament @relation(fields: [departamentId], references: [id])
+
+  @@map("profs")
 }
