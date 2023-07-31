@@ -19,7 +19,6 @@ model Departament {
 
   @@map("departaments")
 }
-
 model Course {
   id            String      @id @default(uuid())
   cou_name      String

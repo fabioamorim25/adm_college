@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs"
-import { createDepartament } from "../repository/departamentRepository";
+import { createDepartament } from "../repository/departament.Repository";
 
 
 export const create = async(req,res)=>{

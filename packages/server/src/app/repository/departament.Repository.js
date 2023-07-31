@@ -9,6 +9,7 @@ export const createDepartament = async(dep_name, dep_email, dep_password)=>{
             dep_password
         },
         select:{
+            id:true,
             dep_name:true,
             dep_email: true,
             dep_password:false
