@@ -10,16 +10,17 @@ datasource db {
 // MODEL DEPARTAMENTO
 model Departament {
   id           String   @id @default(uuid())
-  dep_name     String   
+  dep_name     String
   dep_email    String   @unique
   dep_password String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Course       Course[]
-  Prof       Prof[]
+  Prof         Prof[]
 
   @@map("departaments")
 }
+
 model Course {
   id            String      @id @default(uuid())
   cou_name      String
@@ -31,13 +32,13 @@ model Course {
   @@map("courses")
 }
 
-model Prof{
+model Prof {
   id            String      @id @default(uuid())
-  prof_name String
-  prof_status Boolean
-  prof_email String @unique
+  prof_name     String
+  prof_status   Boolean
+  prof_email    String      @unique
   prof_password String
-  prof_phone String
+  prof_phone    String
   departamentId String
   departament   Departament @relation(fields: [departamentId], references: [id])
 
