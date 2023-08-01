@@ -9,14 +9,15 @@ datasource db {
 
 // MODEL DEPARTAMENTO
 model Departament {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   dep_name     String
-  dep_email    String   @unique
+  dep_email    String    @unique
   dep_password String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   Course       Course[]
   Prof         Prof[]
+  Subject      Subject[]
 
   @@map("departaments")
 }
@@ -39,8 +40,26 @@ model Prof {
   prof_email    String      @unique
   prof_password String
   prof_phone    String
+  // createdAt     DateTime    @default(now())
+  // updatedAt     DateTime    @updatedAt
   departamentId String
   departament   Departament @relation(fields: [departamentId], references: [id])
 
   @@map("profs")
+}
+
+model Subject {
+  id              String      @id @default(uuid())
+  sub_name        String      @unique
+  sub_shift       String
+  sub_start_time  DateTime
+  sub_stop_time   DateTime
+  sub_description String
+  sub_mandatory   Boolean
+  // createdAt       DateTime    @default(now())
+  // updatedAt       DateTime    @updatedAt
+  departamentId   String
+  departament     Departament @relation(fields: [departamentId], references: [id])
+
+  @@map("subjects")
 }
