@@ -29,6 +29,7 @@ model Course {
   updatedAt     DateTime    @updatedAt
   departamentId String
   departament   Departament @relation(fields: [departamentId], references: [id])
+  Student       Student[]
 
   @@map("courses")
 }
@@ -40,8 +41,8 @@ model Prof {
   prof_email    String      @unique
   prof_password String
   prof_phone    String
-  // createdAt     DateTime    @default(now())
-  // updatedAt     DateTime    @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   departamentId String
   departament   Departament @relation(fields: [departamentId], references: [id])
 
@@ -56,10 +57,32 @@ model Subject {
   sub_stop_time   DateTime
   sub_description String
   sub_mandatory   Boolean
-  // createdAt       DateTime    @default(now())
-  // updatedAt       DateTime    @updatedAt
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
   departamentId   String
   departament     Departament @relation(fields: [departamentId], references: [id])
 
   @@map("subjects")
+}
+
+model Student {
+  id               String  @id @default(uuid())
+  stu_name         String
+  stu_registration String
+  stu_course       String
+  stu_status       Boolean
+  stu_period       String
+  stu_mother_name  String
+  stu_father_name  String
+  stu_phone        String
+  stu_email        String  @unique
+  stu_password     String
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+    @@map("students")
 }
