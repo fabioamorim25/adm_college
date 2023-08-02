@@ -3,6 +3,7 @@ import courseRoutes from "./course.route";
 import profRoutes from "./prof.route";
 import subjectRoutes from "./subject.route";
 import studentRoutes from "./student.route";
+import addressRoutes from "./address.route";
 
 
 const routes = (app)=>{
@@ -11,6 +12,7 @@ const routes = (app)=>{
     profRoutes(app)
     subjectRoutes(app)
     studentRoutes(app)
+    addressRoutes(app)
 }
 
 export default routes;
