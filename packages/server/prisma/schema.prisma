@@ -65,7 +65,7 @@ model Subject {
   departament     Departament       @relation(fields: [departamentId], references: [id])
   Porf_Subject    Porf_Subject[]
   Course_Subject  Course_Subject[]
-
+  Student_Subject Student_Subject[]
 
   @@map("subjects")
 }
@@ -89,7 +89,7 @@ model Student {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   Address         Address[]
-
+  Student_Subject Student_Subject[]
 
   @@map("students")
 }
@@ -140,4 +140,24 @@ model Course_Subject {
   updatedAt DateTime @updatedAt
 
   @@map("course_subjects")
+}
+ 
+model Student_Subject {
+  id            String @id @default(uuid())
+  av1           Float?
+  av2           Float?
+  av3           Float?
+  final_grade   Float?
+  attendance    Int?
+  student_count Int?
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("student_subjects")
 }
