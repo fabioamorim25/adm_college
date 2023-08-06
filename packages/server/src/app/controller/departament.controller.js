@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs"
-import { createDepartament } from "../repository/departament.Repository";
+import { createDepartament} from "../repository/departament.Repository";
+
+
 
 
 export const create = async(req,res)=>{
@@ -8,7 +10,7 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
-        
+
         //2° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(dep_password,10);
         dep_password = hashPassword;
@@ -26,3 +28,4 @@ export const create = async(req,res)=>{
         return res.status(404).json(error)
     }
 }
+

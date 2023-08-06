@@ -4,6 +4,7 @@ import profRoutes from "./prof.route";
 import subjectRoutes from "./subject.route";
 import studentRoutes from "./student.route";
 import addressRoutes from "./address.route";
+import noteRoutes from "./note.route";
 
 
 const routes = (app)=>{
@@ -13,6 +14,7 @@ const routes = (app)=>{
     subjectRoutes(app)
     studentRoutes(app)
     addressRoutes(app)
+    noteRoutes(app)
 }
 
 export default routes;

@@ -52,20 +52,21 @@ model Prof {
 }
 
 model Subject {
-  id              String            @id @default(uuid())
-  sub_name        String            @unique
-  sub_shift       String
-  sub_start_time  DateTime
-  sub_stop_time   DateTime
-  sub_description String
-  sub_mandatory   Boolean
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  departamentId   String
-  departament     Departament       @relation(fields: [departamentId], references: [id])
-  Porf_Subject    Porf_Subject[]
-  Course_Subject  Course_Subject[]
-  Student_Subject Student_Subject[]
+  id                String              @id @default(uuid())
+  sub_name          String              @unique
+  sub_shift         String
+  sub_start_time    DateTime
+  sub_stop_time     DateTime
+  sub_description   String
+  sub_mandatory     Boolean
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  departamentId     String
+  departament       Departament         @relation(fields: [departamentId], references: [id])
+  Porf_Subject      Porf_Subject[]
+  Course_Subject    Course_Subject[]
+  Student_Subject   Student_Subject[]
+  Subjects_Subjects Subjects_Subjects[]
 
   @@map("subjects")
 }
@@ -126,7 +127,6 @@ model Porf_Subject {
   @@map("profs_subjects")
 }
 
-
 model Course_Subject {
   id String @id @default(uuid())
 
@@ -141,7 +141,7 @@ model Course_Subject {
 
   @@map("course_subjects")
 }
- 
+
 model Student_Subject {
   id            String @id @default(uuid())
   av1           Float?
@@ -160,4 +160,18 @@ model Student_Subject {
   updatedAt DateTime @updatedAt
 
   @@map("student_subjects")
+}
+
+model Subjects_Subjects {
+  id String @id @default(uuid())
+
+  Id_PreRequisite String
+
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subject_subject")
 }
