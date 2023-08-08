@@ -1,4 +1,6 @@
-import { create, subjectMandatory } from "../controller/departament.controller";
+import {
+    create,
+} from "../controller/departament.controller";
 
 const departamentRoutes = app=>{
     app.post('/department/register', create)
@@ -7,7 +9,7 @@ const departamentRoutes = app=>{
     
     
     
-    app.post('/mandatory_Subject',subjectMandatory)
+    
 
     
 }

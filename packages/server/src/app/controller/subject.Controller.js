@@ -1,5 +1,5 @@
-import { createSubjects } from "../repository/subject.Repository";
-
+import { createSubjects, createSubjectMandatory } from "../repository/subject.Repository";
+import {checksubjects} from '../validations/subject.validation'
 
 export const create = async(req,res)=>{
    
@@ -25,4 +25,30 @@ export const create = async(req,res)=>{
     } catch (error) {
         return res.status(404).json(error)
     }
+}
+
+//OBRIGATORIEDADE DA MATERIA
+export const subjectMandatory = async (req, res) => {
+
+    const { subjectId, Id_PreRequisite } = req.body
+
+    try {
+        //1° VALIDAR OS DADOS RECEBIDOS
+        const message = await checksubjects(subjectId, Id_PreRequisite)
+        if (message) {
+            res.status(400).json({ msg: message })
+        }
+        else {
+            //2° 
+            const mandayory = await createSubjectMandatory(
+                subjectId,
+                Id_PreRequisite
+            )
+
+            return res.status(201).json(mandayory)
+        }
+    } catch (error) {
+        return res.status(404).json(error)
+    }
+
 }

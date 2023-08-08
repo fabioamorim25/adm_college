@@ -33,3 +33,23 @@ export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_st
     return subject;
 }
  
+//OBRIGATORIEDADE DA MATERIA
+export const createSubjectMandatory = async(subjectId,Id_PreRequisite)=>{
+    const mandayory = await prisma.subjects_Subjects.create({
+        data:{
+            subject:{
+                connect:{
+                    id: subjectId
+                }
+            },
+            Id_PreRequisite
+        },
+        select:{
+            id:true,
+            subjectId:true,
+            Id_PreRequisite:true,
+        }
+    })
+
+    return mandayory;
+}

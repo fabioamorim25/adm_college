@@ -1,5 +1,10 @@
 import bcrypt from "bcryptjs"
-import { createDepartament, createSubjectMandatory } from "../repository/departament.Repository";
+
+import { 
+    createDepartament,
+} from "../repository/departament.Repository";
+
+
 
 
 
@@ -29,23 +34,3 @@ export const create = async(req,res)=>{
     }
 }
 
-//OBRIGATORIEDADE DA MATERIA
-export const subjectMandatory = async(req,res)=>{
- 
-    const {subjectId,Id_PreRequisite}= req.body
-
-    try {
-        //1° VALIDAR OS DADOS RECEBIDOS
-        
-        //2° 
-        const mandayory = await createSubjectMandatory(
-            subjectId,
-            Id_PreRequisite 
-        )
-
-        return res.status(201).json(mandayory)
-    } catch (error) {
-        return res.status(404).json(error)
-    }
-
-}
