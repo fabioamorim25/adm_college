@@ -5,6 +5,7 @@ import {
 } from "../repository/departament.Repository";
 
 import {
+    departamentValidation,
     existingDepartment
 } from "../validations/departament.validation"
 
@@ -17,23 +18,24 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
+        await departamentValidation.validate(req.body)
 
         //2°VALIDAR SE JA EXISTE UM CADASTRO DE UM DEPARTAMENTO
-        const existingdepartment = await existingDepartment()
-        if(existingdepartment)
-            return res.status(400).json({ msg: 'Já existe um departamento cadastrado no sistema' })
+        // const existingdepartment = await existingDepartment()
+        // if(existingdepartment)
+        //     return res.status(400).json({ msg: 'Já existe um departamento cadastrado no sistema' })
 
 
-        //3° CRIPTOGRAFAR A SENHA
-        const hashPassword = await bcrypt.hash(dep_password,10);
-        dep_password = hashPassword;
+        // //3° CRIPTOGRAFAR A SENHA
+        // const hashPassword = await bcrypt.hash(dep_password,10);
+        // dep_password = hashPassword;
         
-        //4° MANDAR CRIAR O DEPARTAMENTO
-        const departament = await createDepartament(
-            dep_name,
-            dep_email,
-            dep_password
-        )
+        // //4° MANDAR CRIAR O DEPARTAMENTO
+        // const departament = await createDepartament(
+        //     dep_name,
+        //     dep_email,
+        //     dep_password
+        // )
         
         return res.status(201).json(departament)
     
