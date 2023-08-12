@@ -14,3 +14,13 @@ export const existingDepartment = async()=>{
 
    return singleDepartment
 }
+
+//VALIDAR SE JÁ EXISTE UM DEPARTAMENTO PELO ID
+export const checkDepartmentId = async(id)=>{
+    const department = await prisma.departament.findUnique({
+        where:{
+            id
+        }
+    });
+   return department
+}

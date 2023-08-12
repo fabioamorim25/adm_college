@@ -2,10 +2,12 @@ import bcrypt from "bcryptjs"
 
 import { 
     createDepartament,
+    deleteDepartament,
     editDepartament,
 } from "../repository/departament.Repository";
 
 import {
+    checkDepartmentId,
     departamentValidation,
     existingDepartment
 } from "../validations/departament.validation"
@@ -64,3 +66,19 @@ export const edite = async (req, res) => {
     }
 }
 
+export const remove = async(req,res)=>{
+    const {id}= req.params;
+    try {
+        
+        //1°VALIDAR SE JA EXISTE UM CADASTRO DE UM DEPARTAMENTO
+       const checkDepartment =  await checkDepartmentId(id)
+        if(!checkDepartment)
+            return res.status(400).json({ msg: 'Esse departamento não existe'})
+        
+        //2° REMOVER O DEPARTAMENTO
+        const removeDepartament = await deleteDepartament(id)
+        return res.status(200).json({msg:"Departamento apagado com sucesso"})
+    } catch (error) {
+        return res.status(404).json(error)
+    }
+}
