@@ -30,4 +30,23 @@ export const createProfs = async (prof_name,prof_status,prof_email,prof_password
 
     return prof;
 }
+
+
+// DEFINIR MATERIA PARA O PROFESSOR
+export const assignSubjectTeacher = async(profId,subjectId)=>{
+    
+    const subjectPorf = await prisma.porf_Subject.create({
+        data:{
+            profId,
+            subjectId
+        },
+        select:{
+            id:true,
+            profId:true,
+            subjectId:true
+        }
+    })
+    
+    return subjectPorf
+}
  

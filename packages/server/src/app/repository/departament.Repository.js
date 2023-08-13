@@ -43,8 +43,6 @@ export const editDepartament = async (id, data) => {
 
 //DELETAR O DEPARTAMENTO
 export const deleteDepartament = async (id) => {
-
-
   try {
     const departament = await prisma.departament.delete({
       where: {
@@ -57,3 +55,4 @@ export const deleteDepartament = async (id) => {
     console.log(error)
   }
 }
+
