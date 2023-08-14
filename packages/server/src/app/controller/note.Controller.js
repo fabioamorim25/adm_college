@@ -1,16 +1,20 @@
-import { createNotes } from "../repository/note.Repository";
+import {
+    createNotes
+} from "../repository/note.Repository";
+
+import { 
+    existingStudentSubject, 
+    notesValidation
+} from "../validations/note.validation";
 
 
-export const create = async(req,res)=>{
-   
-    let {av1,av2,av3,final_grade,attendance,student_count,studentId,subjectId}= req.body
-    
+export const create = async (req, res) => {
+
+    const { av1, av2, av3, final_grade, attendance, student_count, studentId, subjectId } = req.body
+
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
-     
-    
-        //2° MANDAR CRIAR O ADDRESS
-        const studentNote = await createNotes(
+        await notesValidation.validate({
             av1,
             av2,
             av3,
@@ -19,10 +23,27 @@ export const create = async(req,res)=>{
             student_count,
             studentId,
             subjectId
-        )
-        
-        return res.status(201).json(studentNote)
-    
+        })
+        //2°VALIDAR DOCUMENTOS   
+        const message = await existingStudentSubject(studentId, subjectId)
+        if (message) {
+            res.status(400).json({ msg: message })
+        }
+        else {
+            //3° MANDAR CRIAR AS NOTAS
+            const studentNote = await createNotes(
+                av1,
+                av2,
+                av3,
+                final_grade,
+                attendance,
+                student_count,
+                studentId,
+                subjectId
+            )
+
+            return res.status(201).json(studentNote)
+        }
     } catch (error) {
         return res.status(404).json(error)
     }
