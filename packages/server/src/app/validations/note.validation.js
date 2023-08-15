@@ -14,6 +14,16 @@ export const notesValidation = yup.object({
     subjectId:yup.string().required()
 })
 
+//VALIDAR OS DADOS DAS NOTAS DO ALUNO
+export const notes = yup.object({
+    av1:yup.number().min(0),
+    av2:yup.number().min(0),
+    av3:yup.number().min(0),
+    attendance:yup.number().required().min(0),
+    studentId:yup.string().required(),
+    subjectId:yup.string().required()
+})
+
 //VALIDAR SE EXISTE O ALUNO E A MATÉRIA
 export const existingStudentSubject = async (studentId, subjectId)=>{
     //Validação: existe Ids

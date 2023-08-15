@@ -35,11 +35,30 @@ export const createNotes = async (av1,av2,av3,final_grade,attendance,student_cou
             subjectId: true
         }
     });
-
-
-
     return studentNotes;
 }
 
 
+export const editeNotes = async (studentId, subjectId, data) => {
+    const studentNotes = await prisma.student_Subject.update({
+        where: {
+            studentId_subjectId: {
+                studentId: studentId,
+                subjectId: subjectId
+            }
+        },
+        data: data,
+        select: {
+            id: true,
+            av1: true,
+            av2: true,
+            av3: true,
+            final_grade: true,
+            attendance: true,
+            createdAt: true,
+            updatedAt: true,
+        }
+    })
 
+    return studentNotes
+}

@@ -159,6 +159,7 @@ model Student_Subject {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([studentId, subjectId])
   @@map("student_subjects")
 }
 

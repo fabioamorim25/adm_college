@@ -1,7 +1,11 @@
-import { create } from "../controller/note.Controller";
+import { 
+    create, 
+    edite 
+} from "../controller/note.Controller";
 
 const noteRoutes = app=>{
     app.post('/createNotes', create)
+    app.put('/editNotes', edite)
     
 
 
