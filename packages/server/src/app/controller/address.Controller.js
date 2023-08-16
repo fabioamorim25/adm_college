@@ -1,4 +1,12 @@
-import { createAddress } from "../repository/address.Repository";
+import {
+    createAddress
+} from "../repository/address.Repository";
+import {
+    addressValidation
+} from "../validations/address.validation";
+import { 
+    validationStudent 
+} from "../validations/student.validation";
 
 
 export const create = async(req,res)=>{
@@ -7,6 +15,19 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
+        await addressValidation.validate({
+            add_street,
+            add_city,
+            add_neighborhood,
+            add_number,
+            add_complement
+        })
+        //2° VALIDAR SE EXISTE O ALUNO
+        const student = await validationStudent(
+            studentId
+        )
+        if(!student)
+        return res.status(400).json({ msg: 'Não existe esse aluno' })
      
     
         //2° MANDAR CRIAR O ADDRESS
