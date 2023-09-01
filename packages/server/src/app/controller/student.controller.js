@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { createStudents } from "../repository/student.Repository";
+import { studentValidation } from '../validations/student.validation';
 
 
 export const create = async(req,res)=>{
@@ -8,7 +9,7 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
-     
+        await studentValidation.validate(req.body)
         //2° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(stu_password,10);
         stu_password = hashPassword;

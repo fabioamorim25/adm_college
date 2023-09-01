@@ -48,17 +48,13 @@ export const create = async(req,res)=>{
 }
 
 export const edite = async(req,res)=>{
-    // let {add_street,add_city,add_neighborhood,add_number,add_complement,studentId}= req.body
-
-    
+       
     try {
       //1° VALIDAR OS DADOS RECEBIDOS
-     await addressValidation.validate(req.body)
+      await addressValidation.validate(req.body)
 
-    
-    //3°PASSAR OS DADOS PARA O EDITOR
+      //2°PASSAR OS DADOS PARA O EDITOR
       const address = await editAddress(req.params.id, req.body)
-
 
       return res.status(200).json(address)
 

@@ -4,7 +4,7 @@ import {
     createProfs
 } from "../repository/prof.Repository";
 import { 
-    checkSubjectProfId 
+    checkSubjectProfId, profValidation 
 } from "../validations/prof.validation";
 
 
@@ -14,7 +14,7 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
-     
+        await profValidation.validate(req.body)
         //2° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(prof_password,10);
         prof_password = hashPassword;

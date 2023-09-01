@@ -1,4 +1,16 @@
+import * as yup from "yup"
 import { prisma } from "../../lib/prismaClient"
+
+
+//VALIDAR OS DADOS DO PROFESSOR
+export const profValidation = yup.object({
+    prof_name:yup.string().required(),
+    prof_status:yup.boolean().required(),
+    prof_email:yup.string().required(),
+    prof_password:yup.string().required().min(6),
+    prof_phone:yup.string(),
+    departamentId:yup.string().required()
+})
 
 
 //VALIDAR SE EXISTE UM PROFESSOR OU MATERIA
