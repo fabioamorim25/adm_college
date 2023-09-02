@@ -1,7 +1,7 @@
 import { prisma } from '../../lib/prismaClient'
 
 // CRIAR O DOCUMENTO E RETONAR O DADO
-export const createStudents = async (stu_name, stu_registration, stu_course, stu_status, stu_period, stu_mother_name, stu_father_name, stu_phone, stu_email, stu_password, courseId) => {
+export const createStudents = async (stu_name, stu_registration, stu_course, stu_status, stu_period, stu_mother_name, stu_father_name, stu_phone, email, password, courseId) => {
 
     const student = await prisma.student.create({
         data: {
@@ -13,8 +13,8 @@ export const createStudents = async (stu_name, stu_registration, stu_course, stu
             stu_mother_name,
             stu_father_name,
             stu_phone,
-            stu_email,
-            stu_password,
+            email,
+            password,
             course: {
                 connect: {
                     id: courseId
@@ -31,8 +31,8 @@ export const createStudents = async (stu_name, stu_registration, stu_course, stu
             stu_mother_name: true,
             stu_father_name: true,
             stu_phone: true,
-            stu_email: true,
-            stu_password: false,
+            email: true,
+            password: false,
             courseId: true
         }
     });

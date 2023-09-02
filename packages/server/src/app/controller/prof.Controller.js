@@ -10,21 +10,21 @@ import {
 
 export const create = async(req,res)=>{
    
-    let {prof_name,prof_status,prof_email,prof_password,prof_phone,departamentId}= req.body
+    let {prof_name,prof_status,email,password,prof_phone,departamentId}= req.body
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
         await profValidation.validate(req.body)
         //2° CRIPTOGRAFAR A SENHA
-        const hashPassword = await bcrypt.hash(prof_password,10);
-        prof_password = hashPassword;
+        const hashPassword = await bcrypt.hash(password,10);
+        password = hashPassword;
         
         //3° MANDAR CRIAR O DEPARTAMENTO
         const prof = await createProfs(
             prof_name,
             prof_status,
-            prof_email,
-            prof_password,
+            email,
+            password,
             prof_phone,
             departamentId
         )

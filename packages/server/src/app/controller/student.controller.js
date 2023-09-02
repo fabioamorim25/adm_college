@@ -5,14 +5,14 @@ import { studentValidation } from '../validations/student.validation';
 
 export const create = async(req,res)=>{
    
-    let {stu_name,stu_registration,stu_course, stu_status,stu_period,stu_mother_name,stu_father_name,stu_phone,stu_email,stu_password,courseId}= req.body
+    let {stu_name,stu_registration,stu_course, stu_status,stu_period,stu_mother_name,stu_father_name,stu_phone,email,password,courseId}= req.body
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
         await studentValidation.validate(req.body)
         //2° CRIPTOGRAFAR A SENHA
-        const hashPassword = await bcrypt.hash(stu_password,10);
-        stu_password = hashPassword;
+        const hashPassword = await bcrypt.hash(password,10);
+        password = hashPassword;
     
         //3° MANDAR CRIAR O STUDENT
         const student = await createStudents(
@@ -24,8 +24,8 @@ export const create = async(req,res)=>{
             stu_mother_name,
             stu_father_name,
             stu_phone,
-            stu_email,
-            stu_password,
+            email,
+            password,
             courseId
         )
         

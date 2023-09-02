@@ -1,19 +1,19 @@
 import { prisma } from '../../lib/prismaClient'
 
 // CRIAR O DOCUMENTO E RETONAR OS DADOS (menos a senha)
-export const createDepartament = async (dep_name, dep_email, dep_password) => {
+export const createDepartament = async (dep_name, email, password) => {
 
   const departament = await prisma.departament.create({
     data: {
       dep_name,
-      dep_email,
-      dep_password
+      email,
+      password
     },
     select: {
       id: true,
       dep_name: true,
-      dep_email: true,
-      dep_password: false
+      email: true,
+      password: false
     }
   });
 
@@ -31,8 +31,8 @@ export const editDepartament = async (id, data) => {
     select: {
       id: true,
       dep_name: true,
-      dep_email: true,
-      dep_password: true,
+      email: true,
+      password: true,
       createdAt: true,
       updatedAt: true,
     },
