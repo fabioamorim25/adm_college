@@ -6,8 +6,8 @@ import { prisma } from "../../lib/prismaClient"
 export const profValidation = yup.object({
     prof_name:yup.string().required(),
     prof_status:yup.boolean().required(),
-    prof_email:yup.string().required(),
-    prof_password:yup.string().required().min(6),
+    email:yup.string().required(),
+    password:yup.string().required().min(6),
     prof_phone:yup.string(),
     departamentId:yup.string().required()
 })

@@ -1,5 +1,8 @@
 import { prisma } from '../../lib/prismaClient'
 import bcrypt from "bcryptjs"
+import jwt from 'jsonwebtoken'
+
+
 
 export const signIn = async (req, res) => {
 
@@ -14,6 +17,8 @@ export const signIn = async (req, res) => {
           email: email
         },
         select:{
+          id:true,
+          stu_name:true,
           password: true,
         }
       }),
@@ -22,6 +27,8 @@ export const signIn = async (req, res) => {
           email: email
         },
         select:{
+          id:true,
+          prof_name:true,
           password: true,
         }
       }),
@@ -30,6 +37,8 @@ export const signIn = async (req, res) => {
           email: email
         },
         select:{
+          id:true,
+          dep_name:true,
           password: true,
         }
       })
@@ -45,12 +54,24 @@ export const signIn = async (req, res) => {
     const user = result.filter(item => item !== null)[0];
   
 
-    //VALIDAR A SENHA DO USER
+    //VALIDAR A SENHA DO USER(comparar senha recebida com a do db)
     if(!await bcrypt.compare(password, user.password)){
       return res.status(400).json({msg:"Password invalido"})
     }
 
-    return res.status(200).json(user);
+    // CRIAR UM TOKEN PARA O USER E ENVIAR PARA O FRONT
+    const token = jwt.sign({id:user.id},process.env.SECRET,{
+      expiresIn: process.env.EXPIRE_TOKEN //1 dia
+    })
+
+
+
+
+
+
+
+
+    return res.status(200).json({user,token});
     
   } catch (error) {
     return res.status(404).json(error)

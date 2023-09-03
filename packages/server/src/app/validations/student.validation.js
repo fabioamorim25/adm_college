@@ -12,8 +12,8 @@ export const studentValidation = yup.object({
     stu_mother_name:yup.string().required(),
     stu_father_name:yup.string().required(),
     stu_phone:yup.string(),
-    stu_email:yup.string().required(),
-    stu_password:yup.string().required().min(6),
+    email:yup.string().required(),
+    password:yup.string().required().min(6),
     courseId:yup.string().required()
 })
 

@@ -12,7 +12,7 @@ const departamentRoutes = app=>{
     app.delete('/removeDepartament/:id',remove)
     
     
-    app.post('/department/SignIn',signIn);
+    app.post('/SignIn',signIn);
     
     
     
