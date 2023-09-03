@@ -4,7 +4,7 @@ import {
     remove
 } from "../controller/departament.controller";
 
-import { signIn } from "../controller/signIn.controller";
+import { signIn } from "../controller/auth.controller";
 
 const departamentRoutes = app=>{
     app.post('/department/register', create)

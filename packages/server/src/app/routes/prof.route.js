@@ -3,7 +3,7 @@ import {
     subjectPorf
 } from "../controller/prof.Controller";
 
-import { signIn } from "../controller/signIn.controller";
+import { signIn } from "../controller/auth.controller";
 
 
 const profRoutes = app=>{
