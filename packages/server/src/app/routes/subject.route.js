@@ -1,10 +1,16 @@
-import { create, subjectMandatory } from "../controller/subject.Controller";
+import {
+    create,
+    subjectMandatory 
+} from "../controller/subject.Controller";
+
+import authTokenValidate from "../middlewares/auth.tokenValidate";
+
 
 const subjectRoutes = app=>{
-    app.post('/subject/register', create)
 
-
-    app.post('/mandatory_Subject',subjectMandatory)
+    app.use(authTokenValidate)
+        app.post('/subject/register', create)
+        app.post('/mandatory_Subject',subjectMandatory)
   
 
 

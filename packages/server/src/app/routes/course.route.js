@@ -1,7 +1,14 @@
 import { create } from "../controller/course.Controller";
 
+import authTokenValidate from "../middlewares/auth.tokenValidate";
+
+
+
 const courseRoutes = app=>{
-    app.post('/course/register', create)
+
+
+    app.use(authTokenValidate)
+        app.post('/course/register', create)
 
 
 

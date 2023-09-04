@@ -4,17 +4,19 @@ import {
 } from "../controller/prof.Controller";
 
 import { signIn } from "../controller/auth.controller";
-
+import authTokenValidate from "../middlewares/auth.tokenValidate";
 
 const profRoutes = app=>{
-    app.post('/prof/register', create)
-
-    app.post('/assignSubjectProf',subjectPorf)
-
-
 
     app.post('/SignIn',signIn);
 
+    app.use(authTokenValidate)
+        app.post('/prof/register', create)
+        app.post('/assignSubjectProf',subjectPorf)
+
+
+
+    
     
 }
 
