@@ -12,6 +12,7 @@ export const consultDocument = async (email)=>{
             select: {
                 id: true,
                 stu_name: true,
+                role:true,
                 password: true,
             }
         }),
@@ -22,6 +23,7 @@ export const consultDocument = async (email)=>{
             select: {
                 id: true,
                 prof_name: true,
+                role:true,
                 password: true,
             }
         }),
@@ -32,6 +34,7 @@ export const consultDocument = async (email)=>{
             select: {
                 id: true,
                 dep_name: true,
+                role:true,
                 password: true,
             }
         })

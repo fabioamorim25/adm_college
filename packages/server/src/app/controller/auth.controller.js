@@ -34,7 +34,7 @@ export const signIn = async (req, res) => {
 
 
     // CRIAR UM TOKEN PARA O USER
-    const token = generateToken(user.id)
+    const token = generateToken(user.id,user.role)
 
     return res.status(200).json({ user, token });
   } catch (error) {

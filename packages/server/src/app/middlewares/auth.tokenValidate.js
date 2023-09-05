@@ -33,7 +33,8 @@ export default (req, res, next) => {
             }
         
             req.userId = decoded.id//pegar o id do user logado
-         
+            req.userRole = decoded.role
+            
             return next();
         })
     
