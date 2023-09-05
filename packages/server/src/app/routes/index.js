@@ -11,12 +11,12 @@ import authRoutes from "./auth.route";
 const routes = (app)=>{
     
     authRoutes(app)
+    addressRoutes(app)
     departamentRoutes(app)
     courseRoutes(app)
     profRoutes(app)
     subjectRoutes(app)
     studentRoutes(app)
-    addressRoutes(app)
     noteRoutes(app)
     
 }

@@ -5,6 +5,7 @@ import {
 } from "../controller/departament.controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
+import { roleAdmin } from "../middlewares/roleAccessControl";
 
 
 const departamentRoutes = app=>{
@@ -13,6 +14,7 @@ const departamentRoutes = app=>{
 
     
     app.use(authTokenValidate)
+    app.use(roleAdmin)
         app.put('/editDepartament/:id', edite)
         app.delete('/removeDepartament/:id',remove)
         
