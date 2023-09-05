@@ -13,12 +13,13 @@ model Departament {
   dep_name  String
   email     String    @unique
   password  String
+  role  String @default("ADMIN")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Course    Course[]
   Prof      Prof[]
   Subject   Subject[]
-
+  
   @@map("departaments")
 }
 
@@ -42,6 +43,7 @@ model Prof {
   email         String         @unique
   password      String
   prof_phone    String
+  role  String @default("TEACHER")
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   departamentId String
@@ -83,6 +85,7 @@ model Student {
   stu_phone        String
   email            String  @unique
   password         String
+  role  String @default("STUDENT")
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)

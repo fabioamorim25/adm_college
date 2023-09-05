@@ -39,3 +39,43 @@ export const consultDocument = async (email)=>{
 
     return result
 }
+
+
+//CONSULTA NAS TABELAS PELO ID
+export const consultID = async (id)=>{
+
+    const result = await Promise.all([
+        prisma.student.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                stu_name: true,
+                password: false,
+            }
+        }),
+        prisma.prof.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                prof_name: true,
+                password: false,
+            }
+        }),
+        prisma.departament.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                dep_name: true,
+                password: false,
+            }
+        })
+    ]);
+
+    return result
+}
