@@ -32,7 +32,7 @@ export const editDepartament = async (id, data) => {
       id: true,
       dep_name: true,
       email: true,
-      password: true,
+      password: false,
       createdAt: true,
       updatedAt: true,
     },

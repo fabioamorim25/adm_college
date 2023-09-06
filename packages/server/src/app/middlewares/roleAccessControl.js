@@ -64,7 +64,7 @@ export const roleStudent = (req, res, next) => {
 export const roleAdminStudent = (req, res, next) => {
     //pegar o role do user vindo da req no token
     const userRole = req.userRole;
-
+    console.log(userRole)
     try {
 
         if (userRole === "ADMIN" || userRole === "STUDENT") {

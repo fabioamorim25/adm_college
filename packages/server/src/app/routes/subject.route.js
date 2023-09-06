@@ -14,7 +14,7 @@ const subjectRoutes = app=>{
         app.post('/subject/register', create)
         app.post('/mandatory_Subject',subjectMandatory)
   
-
+    
 
 
 

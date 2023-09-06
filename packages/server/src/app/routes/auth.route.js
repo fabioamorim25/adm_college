@@ -1,6 +1,6 @@
 import { 
-    authBackFront, signIn, 
-
+  authBackFront,
+  signIn, 
 } from "../controller/auth.controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
@@ -8,12 +8,12 @@ import authTokenValidate from "../middlewares/auth.tokenValidate";
 
 const authRoutes = app=>{
     
- app.post('/SignIn',signIn);
+//  app.post('/SignIn',signIn);
 
 
 
-   app.use(authTokenValidate);
-        app.get('/authApi',authBackFront);
+  //  app.use(authTokenValidate);
+  //       app.get('/authApi',authBackFront);
    
 
 }

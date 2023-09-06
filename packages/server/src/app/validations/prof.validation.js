@@ -42,6 +42,6 @@ export const checkSubjectProfId = async(profId,subjectId)=>{
             ]
         }
     })
-    if(profSubject)
+    if(profSubject.length > 0)
         return {message:'O professor já esta associado a essa matéria'}
 }

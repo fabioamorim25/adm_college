@@ -8,9 +8,9 @@ import { roleAdmin, roleAdminStudent } from "../middlewares/roleAccessControl";
 
 const addressRoutes = app=>{
 
-    app.use(authTokenValidate)
-        app.post('/createAddress',roleAdmin,create)
-        app.put('/editeAddress/:id',roleAdminStudent, edite)
+    app.use(authTokenValidate);
+        app.post('/createAddress',roleAdmin,create);
+        app.put('/editeAddress/:id',roleAdminStudent, edite);
 
 
 

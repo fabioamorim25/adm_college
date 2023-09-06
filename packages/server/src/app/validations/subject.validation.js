@@ -20,6 +20,7 @@ export const checksubjects = async (subjectId,Id_PreRequisite)=>{
         }
     })
     
+   
     if(!requisit && !subject)
         return {message:'As matérias não existem'}
     if(!requisit)
@@ -27,15 +28,22 @@ export const checksubjects = async (subjectId,Id_PreRequisite)=>{
     if(!subject)
         return {message:'A matéria não existe'}
 
+
+
+        
     //2° Validar se ja existe a associação entre as materia 
     const subjectSubject = await prisma.subjects_Subjects.findMany({
         where:{
             AND: [
-                { profId: profId },
-                { subjectId: subjectId }
+                { subjectId: subjectId },
+                { Id_PreRequisite: Id_PreRequisite }
             ]
         }
     })
-    if(subjectSubject)
-        return {message:'A materia já esta associado entre essa matéria'}
+
+   
+    if(subjectSubject.length > 0){
+        return {message:'Já existe uma associado dessas matéria'}
+    }
+
 }
