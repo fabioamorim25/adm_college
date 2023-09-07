@@ -3,7 +3,9 @@
 export default function Home() {
   return (
     <main>
-      das
+
+    <div className="font-alt">gbevfdvdvdvd</div>
+
     </main>
   )
 }
