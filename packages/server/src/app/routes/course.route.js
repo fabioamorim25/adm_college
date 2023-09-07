@@ -8,9 +8,9 @@ import { roleAdmin } from "../middlewares/roleAccessControl";
 const courseRoutes = app=>{
 
 
-    app.use(authTokenValidate)
-    app.use(roleAdmin)
-        app.post('/course/register', create)
+    // app.use(authTokenValidate)
+    // app.use(roleAdmin)
+        app.post('/course/register',authTokenValidate,roleAdmin, create)
 
 
 

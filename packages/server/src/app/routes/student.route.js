@@ -6,9 +6,7 @@ import { roleAdmin } from "../middlewares/roleAccessControl";
 const studentRoutes = app=>{
     
     
-    app.use(authTokenValidate)
-    app.use(roleAdmin)
-        app.post('/student/register', create)
+    app.post('/student/register',authTokenValidate,roleAdmin, create)
 
 
 

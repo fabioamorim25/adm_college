@@ -9,10 +9,10 @@ import { roleTeacher } from "../middlewares/roleAccessControl";
 
 const noteRoutes = app=>{
 
-    app.use(authTokenValidate)
-    app.use(roleTeacher)
-        app.post('/createNotes', create)
-        app.put('/editNotes', edite)
+    // app.use(authTokenValidate)
+    // app.use(roleTeacher)
+        app.post('/createNotes',authTokenValidate,roleTeacher, create)
+        app.put('/editNotes',authTokenValidate,roleTeacher, edite)
     
 
 

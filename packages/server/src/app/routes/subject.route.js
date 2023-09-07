@@ -9,10 +9,10 @@ import { roleAdmin } from "../middlewares/roleAccessControl";
 
 const subjectRoutes = app=>{
 
-    app.use(authTokenValidate)
-    app.use(roleAdmin)
-        app.post('/subject/register', create)
-        app.post('/mandatory_Subject',subjectMandatory)
+    // app.use(authTokenValidate)
+    // app.use(roleAdmin)
+        app.post('/subject/register',authTokenValidate,roleAdmin, create)
+        app.post('/mandatory_Subject',authTokenValidate,roleAdmin,subjectMandatory)
   
     
 

@@ -9,6 +9,7 @@ import authRoutes from "./auth.route";
 
 
 const routes = (app) => {
+    authRoutes(app);
     departamentRoutes(app);
     courseRoutes(app);
     profRoutes(app);
@@ -16,7 +17,7 @@ const routes = (app) => {
     studentRoutes(app);
     addressRoutes(app);
     noteRoutes(app);
-    authRoutes(app);
+   
 
 }
 
