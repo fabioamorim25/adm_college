@@ -1,9 +1,12 @@
 
+
 export default function Home() {
+
   return (
-   
-     
-     <div className="font-sans">asdad</div>
- 
-  )
+    <main>
+
+    <h1>Pagina Principal</h1>
+
+    </main >
+  );
 }
