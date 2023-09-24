@@ -38,6 +38,7 @@ export const signIn = async (req, res) => {
     const token = generateToken(user.id,user.role)
    
     user.password = undefined;
+
     return res.status(200).json({ user, token });
   } catch (error) {
     return res.status(404).json(error)
