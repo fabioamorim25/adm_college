@@ -84,13 +84,6 @@ export default function SignIn() {
         className="mt-2 w-full font-sans px-4 py-2  transition-colors duration-200 transform bg-gray-200 rounded-md hover:bg-orange-900 mb-4"
       >Login
       </button>
-
-      <p className="font-sans text-sm text-center text-gray-700">
-        Don't have an account?{" "}
-        <Link href="#" className="font-alt hover:underline">
-          Sign up
-        </Link>
-      </p>
     </form>
   )
 }
