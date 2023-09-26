@@ -37,6 +37,7 @@ export const options: NextAuthOptions = {
         if (response.ok) {
           // Analise apenas o id,role, token
           const data = await response.json();
+          
           if (data && data.user && data.user.id && data.user.role && data.token) {
             return data;
           } else {
