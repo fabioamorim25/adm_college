@@ -1,12 +1,16 @@
 
 
-export default function Home() {
+
+export default async function Home() {
+
+ 
 
   return (
     <main>
 
-    <h1>Pagina Principal</h1>
+    <h1>Página Principal</h1>
 
+  
     </main >
   );
 }

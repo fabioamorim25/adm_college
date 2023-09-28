@@ -4,11 +4,11 @@ import SignIn from "@/components/SignIn";
 
 export const metadata = {
   title: 'SignIn',
-  description: 'Pagina de login',
+  description: 'Página de login',
 }
 
 
-export default function LoginPage() {
+export default function PageSignIn() {
   return (
       <SignIn/>    
   );

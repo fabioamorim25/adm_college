@@ -47,13 +47,18 @@ export const options: NextAuthOptions = {
         } else {
           throw new Error("Invalid response");
         }
+
       }
 
     })
   ],
+  session:{
+    strategy: "jwt"
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/SignIn"
-  }
+  },
+  debug: process.env.NODE_ENV !== "development"
 }
-
 

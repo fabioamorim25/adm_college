@@ -3,54 +3,58 @@
 import Link from "next/link";
 
 import React, { useState } from "react";
-import {signIn} from "next-auth/react"
+import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
+import Toast from "./ui/toast";
 
 
-interface IUser{
+interface IUser {
   email: string;
-  password:string;
+  password: string;
 }
-
 
 export default function SignIn() {
 
-  const [data, setData] = useState<IUser>({email:"",password:""})
+  const [data, setData] = useState<IUser>({ email: "", password: "" })
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const router = useRouter()
 
   //VALIDAR O USER (enviar dados para provedor interno)
   async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault()  
+    event.preventDefault()
 
-    const res = await signIn<"credentials">("credentials",{
-      ...data,
-      redirect:false
-    })
+      const response = await signIn<"credentials">("credentials", {
+        ...data,
+        redirect: false
+      })
 
-    if(res?.error === 'Invalid response') {
-      setErrorMsg("O usuário não existe"); 
-      return;
-    }
+      if(response && response.error) {
+        if (response.error === 'Invalid response') {
+          setErrorMsg("O usuário não existe");
+        } else {
+          setErrorMsg("Error no servidor. Por favor tente mais tarde");
+        }
+        return null;
+      }
 
-    //redirecionar para home
-    router.push("/")    
+      //redirecionar para home
+      router.push("/")
+    
   }
-  
+
   //PEGAR OS DADOS DO FORMULARIO
   async function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
-   setData((prev)=>{
-    return {...prev, [e.target.name]: e.target.value}
-   })
+    e.preventDefault()
+    setData((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
   }
 
 
 
   return (
     <form onSubmit={onSubmit} className="bg-white-50 py-32 px-6 mt-10 lg:mt-0 lg:w-1/3 rounded-lg shadow-md flex flex-col justify-between h-full">
-  
-      {errorMsg && <div>{errorMsg}</div>}
 
       <h1 className="text-3xl font-alt text-center text-gray-700 mb-10">Logo</h1>
 
@@ -76,7 +80,7 @@ export default function SignIn() {
         />
       </div>
 
-      <Link href="#" className="text-xs font-sans text-blue-600 hover:underline mb-4 block">
+      <Link href="/" className="text-xs font-sans text-blue-600 hover:underline mb-4 block">
         Forget Password?
       </Link>
 
@@ -84,6 +88,7 @@ export default function SignIn() {
         className="mt-2 w-full font-sans px-4 py-2  transition-colors duration-200 transform bg-gray-200 rounded-md hover:bg-orange-900 mb-4"
       >Login
       </button>
+      <Toast errorMessage={errorMsg} />
     </form>
   )
 }
