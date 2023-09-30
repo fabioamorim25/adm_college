@@ -5,6 +5,9 @@ import {
   Roboto_Flex as Roboto,
   Bai_Jamjuree as Baijamjuree
 } from 'next/font/google'
+import AuthProvider from '@/context/AuthProvider'
+
+
 
 
 
@@ -34,8 +37,10 @@ export default function RootLayout({children}: {children:ReactNode}) {
     <html lang="en">
       
       <body className={`${roboto.variable} ${baijamjuree.variable} font-sans`}>
+        <AuthProvider>
         <h1>layout raiz</h1>
         {children}
+        </AuthProvider>
       </body>
     
     </html>

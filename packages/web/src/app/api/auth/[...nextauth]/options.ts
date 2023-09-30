@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 
+
 export const options: NextAuthOptions = {
   providers: [
     //AUTH EXTERNO: 
@@ -37,7 +38,7 @@ export const options: NextAuthOptions = {
         if (response.ok) {
           // Analise apenas o id,role, token
           const data = await response.json();
-          
+
           if (data && data.user && data.user.id && data.user.role && data.token) {
             return data;
           } else {
@@ -52,7 +53,11 @@ export const options: NextAuthOptions = {
 
     })
   ],
-  session:{
+  callbacks: {
+    
+
+  },
+  session: {
     strategy: "jwt"
   },
   secret: process.env.NEXTAUTH_SECRET,
@@ -61,4 +66,3 @@ export const options: NextAuthOptions = {
   },
   debug: process.env.NODE_ENV !== "development"
 }
-
