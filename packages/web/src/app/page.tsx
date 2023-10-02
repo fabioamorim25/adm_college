@@ -1,16 +1,15 @@
-// import { getCurrentUse } from "@/lib/session";
+import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/options"
+import { getServerSession } from "next-auth"
 
-import { getServerSession } from "next-auth";
 export default async function Home() {
 
-  // const user = await getCurrentUse()
-  const session = await getServerSession()
-  return (
-    <main>
+  const session = await getServerSession(nextAuthOptions)
 
-    <h1>Página Principal</h1>
-    <div>{JSON.stringify(session)}</div> 
-    
-    </main >
-  );
+  return (
+    <div>
+      <h1>Pagina admin</h1>
+      <h2>{session?.user.name}</h2>
+      <h2>{JSON.stringify(session)}</h2>
+    </div>
+  )
 }

@@ -1,26 +1,27 @@
 import { ReactNode } from 'react'
 import '../styles/globals.css'
 
-import { 
+import {
   Roboto_Flex as Roboto,
   Bai_Jamjuree as Baijamjuree
 } from 'next/font/google'
-import AuthProvider from '@/context/AuthProvider'
+
+import AuthSessionProvider from '@/context/sessionProvider'
 
 
 
 
 
 // DEFINIR AS FONTES:
-const roboto = Roboto ({
-  subsets:['latin'],
-  weight:'100',
-  variable:'--font-roboto'
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: '100',
+  variable: '--font-roboto'
 })
-const baijamjuree = Baijamjuree ({
-  subsets:['latin'],
-  weight:'700',
-  variable:'--font-bai-jamjuree'
+const baijamjuree = Baijamjuree({
+  subsets: ['latin'],
+  weight: '700',
+  variable: '--font-bai-jamjuree'
 })
 
 
@@ -32,17 +33,17 @@ export const metadata = {
 
 
 
-export default function RootLayout({children}: {children:ReactNode}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      
+
       <body className={`${roboto.variable} ${baijamjuree.variable} font-sans`}>
-        <AuthProvider>
-        <h1>layout raiz</h1>
-        {children}
-        </AuthProvider>
+        <AuthSessionProvider>
+          <h1>layout raiz</h1>
+          {children}
+        </AuthSessionProvider>
       </body>
-    
+
     </html>
   )
 }

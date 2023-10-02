@@ -9,8 +9,9 @@ import authRoutes from "./auth.route";
 
 
 const routes = (app) => {
-    authRoutes(app);
     departamentRoutes(app);
+    authRoutes(app);
+   
     courseRoutes(app);
     profRoutes(app);
     subjectRoutes(app);

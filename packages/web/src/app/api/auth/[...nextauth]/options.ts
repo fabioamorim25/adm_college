@@ -1,13 +1,12 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
-
-export const options: NextAuthOptions = {
+export const nextAuthOptions: NextAuthOptions = {
+  //DEFINIR OS PROVEDORES: provedor interno
   providers: [
-    //AUTH EXTERNO: 
+    // AUTH EXTERNO: 
 
-    //AUTH INTERNO DO SISTEMA: 
+    //  AUTH INTERNO DO SISTEMA: 
     CredentialsProvider({
       name: "credentials",
       credentials: {
@@ -21,46 +20,45 @@ export const options: NextAuthOptions = {
           type: "password",
         }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials)
           throw new Error("Credentials are not provided");
-
         const { email, password } = credentials;
 
-        //FAZER REQUISIÇÃO PARA O BACK END PASSANDO OS DADOS
+
         const response = await fetch("http://localhost:5000/SignIn", {
           method: "POST",
-          body: JSON.stringify({ email, password }),
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
         })
 
-        //VALIDAR OS DADOS RECEBIDOS DO BACK END:
-        if (response.ok) {
-          // Analise apenas o id,role, token
-          const data = await response.json();
+        const user = await response.json();
 
-          if (data && data.user && data.user.id && data.user.role && data.token) {
-            return data;
-          } else {
-            throw new Error("Invalid user data");
-          }
-
-        } else {
-          throw new Error("Invalid response");
+        console.log('token back', user.token)
+        if (user && response.ok) {
+          return user
         }
-
+        return null
       }
-
     })
   ],
   callbacks: {
-    
+    async jwt({ token, user, account, profile }) {
+      user && (token.user = user)
 
+      return token;
+    },
+    async session({ session, user, token }) {
+      session = token.user as any
+      return session;
+    },
   },
   session: {
     strategy: "jwt"
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: 'adssdf', maxAge: 60 * 60 * 24,
+  },
   pages: {
     signIn: "/SignIn"
   },

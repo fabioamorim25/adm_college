@@ -32,7 +32,6 @@ export const signIn = async (req, res) => {
     if (validate.error)
       return res.status(400).json({ msg: validate.msg });
      
-   
 
     // CRIAR UM TOKEN PARA O USER
     const token = generateToken(user.id,user.role)

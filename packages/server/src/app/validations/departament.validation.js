@@ -3,10 +3,10 @@ import * as yup from "yup"
 
 //VALIDAR OS DADOS RECEBIDOS NA CRIAÇÃO DO DEPARTAMENTO
 export const departamentValidation = yup.object({
-    dep_name:yup.string().required(),
-    email:yup.string().required(),
-    password:yup.string().required().min(6),
-})
+    dep_name: yup.string().required('O campo nome é obrigatório'),
+    email: yup.string().required('O campo email é obrigatório'),
+    password: yup.string().required('O campo password é obrigatório').min(6, 'A senha deve ter pelo menos 6 caracteres'),
+});
 
 //VALIDAR SE JÁ EXISTE UM CADASTRO DE UM DEPARTAMENTO
 export const existingDepartment = async()=>{
