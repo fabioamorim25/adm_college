@@ -37,7 +37,7 @@ export default function SignIn() {
         }
         return null;
       }
-
+      console.log(response)
       //redirecionar para home
       router.push("/")
     
