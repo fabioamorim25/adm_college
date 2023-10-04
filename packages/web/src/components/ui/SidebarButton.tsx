@@ -38,5 +38,3 @@ export default function SidebarButton({ item, children }: SidebarButtonProps) {
     </div>
   );
 }
-
-
