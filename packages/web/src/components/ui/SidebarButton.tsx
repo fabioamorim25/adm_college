@@ -1,7 +1,9 @@
 'use client'
 
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+
 
 interface MenuItem {
   title: string;
@@ -23,9 +25,11 @@ export default function SidebarButton({ item, children }: SidebarButtonProps) {
 
   return (
     <div className="relative">
-      <button onClick={toggleDropdown} className="w-full text-left bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-5 rounded">
-        {item.title}
+      <button onClick={toggleDropdown} className="flex justify-between items-center w-full text-left bg-gray-900 hover:bg-gray-800 text-purple-800 py-2 px-5">
+        <span>{item.title}</span>
+        <ChevronDown />
       </button>
+
       {isOpen && (
         <div className="flex flex-col pl-4 bg-gray-700">
           {children?.map((childItem) => (
