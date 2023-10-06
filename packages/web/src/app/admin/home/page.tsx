@@ -7,10 +7,13 @@ export default async function HomeAdmin() {
   const session = await getServerSession(nextAuthOptions)
 
   return (
-    <>
-    <h1>Página Home admin</h1>
-    <h2>{session?.user.name}</h2>
-      <h2>{JSON.stringify(session)}</h2>
-    </>
+    <main className="mx-auto">
+      <h1>Página Home admin</h1>
+      <h2>{JSON.stringify(session?.user.dep_name)}</h2>
+      {/* <h2>{JSON.stringify(session)}</h2> */}
+     
+
+      
+    </main>
   )
 }
