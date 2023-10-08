@@ -5,7 +5,7 @@ import { prisma } from "../../lib/prismaClient"
 //VALIDAR OS DADOS DO PROFESSOR
 export const profValidation = yup.object({
     prof_name: yup.string().required('O campo prof_name é obrigatório'),
-    prof_status: yup.boolean().required('O campo prof_status é obrigatório'),
+    prof_status: yup.string().required('O campo prof_status é obrigatório'),
     email: yup.string().required('O campo email é obrigatório'),
     password: yup.string().required('O campo password é obrigatório').min(6, 'A senha deve ter pelo menos 6 caracteres'),
     prof_phone: yup.string(),

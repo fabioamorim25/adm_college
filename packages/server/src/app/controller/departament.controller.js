@@ -26,10 +26,11 @@ export const create = async(req,res)=>{
        
         // 2°VALIDAR SE JA EXISTE UM CADASTRO DE UM DEPARTAMENTO
         const existingdepartment = await existingDepartment()
-        if(existingdepartment)
-            return res.status(400).json({ msg: 'Já existe um departamento cadastrado no sistema' })
-
-
+        if (existingdepartment) {
+            return res.status(400).json({ msg: 'Já existe um departamento cadastrado no sistema' });
+        }
+           
+       
         //3° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(password,10);
         password = hashPassword;

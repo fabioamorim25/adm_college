@@ -1,24 +1,27 @@
 import { prisma } from '../../lib/prismaClient'
 
 // CRIAR O DOCUMENTO E RETONAR O DADO
-export const createProfs = async (prof_name,prof_status,email,password,prof_phone,departamentId) => {
-    
+export const createProfs = async (prof_name, prof_status, email, password, prof_phone, departamentId) => {
+    // Convert prof_status to a boolean
+    if (prof_status === "true") prof_status = true;
+    if (prof_status === "false") prof_status = false;
+
     const prof = await prisma.prof.create({
         data: {
-            prof_name, 
+            prof_name,
             prof_status,
             email,
             password,
             prof_phone,
             departament: {
                 connect: {
-                    id:departamentId
+                    id: departamentId
                 }
             }
         },
         select: {
             id: true,
-            prof_name: true, 
+            prof_name: true,
             prof_status: true,
             email: true,
             password: false,
@@ -27,9 +30,9 @@ export const createProfs = async (prof_name,prof_status,email,password,prof_phon
         }
     });
 
-
     return prof;
 }
+
 
 
 // DEFINIR MATERIA PARA O PROFESSOR

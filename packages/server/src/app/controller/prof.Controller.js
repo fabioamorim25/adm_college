@@ -20,7 +20,7 @@ export const create = async(req,res)=>{
         password = hashPassword;
         
         //3° MANDAR CRIAR O DEPARTAMENTO
-        const prof = await createProfs(
+        createProfs(
             prof_name,
             prof_status,
             email,
@@ -29,7 +29,7 @@ export const create = async(req,res)=>{
             departamentId
         )
         
-        return res.status(201).json(prof)
+        return res.status(201).json({ msg: "Professor salvo com sucesso" })
     
     } catch (error) {
         return res.status(404).json(error)

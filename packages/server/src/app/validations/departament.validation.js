@@ -12,7 +12,7 @@ export const departamentValidation = yup.object({
 export const existingDepartment = async()=>{
     const singleDepartment = await prisma.departament.findFirst();
 
-   return singleDepartment
+   return singleDepartment ? true : false;
 }
 
 //VALIDAR SE JÁ EXISTE UM DEPARTAMENTO PELO ID
