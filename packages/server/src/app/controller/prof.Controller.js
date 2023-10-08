@@ -4,7 +4,7 @@ import {
     createProfs
 } from "../repository/prof.Repository";
 import { 
-    checkSubjectProfId, profValidation 
+    checkSubjectProfId, profEmailUnique, profValidation 
 } from "../validations/prof.validation";
 
 
@@ -15,16 +15,23 @@ export const create = async(req,res)=>{
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
         await profValidation.validate(req.body)
+
+        //2° VALIDAR SE JA EXISTE ESSE PROF
+        const emailUnique = await profEmailUnique(email)
+        if (emailUnique) {
+           return res.status(400).json({ msg: emailUnique.message })
+        }
+
         //2° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(password,10);
         password = hashPassword;
         
         //3° MANDAR CRIAR O DEPARTAMENTO
         createProfs(
-            prof_name,
+            prof_name, 
             prof_status,
             email,
-            password,
+            password, 
             prof_phone,
             departamentId
         )
@@ -44,7 +51,7 @@ export const subjectPorf = async (req, res) => {
         //1°VALIDAR SE JA EXISTE UM PROFESSOR OU MATERIA
         const message = await checkSubjectProfId(profId, subjectId)
         if (message) {
-            res.status(400).json({ msg: message })
+           return res.status(400).json({ msg: message })
         }
         else {
             //2° PASSAR MATERIA PARA O PROFESSOR

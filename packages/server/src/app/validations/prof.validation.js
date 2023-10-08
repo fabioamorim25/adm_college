@@ -12,6 +12,17 @@ export const profValidation = yup.object({
     departamentId: yup.string().required('O campo departamentId é obrigatório')
 });
 
+//VALIDAR SE EXISTE UM PROFESSOR OU MATERIA
+export const profEmailUnique = async(email)=>{
+    const prof = await prisma.prof.findUnique({
+        where:{
+            email
+        }
+    })
+    if(prof)
+    return {message:'Já existe esse email para um professor'}
+
+}
 
 //VALIDAR SE EXISTE UM PROFESSOR OU MATERIA
 export const checkSubjectProfId = async(profId,subjectId)=>{
