@@ -36,7 +36,7 @@ export const subjectMandatory = async (req, res) => {
         //1° VALIDAR OS DADOS RECEBIDOS
         const message = await checksubjects(subjectId, Id_PreRequisite)
         if (message) {
-            res.status(400).json({ msg: message })
+           return res.status(400).json({ msg: message })
         }
         else {
             //2° 

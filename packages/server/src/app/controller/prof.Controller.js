@@ -19,7 +19,7 @@ export const create = async(req,res)=>{
         //2° VALIDAR SE JA EXISTE ESSE PROF
         const emailUnique = await profEmailUnique(email)
         if (emailUnique) {
-           return res.status(400).json({ msg: emailUnique.message })
+           return res.status(400).json({ message: emailUnique.message, type:emailUnique.type })
         }
 
         //2° CRIPTOGRAFAR A SENHA
@@ -36,7 +36,7 @@ export const create = async(req,res)=>{
             departamentId
         )
         
-        return res.status(201).json({ msg: "Professor salvo com sucesso" })
+        return res.status(201).json({ message: "Professor salvo com sucesso", type:"success" })
     
     } catch (error) {
         return res.status(404).json(error)

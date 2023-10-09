@@ -20,7 +20,7 @@ export const profEmailUnique = async(email)=>{
         }
     })
     if(prof)
-    return {message:'Já existe esse email para um professor'}
+    return {message:'Já existe esse email para um professor',type:'error'}
 
 }
 

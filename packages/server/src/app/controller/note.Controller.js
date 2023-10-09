@@ -28,7 +28,7 @@ export const create = async (req, res) => {
         //2°VALIDAR DOCUMENTOS   
         const message = await existingStudentSubject(studentId, subjectId)
         if (message) {
-            res.status(400).json({ msg: message })
+           return res.status(400).json({ msg: message })
         }
         else {
             //3° MANDAR CRIAR AS NOTAS
