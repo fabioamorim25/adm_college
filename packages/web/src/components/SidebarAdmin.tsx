@@ -10,7 +10,9 @@ export default function SidebarAdmin() {
           item={{ title: 'Registros', route: '/menu' }}
           children={[
             { title: 'Registra Professores', route: '/admin/registerProfs' },
-            { title: 'Ação 2', route: '#' },
+            { title: 'Registra Cursos', route: '/admin/registerCourses' },
+            { title: 'Registra Máterias', route: '/admin/registerSubjects' },
+            { title: 'Ação 5', route: '#' },
             // Adicione mais itens
           ]}
         />
@@ -18,8 +20,8 @@ export default function SidebarAdmin() {
         <SidebarButton
           item={{ title: 'Editar', route: '/menu' }}
           children={[
-            { title: 'Ação 3', route: '#' },
-            { title: 'Ação 4', route: '#' },
+            { title: 'Ação 6', route: '#' },
+            { title: 'Ação 7', route: '#' },
             // Adicione mais itens de submenu conforme necessário
           ]}
         />
