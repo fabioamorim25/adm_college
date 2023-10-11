@@ -1,6 +1,26 @@
+import * as yup from "yup"
 import { prisma } from "../../lib/prismaClient"
 
+export const subjectValidation = yup.object({
+    sub_name: yup.string().required(),
+    sub_shift: yup.string().required(),
+    sub_start_time: yup.string().required(),
+    sub_stop_time: yup.string().required(),
+    sub_description: yup.string().required(),
+    sub_mandatory: yup.string().required(),
+    departamentId: yup.string().required()    
+});
 
+// VALIDAR SE EXISTE OUTRA MÁTERIA COM O MESMO NOME
+export const subjectUnic = async(sub_name)=>{
+    const subject = await prisma.subject.findUnique({
+        where:{
+            sub_name
+        }
+    })
+    if(subject)
+    return {message:'Já existe esse nome para uma máteria',type:'error'}
+}
 
 //VALIDAR OBRIGATORIEDADE DA MATERIA
 export const checksubjects = async (subjectId,Id_PreRequisite)=>{

@@ -1,5 +1,5 @@
 import { createSubjects, createSubjectMandatory } from "../repository/subject.Repository";
-import {checksubjects} from '../validations/subject.validation'
+import {checksubjects, subjectUnic, subjectValidation} from '../validations/subject.validation'
 
 export const create = async(req,res)=>{
    
@@ -7,9 +7,15 @@ export const create = async(req,res)=>{
     
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
-     
-    
-        //2° MANDAR CRIAR O DEPARTAMENTO
+        await subjectValidation.validate(req.body)
+
+        // 2° VALIDAR SE O NOME DA MÁTERIA JÁ EXISTE
+        const nameUnique = await subjectUnic(sub_name)
+        if (nameUnique) {
+            return res.status(400).json({ message: nameUnique.message, type:nameUnique.type })
+         }
+
+        //3° MANDAR CRIAR O DEPARTAMENTO
         const subject = await createSubjects(
             sub_name,
             sub_shift,

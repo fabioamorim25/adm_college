@@ -1,14 +1,19 @@
 import { prisma } from '../../lib/prismaClient'
 
+
+
 // CRIAR O DOCUMENTO E RETONAR O DADO
 export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description,sub_mandatory, departamentId) => {
-    
+    // Converter o valor de sub_mandatory para boolean
+    if (sub_mandatory === "true") sub_mandatory = true;
+    if (sub_mandatory === "false") sub_mandatory = false;
+   
     const subject = await prisma.subject.create({
         data: {
             sub_name,
             sub_shift,       
-            sub_start_time,  
-            sub_stop_time,   
+            sub_start_time: `${sub_start_time}:00Z`,
+            sub_stop_time: `${sub_stop_time}:00Z`,   
             sub_description, 
             sub_mandatory,
             departament: {
