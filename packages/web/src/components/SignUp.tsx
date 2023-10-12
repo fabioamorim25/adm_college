@@ -26,7 +26,7 @@ export default function SignUp() {
     event.preventDefault()
     
     //REQUISIÇÃO PARA O BACKEND DO NEXT PARA REGISTRA O USER
-    const request = await fetch("/api/registerUser",{
+    const request = await fetch("/api/authenticatedUser",{
       method:"POST",
       headers:{"Content-Type": "application/json"},
       body:JSON.stringify(data)

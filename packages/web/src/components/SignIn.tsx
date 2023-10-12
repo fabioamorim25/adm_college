@@ -30,14 +30,15 @@ export default function SignIn() {
       })
 
       if(response && response.error) {
-        if (response.error === 'Invalid response') {
+        if (response.error == 'CredentialsSignin') {
           setErrorMsg("O usuário não existe");
-        } else {
+        } 
+        if(response.error == 'fetch failed') {
           setErrorMsg("Error no servidor. Por favor tente mais tarde");
         }
         return null;
       }
-      console.log(response)
+      
       //redirecionar para home
       router.push("/")
     
@@ -56,7 +57,7 @@ export default function SignIn() {
   return (
     <form onSubmit={onSubmit} className="bg-white-50 py-32 px-6 mt-10 lg:mt-0 lg:w-1/3 rounded-lg shadow-md flex flex-col justify-between h-full">
 
-      <h1 className="text-3xl font-alt text-center text-gray-700 mb-10">Logo</h1>
+      <h1 className="text-3xl font-alt text-center text-gray-700 mb-10">Logotipo</h1>
 
       <div className="mb-6">
         <label htmlFor="email" className="block text-sm font-alt text-gray-800">Digite seu Email</label>
