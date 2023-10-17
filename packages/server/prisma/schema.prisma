@@ -25,7 +25,7 @@ model Departament {
 
 model Course {
   id             String           @id @default(uuid())
-  cou_name       String
+  cou_name       String           @unique
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   departamentId  String
@@ -133,11 +133,11 @@ model Porf_Subject {
 model Course_Subject {
   id String @id @default(uuid())
 
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  courseName String
+  course     Course @relation(fields: [courseName], references: [cou_name], onDelete: Cascade, onUpdate: Cascade)
 
-  subjectId String
-  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subjectName String
+  subject     Subject @relation(fields: [subjectName], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
