@@ -13,7 +13,7 @@ export default async function AddProfs() {
       <nav className="flex flex-col items-start p-3">
         <div className="flex space-x-2 text-lg font-bold pb-0">
           <Link href='/admin/home'>
-            <Home />
+            <Home size={22} />
           </Link>
           <span>/ Dados Cadastrais</span>
         </div>
