@@ -21,3 +21,18 @@ export const createCourses = async (cou_name, departamentId) => {
 
     return course;
 }
+
+//LISTAR TODOS OS CURSOS
+export const getCourse = async()=>{
+    const courses = await prisma.course.findMany({
+        select:{
+            id:false,           
+            cou_name:true,     
+            createdAt:false,    
+            updatedAt:false,    
+            departamentId:false,
+        }
+    })
+
+    return courses
+}
