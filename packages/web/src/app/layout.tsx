@@ -35,11 +35,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt">
 
       <body className={`${roboto.variable} ${baijamjuree.variable} font-sans`}>
         <AuthSessionProvider>
-          <h1>layout raiz</h1>
+          {/* <h1>layout raiz</h1> */}
           {children}
         </AuthSessionProvider>
       </body>

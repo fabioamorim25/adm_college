@@ -7,9 +7,10 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Pagina admin</h1>
+      <h1>Pagina HOME</h1>
       <h2>{session?.user.name}</h2>
       <h2>{JSON.stringify(session)}</h2>
+    
     </div>
   )
 }
