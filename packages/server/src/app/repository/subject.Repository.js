@@ -37,7 +37,25 @@ export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_st
 
     return subject;
 }
- 
+
+// ASSOCIAR UMA MÁTERIA A UM CURSO
+export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
+    const associate = await prisma.course_Subject.create({
+        data:{
+            subjectName,
+            courseName    
+        },
+        select:{
+            id:true,
+            subjectName:true,
+            courseName:true
+        }
+    })
+
+    return associate
+}
+
+
 //OBRIGATORIEDADE DA MATERIA
 export const createSubjectMandatory = async(subjectId,Id_PreRequisite)=>{
     const mandayory = await prisma.subjects_Subjects.create({
