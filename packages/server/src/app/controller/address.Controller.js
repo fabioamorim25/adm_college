@@ -22,16 +22,19 @@ export const create = async(req,res)=>{
             add_number,
             add_complement
         })
-        //2° VALIDAR SE EXISTE O ALUNO
+
+        //2° VALIDAR: DEVE SER UM ENDEREÇO UNICO
+
+        //3° VALIDAR SE EXISTE O ALUNO
         const student = await validationStudent(
             studentId
         )
         if(!student)
-        return res.status(400).json({ msg: 'Não existe esse aluno' })
+        return res.status(400).json({ message: 'Não existe esse aluno',type:'error'})
      
     
-        //2° MANDAR CRIAR O ADDRESS
-        const address = await createAddress(
+        //MANDAR CRIAR O ADDRESS
+        await createAddress(
             add_street,
             add_city,
             add_neighborhood,
@@ -40,10 +43,10 @@ export const create = async(req,res)=>{
             studentId
         )
         
-        return res.status(201).json(address)
+        return res.status(201).json({message:'O endereço foi criado com sucesso',type:'success'})
     
     } catch (error) {
-        return res.status(404).json(error)
+        return res.status(404).json({message:'Tivemos um erro ao criar o endereço',type:'error'})
     }
 }
 

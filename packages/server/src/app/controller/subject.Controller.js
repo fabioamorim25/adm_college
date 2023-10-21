@@ -1,5 +1,5 @@
 import { createSubjects, createSubjectMandatory, createAssociateSubjectCourse } from "../repository/subject.Repository";
-import {checksubjects, subjectUnic, subjectValidation} from '../validations/subject.validation'
+import {checksubjects, nameUniqueSubject, namesAssociateSubjectCourse, subjectUnic, subjectValidation} from '../validations/subject.validation'
 
 export const create = async(req,res)=>{
    
@@ -29,7 +29,7 @@ export const create = async(req,res)=>{
         return res.status(201).json({message:'Máteria foi cadastrada com sucesso',type:'success'})
     
     } catch (error) {
-        return res.status(404).json(error)
+        return res.status(404).json({message:'Tivemos um erro ao cadastra a máteria',type:'error'})
     }
 }
 
@@ -38,19 +38,26 @@ export const associateSubjectCourse = async(req,res)=>{
     const {subjectName,courseName} = req.body
 
     try {
-        //1° VALIDAR OS DADOS RECEBIDOS
-        //2° VALIDAR SE O NOME DA MÁTERIA E CURSO JÁ EXISTE
-        //3° VALIDAR SE JÁ EXISTE A ASSOCIAÇÃO ENTRE A MÁTERIA E O CURSO
+        //VALIDAR SE O NOME DA MÁTERIA EXISTE
+        const uniqueName = await nameUniqueSubject(subjectName)
+        if (uniqueName)
+            return res.status(400).json({ message: uniqueName.message, type:uniqueName.type })
 
-        //4° MANDAR CRIAR A ASSOCIAÇÃO DA MÁTERIA COM O CURSO
-        createAssociateSubjectCourse(
+        // VALIDAR SE JÁ EXISTE A ASSOCIAÇÃO ENTRE A MÁTERIA E O CURSO
+        const associate = await namesAssociateSubjectCourse(subjectName,courseName)
+        if (associate)
+            return res.status(400).json({ message: associate.message, type:associate.type })
+
+
+        //MANDAR CRIAR A ASSOCIAÇÃO DA MÁTERIA COM O CURSO
+       await createAssociateSubjectCourse(
             subjectName,
             courseName
         )
        
         return res.status(201).json({message:'Máteria foi associada ao curso com sucesso',type:'success'}) 
     } catch (error) {
-        return res.status(404).json(error)
+        return res.status(404).json({message:'Tivemos um erro ao associar a máteria ao curso',type:'error'})
     }
 
 }
@@ -62,13 +69,12 @@ export const subjectMandatory = async (req, res) => {
     const { subjectId, Id_PreRequisite } = req.body
 
     try {
-        //1° VALIDAR OS DADOS RECEBIDOS
+        // VALIDAR OS DADOS RECEBIDOS
         const message = await checksubjects(subjectId, Id_PreRequisite)
         if (message) {
            return res.status(400).json({ msg: message })
         }
         else {
-            //2° 
             const mandayory = await createSubjectMandatory(
                 subjectId,
                 Id_PreRequisite

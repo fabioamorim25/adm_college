@@ -8,20 +8,21 @@ export const create = async(req,res)=>{
       
     // VALIDAR O NOME DO CURSO (Deve ser unico)
     const nameUnique = await courseUnic(cou_name)
+    
     if (nameUnique)
         return res.status(400).json({ message: nameUnique.message, type:nameUnique.type })
         
     try {
-        //MANDAR CRIAR O DEPARTAMENTO
-        const course = await createCourses(
+        //MANDAR CRIAR O CURSO
+        await createCourses(
             cou_name,
             departamentId
         )
         
-        return res.status(201).json(course)
+        return res.status(201).json({message:'O curso foi criado com sucesso',type:'success'})
     
     } catch (error) {
-        return res.status(404).json(error)
+        return res.status(404).json({message:'Tivemos um erro ao criar o curso',type:'error'})
     }
 }
 

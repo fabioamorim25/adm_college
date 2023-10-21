@@ -22,6 +22,34 @@ export const subjectUnic = async(sub_name)=>{
     return {message:'Já existe esse nome para uma máteria',type:'error'}
 }
 
+
+export const  nameUniqueSubject = async(subjectName)=>{
+    const subject = await prisma.subject.findUnique({
+        where:{
+            sub_name:subjectName
+        }
+    })
+    if(!subject)
+        return {message:'A materia não existe. Crie uma para continuar',type:'error'}
+}
+
+export const namesAssociateSubjectCourse = async(subjectName,courseName)=>{
+    const associate = await prisma.course_Subject.findFirst({
+        where:{
+            subjectName,
+            courseName
+        }
+    })
+    
+    if(associate){
+        return {message:'Já existe uma associação dessa matéria com esse curso',type:'error'}
+    }
+}
+
+
+
+
+
 //VALIDAR OBRIGATORIEDADE DA MATERIA
 export const checksubjects = async (subjectId,Id_PreRequisite)=>{
     //teste os ids não podem ser iguais
@@ -63,7 +91,7 @@ export const checksubjects = async (subjectId,Id_PreRequisite)=>{
 
    
     if(subjectSubject.length > 0){
-        return {message:'Já existe uma associado dessas matéria'}
+        return {message:'Já existe uma associação dessas matéria'}
     }
 
 }
