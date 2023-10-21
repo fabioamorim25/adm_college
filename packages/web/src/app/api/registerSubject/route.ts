@@ -39,13 +39,8 @@ export async function POST(request: NextRequest) {
     })
     
     const response = await submitCourse.json();
-    
-    if (!submitCourse.ok) {      
-      return NextResponse.json({ message: response.message, type: response.type });
-    } else {
-      return NextResponse.json({ message: response.message, type: response.type })
-    }
-    
+  
+   return NextResponse.json({ message: response.message, type: response.type })
   } catch (error) {
     return NextResponse.json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
   }

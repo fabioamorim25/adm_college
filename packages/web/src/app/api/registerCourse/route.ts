@@ -23,10 +23,11 @@ export async function POST(request: NextRequest) {
     body: JSON.stringify({ cou_name, departamentId })
   })
 
-  if(submitCourse.ok)
-    return NextResponse.json({ message: "O curso foi criado com sucesso", type:"success"})
-  
-  } catch (error) {
-    return NextResponse.json({ message: "Tivemos um error na criação do curso", type:"error"})
+  const response = await submitCourse.json()
+    
+  return NextResponse.json({ message: response.message, type: response.type })
+
+} catch (error) {
+    return NextResponse.json({ message: "Error no servidor. Por favor tente mais tarde", type:"error"})
   }   
 }

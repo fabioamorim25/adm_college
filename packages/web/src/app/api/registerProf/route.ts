@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     const response = await submitProf.json()
 
-    return NextResponse.json(response)
+    return NextResponse.json({ message: response.message, type: response.type })
 
   } catch (error) {
     return NextResponse.json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
