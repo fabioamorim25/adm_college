@@ -45,17 +45,13 @@ export default function FormRegisterCourse() {
     const response = await request.json()
 
     //mensagem de alerta
-    if (response) {
-      setMsg({
-        message: response.message,
-        type: response.type
-      })
-      
-      if(response.type == 'error')
-      return
-
+    setMsg({
+      message: response.message,
+      type: response.type
+    })
+    
+    if(response.type === 'success')     
       return router.push('/admin/registerSubjects')
-    }
   }
 
 
