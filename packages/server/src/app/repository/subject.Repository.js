@@ -76,3 +76,22 @@ export const createSubjectMandatory = async(subjectId,Id_PreRequisite)=>{
 
     return mandayory;
 }
+
+// LISTAR TODAS AS MÁTERIAS
+export const getSubject = async()=>{
+    const subjects = await prisma.subject.findMany({
+        select:{
+            id:false,
+            sub_name:true,
+            sub_shift:false,
+            sub_start_time:false,
+            sub_stop_time:false,
+            sub_description:false,
+            sub_mandatory:false,
+            createdAt:false,
+            updatedAt:false,
+            departamentId:false, 
+        }
+    })
+    return subjects
+}

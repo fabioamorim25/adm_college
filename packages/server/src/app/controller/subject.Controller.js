@@ -1,4 +1,4 @@
-import { createSubjects, createSubjectMandatory, createAssociateSubjectCourse } from "../repository/subject.Repository";
+import { createSubjects, createSubjectMandatory, createAssociateSubjectCourse, getSubject } from "../repository/subject.Repository";
 import {checksubjects, nameUniqueSubject, namesAssociateSubjectCourse, subjectUnic, subjectValidation} from '../validations/subject.validation'
 
 export const create = async(req,res)=>{
@@ -82,6 +82,17 @@ export const subjectMandatory = async (req, res) => {
 
             return res.status(201).json(mandayory)
         }
+    } catch (error) {
+        return res.status(404).json(error)
+    }
+}
+
+
+// LISTAR TODOS OS NOMES DAS MÁTERIAS DO SISTEMA
+export const getAllSubject = async(req,res)=>{
+    try {
+        const list = await getSubject()
+        return res.status(201).json(list)
     } catch (error) {
         return res.status(404).json(error)
     }
