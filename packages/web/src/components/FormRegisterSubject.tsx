@@ -59,9 +59,9 @@ export default function FormRegisterSubject() {
       })
       // máteria para o contexto
       if (response.type == 'success'){
-        setSubjectName({
-          subjectName: data.sub_name
-        })
+        setSubjectName(
+          data.sub_name
+        )
         setData({
           sub_name: "",
           sub_shift: "",

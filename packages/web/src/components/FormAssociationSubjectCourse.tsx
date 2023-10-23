@@ -24,7 +24,7 @@ interface Imessage {
 export default function FormAssociationSubjectCourse() {
 
   //dados Do contexto
-  const { subjectName } = useWorkDataContext();
+  const { subjectName, setCourseName } = useWorkDataContext();
 
   const [courses, setCourses] = useState<ICourses[]>([]);
 
@@ -82,7 +82,10 @@ export default function FormAssociationSubjectCourse() {
     })
     //pegar o resultado da requisição
     const response = await request.json()
-
+    setCourseName(
+      data.courseName
+    )
+  
      //mensagem de alerta
     if (response) {
       return setMsg({
@@ -103,7 +106,7 @@ export default function FormAssociationSubjectCourse() {
               <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a máteria a um curso:</label>
             ) : (
               <label htmlFor="courseName" className="block  font-alt text-gray-800">Associar a máteria
-                <span className=" text-purple-700 text-lg"> {subjectName.subjectName} </span>para um curso:</label>
+                <span className=" text-purple-700 text-lg"> {subjectName}</span>para um curso:</label>
             )
           }
 
