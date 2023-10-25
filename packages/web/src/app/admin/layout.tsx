@@ -10,6 +10,10 @@ import {
 } from 'next/font/google'
 
 
+import { WorkDataContextPorvider } from '@/context/contextAdmin/WorkDataStoreProvider'
+
+
+
 // DEFINIR AS FONTES:
 const roboto = Roboto({
   subsets: ['latin'],
@@ -23,7 +27,6 @@ const baijamjuree = Baijamjuree({
 })
 
 
-
 export const metadata = {
   title: 'PageAdmin',
   description: 'página admin do departamento',
@@ -31,14 +34,18 @@ export const metadata = {
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <body className={`${roboto.variable} ${baijamjuree.variable} font-sans flex flex-col h-screen`}>
         <Header className="w-full" />
         <div className="flex flex-grow">
           <SidebarAdmin />
+
           <main className="flex-grow bg-white overflow-auto">
-            {children}
+            <WorkDataContextPorvider>
+              {children}
+            </WorkDataContextPorvider>
           </main>
+
         </div>
       </body>
     </html>

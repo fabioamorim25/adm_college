@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { Home } from 'lucide-react';
 import FormRegisterSubject from '@/components/FormRegisterSubject';
 import FormAssociationSubjectCourse from '@/components/FormAssociationSubjectCourse';
+import { FormMandatorySubject } from '@/components/FormMandatorySubject';
+
 
 
 
@@ -21,14 +23,14 @@ export default async function AddSubjects() {
         <hr className="w-full mt-2 border-t-4 border-purple-700" />
       </nav> 
 
-     {/*funcionalidade registra materia*/}
+     {/*funcionalidade registra máteria*/}
       <FormRegisterSubject/>
      
-      {/* associar a materia a um curso */}
-      <FormAssociationSubjectCourse/>
+      {/* associar a máteria a um curso */}
+     <FormAssociationSubjectCourse/>
 
-      <h3>funcionalidade obrigatóriedade da materia</h3>
-
+      {/*funcionalidade obrigatóriedade da máteria*/}
+      <FormMandatorySubject/>
 
     </main>
   )
