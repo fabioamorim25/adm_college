@@ -47,51 +47,33 @@ export const namesAssociateSubjectCourse = async(subjectName,courseName)=>{
 }
 
 
-
-
-
 //VALIDAR OBRIGATORIEDADE DA MATERIA
-export const checksubjects = async (subjectId,Id_PreRequisite)=>{
-    //teste os ids não podem ser iguais
-    if(subjectId === Id_PreRequisite)
-        return {message:'As duas matérias são iguais'}
-   
-    //1° Validação: existe Ids
-    const subject = await prisma.subject.findUnique({
-        where:{
-            id:subjectId
-        }
-    })
-    const requisit = await prisma.subject.findUnique({
-        where:{
-            id:Id_PreRequisite
-        }
-    })
+export const checksubjects = async (subjectName, preRequisite)=>{
+    //1° Validação: existe name subject e requisite
+    const [subject, requisit] = await Promise.all([
+        prisma.subject.findUnique({ where: { sub_name: subjectName } }),
+        prisma.subject.findUnique({ where: { sub_name: preRequisite } })
+    ]);
     
-   
-    if(!requisit && !subject)
-        return {message:'As matérias não existem'}
-    if(!requisit)
-        return {message:'A materia obrigatoria não existe'}
-    if(!subject)
-        return {message:'A matéria não existe'}
+        if (!subject && !requisit) {
+            return { message: 'As matérias não existem',type: 'error' };
+        } else if (!requisit) {
+            return { message: 'A matéria obrigatória não existe',type: 'error' };
+        } else if (!subject) {
+            return { message: 'A matéria não existe',type:'error'};
+        }
 
-
-
-        
-    //2° Validar se ja existe a associação entre as materia 
+    //2° Validar se já existe a associação entre as materia 
     const subjectSubject = await prisma.subjects_Subjects.findMany({
         where:{
             AND: [
-                { subjectId: subjectId },
-                { Id_PreRequisite: Id_PreRequisite }
+                { subjectName: subjectName },
+                { preRequisite: preRequisite }
             ]
         }
     })
 
-   
     if(subjectSubject.length > 0){
-        return {message:'Já existe uma associação dessas matéria'}
+        return {message:'Já existe uma associação dessas matéria',type:'error'}
     }
-
 }

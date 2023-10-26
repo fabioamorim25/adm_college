@@ -16,7 +16,7 @@ const subjectRoutes = app=>{
         app.post('/subject/register',authTokenValidate,roleAdmin, create)
         app.post('/mandatory_Subject',authTokenValidate,roleAdmin,subjectMandatory)
         app.post('/associate_Subject_Course',authTokenValidate,roleAdmin,associateSubjectCourse)
-        app.get('/getAllSubject',authTokenValidate,roleAdmin,getAllSubject)
+        app.post('/getAllSubject',authTokenValidate,roleAdmin,getAllSubject)
 
 
 

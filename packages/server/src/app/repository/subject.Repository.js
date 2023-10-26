@@ -55,43 +55,53 @@ export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
     return associate
 }
 
+// LISTAR TODAS AS MÁTERIAS
+export const getSubject = async (courseName) => {
+    const subjects = await prisma.course_Subject.findMany({
+        where: {
+          courseName: courseName
+        },
+        select: {
+          subject: {
+            select: {
+                id:false,
+                sub_name:true,
+                sub_shift:false,
+                sub_start_time:false,
+                sub_stop_time:false,
+                sub_description:false,
+                sub_mandatory:false,
+                createdAt:false,
+                updatedAt:false,
+                departamentId:false, 
+            }
+          }
+        }
+      })
+   
+    //filtra o obj para retornar a chave e o valor das máterias
+    return subjects.map(subject => ({ sub_name: subject.subject.sub_name }));
+}
+
 
 //OBRIGATORIEDADE DA MATERIA
-export const createSubjectMandatory = async(subjectId,Id_PreRequisite)=>{
+export const createSubjectMandatory = async(subjectName,preRequisite)=>{
     const mandayory = await prisma.subjects_Subjects.create({
         data:{
             subject:{
                 connect:{
-                    id: subjectId
+                    sub_name: subjectName
                 }
             },
-            Id_PreRequisite
+            preRequisite
         },
         select:{
             id:true,
-            subjectId:true,
-            Id_PreRequisite:true,
+            subjectName:true,
+            preRequisite:true,
         }
     })
 
-    return mandayory;
+    return ;
 }
 
-// LISTAR TODAS AS MÁTERIAS
-export const getSubject = async()=>{
-    const subjects = await prisma.subject.findMany({
-        select:{
-            id:false,
-            sub_name:true,
-            sub_shift:false,
-            sub_start_time:false,
-            sub_stop_time:false,
-            sub_description:false,
-            sub_mandatory:false,
-            createdAt:false,
-            updatedAt:false,
-            departamentId:false, 
-        }
-    })
-    return subjects
-}

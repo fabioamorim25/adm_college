@@ -36,13 +36,13 @@ export const create = async(req,res)=>{
 // ASSOCIAR UMA MÁTERIA A UM CURSO
 export const associateSubjectCourse = async(req,res)=>{
     const {subjectName,courseName} = req.body
-
+    console.log(subjectName)
     try {
         //VALIDAR SE O NOME DA MÁTERIA EXISTE
         const uniqueName = await nameUniqueSubject(subjectName)
         if (uniqueName)
             return res.status(400).json({ message: uniqueName.message, type:uniqueName.type })
-
+  
         // VALIDAR SE JÁ EXISTE A ASSOCIAÇÃO ENTRE A MÁTERIA E O CURSO
         const associate = await namesAssociateSubjectCourse(subjectName,courseName)
         if (associate)
@@ -62,38 +62,41 @@ export const associateSubjectCourse = async(req,res)=>{
 
 }
 
+// LISTAR TODOS OS NOMES DAS MÁTERIAS DE UM CURSO
+export const getAllSubject = async(req,res)=>{
+    const {courseName} = req.body
+    
+    try {
+        const list = await getSubject(courseName)
+        return res.status(201).json(list)
+    } catch (error) {
+        return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
+    }
+}
+
 
 //OBRIGATORIEDADE DA MÁTERIA
 export const subjectMandatory = async (req, res) => {
 
-    const { subjectId, Id_PreRequisite } = req.body
-
+    const { subjectName, preRequisite } = req.body
+    
     try {
         // VALIDAR OS DADOS RECEBIDOS
-        const message = await checksubjects(subjectId, Id_PreRequisite)
-        if (message) {
-           return res.status(400).json({ msg: message })
-        }
-        else {
-            const mandayory = await createSubjectMandatory(
-                subjectId,
-                Id_PreRequisite
-            )
+        const message = await checksubjects(subjectName, preRequisite)
+        if (message) 
+           return res.status(400).json(message)
+        
+  
+        await createSubjectMandatory(
+            subjectName,
+            preRequisite
+        )
 
-            return res.status(201).json(mandayory)
-        }
+        return res.status(201).json({message:`O pre requisito para a matéria ${subjectName} foi criado com sucesso`,type:'success'})
+        
     } catch (error) {
-        return res.status(404).json(error)
+        return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
     }
 }
 
 
-// LISTAR TODOS OS NOMES DAS MÁTERIAS DO SISTEMA
-export const getAllSubject = async(req,res)=>{
-    try {
-        const list = await getSubject()
-        return res.status(201).json(list)
-    } catch (error) {
-        return res.status(404).json(error)
-    }
-}
