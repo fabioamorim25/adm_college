@@ -39,7 +39,7 @@ export default function FormRegisterSubject() {
   }
 
 
-  //CADASTRA MATERIA (enviar dados para backend)
+  //CADASTRA MATÉRIA (enviar dados para backend)
   async function onRegisterSubject(event: React.SyntheticEvent) {
     event.preventDefault()
     //REQUISIÇÃO PARA O BACKEND DO NEXT PARA REGISTRA O CURSO
@@ -57,7 +57,7 @@ export default function FormRegisterSubject() {
         message: response.message,
         type: response.type
       })
-      // máteria para o contexto
+      // matéria para o contexto
       if (response.type == 'success'){
         setSubjectName(
           data.sub_name
@@ -230,7 +230,7 @@ export default function FormRegisterSubject() {
 
 
         <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700"
-        >Registra Máteria
+        >Registra Matéria
         </button>
 
       </form>

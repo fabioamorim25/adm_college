@@ -9,13 +9,13 @@ export const create = async(req,res)=>{
         //1° VALIDAR OS DADOS RECEBIDOS
         await subjectValidation.validate(req.body)
 
-        // 2° VALIDAR SE O NOME DA MÁTERIA JÁ EXISTE
+        // 2° VALIDAR SE O NOME DA MATÉRIA JÁ EXISTE
         const nameUnique = await subjectUnic(sub_name)
         if (nameUnique) {
             return res.status(400).json({ message: nameUnique.message, type:nameUnique.type })
          }
 
-        //3° MANDAR CRIAR A MÁTERIA
+        //3° MANDAR CRIAR A MATÉRIA
         await createSubjects(
             sub_name,
             sub_shift,
@@ -26,24 +26,24 @@ export const create = async(req,res)=>{
             departamentId
         ) 
         
-        return res.status(201).json({message:'Máteria foi cadastrada com sucesso',type:'success'})
+        return res.status(201).json({message:'Matéria foi cadastrada com sucesso',type:'success'})
     
     } catch (error) {
-        return res.status(404).json({message:'Tivemos um erro ao cadastra a máteria',type:'error'})
+        return res.status(404).json({message:'Tivemos um erro ao cadastra a matéria',type:'error'})
     }
 }
 
-// ASSOCIAR UMA MÁTERIA A UM CURSO
+// ASSOCIAR UMA MATERIA A UM CURSO
 export const associateSubjectCourse = async(req,res)=>{
     const {subjectName,courseName} = req.body
     console.log(subjectName)
     try {
-        //VALIDAR SE O NOME DA MÁTERIA EXISTE
+        //VALIDAR SE O NOME DA MATERIA EXISTE
         const uniqueName = await nameUniqueSubject(subjectName)
         if (uniqueName)
             return res.status(400).json({ message: uniqueName.message, type:uniqueName.type })
   
-        // VALIDAR SE JÁ EXISTE A ASSOCIAÇÃO ENTRE A MÁTERIA E O CURSO
+        // VALIDAR SE JÁ EXISTE A ASSOCIAÇÃO ENTRE A MATERIA E O CURSO
         const associate = await namesAssociateSubjectCourse(subjectName,courseName)
         if (associate)
             return res.status(400).json({ message: associate.message, type:associate.type })
@@ -55,14 +55,14 @@ export const associateSubjectCourse = async(req,res)=>{
             courseName
         )
        
-        return res.status(201).json({message:'Máteria foi associada ao curso com sucesso',type:'success'}) 
+        return res.status(201).json({message:'Matéria foi associada ao curso com sucesso',type:'success'}) 
     } catch (error) {
-        return res.status(404).json({message:'Tivemos um erro ao associar a máteria ao curso',type:'error'})
+        return res.status(404).json({message:'Tivemos um erro ao associar a matéria ao curso',type:'error'})
     }
 
 }
 
-// LISTAR TODOS OS NOMES DAS MÁTERIAS DE UM CURSO
+// LISTAR TODOS OS NOMES DAS MATERIAS DE UM CURSO
 export const getAllSubject = async(req,res)=>{
     const {courseName} = req.body
     
@@ -75,7 +75,7 @@ export const getAllSubject = async(req,res)=>{
 }
 
 
-//OBRIGATORIEDADE DA MÁTERIA
+//OBRIGATORIEDADE DA MATERIA
 export const subjectMandatory = async (req, res) => {
 
     const { subjectName, preRequisite } = req.body

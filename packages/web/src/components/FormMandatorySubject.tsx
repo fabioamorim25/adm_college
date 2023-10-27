@@ -22,7 +22,7 @@ export function FormMandatorySubject() {
   //curso no contexto
   const { courseName,subjectName } = useWorkDataContext();
   
-  //lista de máterias
+  //lista de matérias
   const [subject, setSubjects] = useState<ISubject[]>([])
   // dados para enviar
   const [data, setData] = useState<IRequisite>({ preRequisite: '', subjectName }) // [preRequisite materias vindas do back] [nameSubject esta no contexto]
@@ -30,7 +30,7 @@ export function FormMandatorySubject() {
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
 
-  //1° REQUISIÇÃO PARA PEGAR TODOS AS MATERIAS DE UM CURSO (Passar o nome do curso)
+  //1° REQUISIÇÃO PARA PEGAR TODOS AS MATÉRIAS DE UM CURSO (Passar o nome do curso)
   async function getSubjects() {
     if (!courseName)
       return console.log("front front", courseName)    
@@ -50,7 +50,7 @@ export function FormMandatorySubject() {
   }, [courseName]);
 
 
-  //2° REQUSIÇÃO PARA ASSOCIAR A MATERIA DO CONTEXTO A UMA MÁTERIA (Passar o nome das duas máterias)
+  //2° REQUSIÇÃO PARA ASSOCIAR A MATÉRIA DO CONTEXTO A UMA MATÉRIA (Passar o nome das duas máterias)
   async function handleRegister(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     setData((prev) => {
@@ -78,8 +78,16 @@ export function FormMandatorySubject() {
 
   return (
     <>
-
       <form onSubmit={onRegisterRequisite} className="m-4 p-6 border rounded shadow">
+        
+        {subjectName === null ? (
+            <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">A Matéria possui algum pre-requisito para ser cursada: (Não obrigatório)</label>
+        ) : (
+            <label htmlFor="courseName" className="block  font-alt text-gray-800">
+              A Matéria <span className=" text-purple-700 text-lg">{subjectName}</span> possui algum pre-requisito para ser cursada:
+          </label>
+        )
+        }
 
        {msg.message && <Alert message={msg.message} type={msg.type} />}
 
@@ -97,26 +105,15 @@ export function FormMandatorySubject() {
                   <option key={index}>{subject.sub_name}</option>
                 ))
               ) : (
-                <option value=""> carregando a lista de máterias ... </option>
+                <option value=""> carregando a lista de matérias ... </option>
               )
             }
 
           </select>
         </div >
 
-        <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700">Registra Máteria</button>
+        <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700">Registra Pre-requisito</button>
       </form>
     </>
   )
 }
-
-
-
-// {subjectName === null ? (
-//            <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">A Máteria possui algum pre-requisito para ser cursada:</label>
-//         ) : (
-//           <label htmlFor="courseName" className="block  font-alt text-gray-800">
-//             A Máteria <span className=" text-purple-700 text-lg">{subjectName.subjectName}</span> possui algum pre-requisito para ser cursada:
-//          </label>
-//         )
-//        }

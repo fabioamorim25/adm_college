@@ -70,7 +70,7 @@ export default function FormAssociationSubjectCourse() {
     event.preventDefault()
     if(!data.subjectName){   
          return setMsg({
-            message: 'Precisa criar uma máteria',
+            message: 'Precisa criar uma matéria',
             type: 'erro'
           })
     }
@@ -103,10 +103,10 @@ export default function FormAssociationSubjectCourse() {
        
         <div className="mb-4">
           {subjectName === null ? (
-              <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a máteria a um curso:</label>
+              <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a matéria a um curso:</label>
             ) : (
-              <label htmlFor="courseName" className="block  font-alt text-gray-800">Associar a máteria
-                <span className=" text-purple-700 text-lg"> {subjectName}</span>para um curso:</label>
+              <label htmlFor="courseName" className="block  font-alt text-gray-800">Associar a matéria
+                <span className=" text-purple-700 text-lg"> {subjectName} </span> para um curso:</label>
             )
           }
 
@@ -128,7 +128,7 @@ export default function FormAssociationSubjectCourse() {
           </select>
         </div>
 
-        <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700">Registra Máteria</button>
+        <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700">Registra Associação</button>
       </form>
     </>
   )

@@ -11,7 +11,7 @@ export const subjectValidation = yup.object({
     departamentId: yup.string().required()    
 });
 
-// VALIDAR SE EXISTE OUTRA MÁTERIA COM O MESMO NOME
+// VALIDAR SE EXISTE OUTRA MATERIA COM O MESMO NOME
 export const subjectUnic = async(sub_name)=>{
     const subject = await prisma.subject.findUnique({
         where:{
@@ -19,7 +19,7 @@ export const subjectUnic = async(sub_name)=>{
         }
     })
     if(subject)
-    return {message:'Já existe esse nome para uma máteria',type:'error'}
+    return {message:'Já existe esse nome para uma matéria',type:'error'}
 }
 
 
@@ -30,7 +30,7 @@ export const  nameUniqueSubject = async(subjectName)=>{
         }
     })
     if(!subject)
-        return {message:'A materia não existe. Crie uma para continuar',type:'error'}
+        return {message:'A matéria não existe. Crie uma para continuar',type:'error'}
 }
 
 export const namesAssociateSubjectCourse = async(subjectName,courseName)=>{
