@@ -52,9 +52,10 @@ export default function FormAssociationSubjectCourse() {
   }
 
   useEffect(() => {
-    getCourses()
-  }, []);
-
+    if (subjectName) {
+      getCourses()
+    }
+  }, [subjectName]);
  
 
    
