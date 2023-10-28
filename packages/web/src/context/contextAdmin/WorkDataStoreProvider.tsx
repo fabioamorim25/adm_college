@@ -10,17 +10,20 @@ import { ContextAdminProps } from 'admin'
 const WorkDataContext = createContext<ContextAdminProps>({
   // estado inicial dos dados
   subjectName: null,
-  setSubjectName: null
+  setSubjectName: () => {},
+
+  courseName: null,
+  setCourseName: () => {}
 })
 
 // 2°CRIAR O PROVEDOR DO CONTEXTO
 export function WorkDataContextPorvider({children}:any){
   // criar a variavel do dado
-  const [subjectName, setSubjectName] = useState(null)
-
-  // passar os dados que o provedor pode passar para os componentes
+  const [subjectName, setSubjectName] = useState<string | null>(null)
+  const [courseName,setCourseName] = useState<string | null>(null)
+  
   return(
-    <WorkDataContext.Provider value={{subjectName, setSubjectName}}>
+    <WorkDataContext.Provider value={{subjectName, setSubjectName,courseName,setCourseName}}>
       {children}
     </WorkDataContext.Provider>
   )
