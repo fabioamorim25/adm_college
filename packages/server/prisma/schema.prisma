@@ -38,7 +38,7 @@ model Course {
 
 model Prof {
   id            String         @id @default(uuid())
-  prof_name     String
+  prof_name     String         @unique
   prof_status   Boolean
   email         String         @unique
   password      String
@@ -118,11 +118,11 @@ model Address {
 model Porf_Subject {
   id String @id @default(uuid())
 
-  profId String
-  prof   Prof   @relation(fields: [profId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profName String
+  prof     Prof   @relation(fields: [profName], references: [prof_name], onDelete: Cascade, onUpdate: Cascade)
 
-  subjectId String
-  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subjectName String
+  subject     Subject @relation(fields: [subjectName], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
