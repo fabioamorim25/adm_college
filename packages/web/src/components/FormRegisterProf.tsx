@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { useSession } from 'next-auth/react'
-import { useRouter } from "next/navigation";
 
 import Alert from "./ui/Alert";
+import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
 
 
 
@@ -23,14 +23,13 @@ interface Imessage{
 }
 
 export default function FormRegisterProf() {
-  
   const { data: session } = useSession()
   
+  const {setProfName} = useWorkDataContext()
   const [data, setData] = useState<IProfs>({prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true", departamentId:""})
-  
   const [msg, setMsg] = useState<Imessage>({message:'', type:''});
   
-  const router = useRouter()
+  
   
   //CADASTRA PROFESSOR (enviar dados para backend)
   async function onRegisterProf(event: React.SyntheticEvent) {
@@ -51,7 +50,7 @@ export default function FormRegisterProf() {
         type: response.type
       })
       
-      // return router.push('/') REDIRECIONAR PARA ASSOCIAR O PROF A UMA MATERIA
+     return setProfName(data.prof_name)
     }
   }
  
@@ -66,8 +65,10 @@ export default function FormRegisterProf() {
 
   return (
    <>
-    {msg.message && <Alert message={msg.message} type={msg.type} />}
     <form onSubmit={onRegisterProf} className="m-4 p-6 border rounded shadow">
+      
+      {msg.message && <Alert message={msg.message} type={msg.type} />}
+
       <div className="mb-6">
         <label htmlFor="name" className="block text-sm font-alt text-gray-800">Digite o nome do professor completo</label>
         <input
