@@ -1,4 +1,4 @@
-import { createSubjects, createSubjectMandatory, createAssociateSubjectCourse, getSubject } from "../repository/subject.Repository";
+import { createSubjects, createSubjectMandatory, createAssociateSubjectCourse, getSubject, listSubjects } from "../repository/subject.Repository";
 import {checksubjects, nameUniqueSubject, namesAssociateSubjectCourse, subjectUnic, subjectValidation} from '../validations/subject.validation'
 
 export const create = async(req,res)=>{
@@ -36,7 +36,7 @@ export const create = async(req,res)=>{
 // ASSOCIAR UMA MATERIA A UM CURSO
 export const associateSubjectCourse = async(req,res)=>{
     const {subjectName,courseName} = req.body
-    console.log(subjectName)
+
     try {
         //VALIDAR SE O NOME DA MATERIA EXISTE
         const uniqueName = await nameUniqueSubject(subjectName)
@@ -100,3 +100,13 @@ export const subjectMandatory = async (req, res) => {
 }
 
 
+
+// LISTAR TODAS AS MATÉRIAS
+export const getSubjects = async(req,res)=>{
+    try {
+        const subjects = await listSubjects()
+        return res.status(201).json(subjects)
+    } catch (error) {
+        return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
+    }
+}

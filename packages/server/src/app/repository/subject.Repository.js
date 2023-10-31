@@ -55,7 +55,7 @@ export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
     return associate
 }
 
-// LISTAR TODAS AS MATÉRIAS
+// LISTAR TODAS AS MATÉRIAS DE UM CURSO
 export const getSubject = async (courseName) => {
     const subjects = await prisma.course_Subject.findMany({
         where: {
@@ -105,3 +105,23 @@ export const createSubjectMandatory = async(subjectName,preRequisite)=>{
     return ;
 }
 
+// LISTAR MATÉRIAS
+export const listSubjects = async()=>{
+    const subjects = await prisma.subject.findMany({
+        select:{
+            id:false,
+            sub_name:true,
+            sub_shift:false,
+            sub_start_time:false,
+            sub_stop_time:false,
+            sub_description:false,
+            sub_mandatory:false,
+            createdAt:false,
+            updatedAt:false,
+            departamentId:false,     
+        }
+    })
+    return subjects
+     //filtra o obj para retornar a chave e o valor das matérias
+    //  return subjects.map(subject => ({ sub_name: subject.sub_name }));
+}

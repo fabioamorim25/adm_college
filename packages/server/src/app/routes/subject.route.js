@@ -2,6 +2,7 @@ import {
     associateSubjectCourse,
     create,
     getAllSubject,
+    getSubjects,
     subjectMandatory 
 } from "../controller/subject.Controller";
 
@@ -17,7 +18,7 @@ const subjectRoutes = app=>{
         app.post('/mandatory_Subject',authTokenValidate,roleAdmin,subjectMandatory)
         app.post('/associate_Subject_Course',authTokenValidate,roleAdmin,associateSubjectCourse)
         app.post('/getAllSubject',authTokenValidate,roleAdmin,getAllSubject)
-
+        app.get('/getSubjects',authTokenValidate,roleAdmin,getSubjects)
 
 
     
