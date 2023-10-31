@@ -9,6 +9,9 @@ declare module 'admin' {
 
     courseName:string | null
     setCourseName:React.Dispatch<SetStateAction<string | null>>
+
+    profName:string | null
+    setProfName: React.Dispatch<SetStateAction <string| null>>
   }
   
 }
