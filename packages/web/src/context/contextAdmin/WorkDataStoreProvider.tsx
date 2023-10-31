@@ -13,7 +13,10 @@ const WorkDataContext = createContext<ContextAdminProps>({
   setSubjectName: () => {},
 
   courseName: null,
-  setCourseName: () => {}
+  setCourseName: () => {},
+
+  profName:null,
+  setProfName:()=>{},
 })
 
 // 2°CRIAR O PROVEDOR DO CONTEXTO
@@ -21,9 +24,10 @@ export function WorkDataContextPorvider({children}:any){
   // criar a variavel do dado
   const [subjectName, setSubjectName] = useState<string | null>(null)
   const [courseName,setCourseName] = useState<string | null>(null)
+  const [profName, setProfName] = useState<string| null>(null)
   
   return(
-    <WorkDataContext.Provider value={{subjectName, setSubjectName,courseName,setCourseName}}>
+    <WorkDataContext.Provider value={{subjectName,setSubjectName, courseName,setCourseName, profName,setProfName}}>
       {children}
     </WorkDataContext.Provider>
   )
