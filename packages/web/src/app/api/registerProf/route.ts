@@ -5,17 +5,15 @@ import { nextAuthOptions } from "../auth/[...nextauth]/options";
 export async function POST(request: NextRequest) {
 
   const session = await getServerSession(nextAuthOptions)
+  const departamentId = session?.user.id
 
   const {
     prof_name,
     email,
     password,
     prof_phone,
-    prof_status,
-    departamentId,
+    prof_status
   } = await request.json()
-
-
 
   try {
     if (!prof_name || !email || !password || !prof_phone || !prof_status || !departamentId)

@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useState } from "react";
-import { useSession } from 'next-auth/react'
+import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
 
 import Alert from "./ui/Alert";
-import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
 
 
 
@@ -14,7 +13,6 @@ interface IProfs {
   password: string
   prof_phone: string
   prof_status: string
-  departamentId: string
 }
 
 interface Imessage{
@@ -23,10 +21,9 @@ interface Imessage{
 }
 
 export default function FormRegisterProf() {
-  const { data: session } = useSession()
   
   const {setProfName} = useWorkDataContext()
-  const [data, setData] = useState<IProfs>({prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true", departamentId:""})
+  const [data, setData] = useState<IProfs>({prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true"})
   const [msg, setMsg] = useState<Imessage>({message:'', type:''});
   
   
@@ -58,7 +55,7 @@ export default function FormRegisterProf() {
   async function handleRegister(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value, departamentId: session?.user.id || '' }
+      return { ...prev, [e.target.name]: e.target.value }
     });
   }
 
