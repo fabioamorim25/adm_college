@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
+import Alert from "./ui/Alert";
 
 
 interface Iprof {
@@ -11,6 +12,10 @@ interface Iprof {
 interface ISubjects {
   sub_name: string
 }
+interface Imessage{
+  message: string
+  type: string
+}
 
 
 export default function FormAssociationProfSubject() {
@@ -18,6 +23,7 @@ export default function FormAssociationProfSubject() {
   const { profName } = useWorkDataContext();
   const [listsub, setListSub] = useState<ISubjects[]>([])
   const [data, setData] = useState<Iprof>({ profName: null, subject: null })
+  const [msg, setMsg] = useState<Imessage>({message:'', type:''});
 
 
   //LISTA DE MATÉRIAS
@@ -57,13 +63,20 @@ export default function FormAssociationProfSubject() {
     })
 
     const res = await response.json()
-    console.log(res)
+    //mensagem de alerta
+    if (res) {
+      return setMsg({
+        message: res.message,
+        type: res.type
+      })
+    }
   }
 
  
   return (
     <>
       <form onSubmit={onRegisterAssociate} className="m-4 p-6 border rounded shadow">
+      {msg.message && <Alert message={msg.message} type={msg.type} />}
         <div className="mb-4">
           {profName === null ? (
             <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a matéria ao professor:</label>
