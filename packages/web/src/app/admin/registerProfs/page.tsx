@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Home } from 'lucide-react';
 import FormRegisterProf from '@/components/FormRegisterProf';
+import FormAssociationProfSubject from '@/components/FormAssociationProfSubject';
 
 
 export default async function AddProfs() {
@@ -21,6 +22,7 @@ export default async function AddProfs() {
       </nav>
 
       <FormRegisterProf />
+      <FormAssociationProfSubject/>
 
     </main>
   )

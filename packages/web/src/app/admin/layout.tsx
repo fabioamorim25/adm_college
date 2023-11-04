@@ -34,13 +34,13 @@ export const metadata = {
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt">
-      <body className={`${roboto.variable} ${baijamjuree.variable} font-sans flex flex-col h-screen`}>
+    <html lang="pt" className="h-full">
+      <body className={`${roboto.variable} ${baijamjuree.variable} font-sans flex flex-col h-screen`} >
         <Header className="w-full" />
         <div className="flex flex-grow">
           <SidebarAdmin />
 
-          <main className="flex-grow bg-white overflow-auto">
+          <main className="flex-grow bg-white overflow-auto h-screen scroll-smooth cursor-auto">
             <WorkDataContextPorvider>
               {children}
             </WorkDataContextPorvider>

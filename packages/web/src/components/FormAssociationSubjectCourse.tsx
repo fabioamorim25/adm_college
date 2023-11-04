@@ -42,11 +42,12 @@ export default function FormAssociationSubjectCourse() {
     })
     const course = await listCourse.json();
 
-    if (course.type === "error")
+    if (course.type === "error"){
       return setMsg({
         message: course.message,
         type: course.type
       })
+    }
 
     return setCourses(course);
   }
