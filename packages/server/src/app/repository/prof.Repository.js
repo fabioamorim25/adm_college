@@ -20,7 +20,7 @@ export const createProfs = async (prof_name, prof_status, email, password, prof_
             }
         },
         select: {
-            id: true,
+            id: false,
             prof_name: true,
             prof_status: true,
             email: true,
@@ -30,25 +30,30 @@ export const createProfs = async (prof_name, prof_status, email, password, prof_
         }
     });
 
-    return prof;
+    return prof
 }
 
 
 
 // DEFINIR MATERIA PARA O PROFESSOR
-export const assignSubjectTeacher = async(profId,subjectId)=>{
+export const assignSubjectTeacher = async(profName, subjects)=>{
     
-    const subjectPorf = await prisma.porf_Subject.create({
-        data:{
-            profId,
-            subjectId
-        },
-        select:{
-            id:true,
-            profId:true,
-            subjectId:true
-        }
-    })
+    const createPromises = subjects.map(subject => {
+        return prisma.porf_Subject.create({
+            data:{
+               profName: profName,
+               subjectName:subject
+            },
+            select:{
+                id:true,
+                profName:true,
+                subjectName:true
+            }
+        });
+    });
+
+    const subjectPorfs = await prisma.$transaction(createPromises);
     
-    return subjectPorf
+    if(subjectPorfs)
+        return { message: 'Associações salvas com sucesso' };
 }
