@@ -1,13 +1,16 @@
 import { prisma } from '../../lib/prismaClient'
 
 // CRIAR O DOCUMENTO E RETONAR O DADO
-export const createStudents = async (stu_name, stu_registration, stu_course, stu_status, stu_period, stu_mother_name, stu_father_name, stu_phone, email, password, courseId) => {
+export const createStudents = async (stu_name,stu_registration, stu_status,stu_period,stu_mother_name,stu_father_name,stu_phone,email,password,courseName) => {
+
+    // Convert prof_status to a boolean
+    if (stu_status === "true") stu_status = true;
+    if (stu_status === "false") stu_status = false;
 
     const student = await prisma.student.create({
         data: {
             stu_name,
             stu_registration,
-            stu_course,
             stu_status,
             stu_period,
             stu_mother_name,
@@ -17,27 +20,27 @@ export const createStudents = async (stu_name, stu_registration, stu_course, stu
             password,
             course: {
                 connect: {
-                    id: courseId
+                    cou_name: courseName
                 }
             }
         },
         select: {
-            id: true,
-            stu_name: true,
-            stu_registration: true,
-            stu_course: true,
-            stu_status: true,
-            stu_period: true,
-            stu_mother_name: true,
-            stu_father_name: true,
-            stu_phone: true,
-            email: true,
-            password: false,
-            courseId: true
+            id: false,
+            stu_name:true,
+            stu_registration:true,
+            stu_status:false,
+            stu_period:false,
+            stu_mother_name:false,
+            stu_father_name:false,
+            stu_phone:false,
+            email:false,
+            password:false,
+            courseName:false,
         }
     });
 
+    if(student)
+        return { message: "O aluno foi registrado com sucesso", type: "success" }
 
-
-    return student;
+    return { message: "tivemos um erro ao registrar o aluno", type: "error" }
 }

@@ -4,26 +4,29 @@ import { prisma } from "../../lib/prismaClient"
 
 //VALIDAR OS DADOS RECEBIDOS
 export const studentValidation = yup.object({
-    stu_name: yup.string().required('O campo stu_name é obrigatório'),
-    stu_registration: yup.string().required('O campo stu_registration é obrigatório'),
-    stu_course: yup.string().required('O campo stu_course é obrigatório'),
-    stu_status: yup.boolean().required('O campo stu_status é obrigatório'),
-    stu_period: yup.string().required('O campo stu_period é obrigatório'),
-    stu_mother_name: yup.string().required('O campo stu_mother_name é obrigatório'),
-    stu_father_name: yup.string().required('O campo stu_father_name é obrigatório'),
+    stu_name: yup.string().required('O nome do aluno é obrigatório'),
+    stu_registration: yup.string().required('O número de matrícula é obrigatório'),
+    stu_status: yup.boolean().required('O status do aluno é obrigatório'),
+    stu_period: yup.string().required('O periodo é obrigatório'),
+    stu_mother_name: yup.string().required('O nome da mãe é obrigatório'),
+    stu_father_name: yup.string(),
     stu_phone: yup.string(),
     email: yup.string().required('O campo email é obrigatório'),
     password: yup.string().required('O campo password é obrigatório').min(6, 'A senha deve ter pelo menos 6 caracteres'),
-    courseId: yup.string().required('O campo courseId é obrigatório')
+    courseName: yup.string().required('O nome do curso é obrigatório'),
 });
 
 //VALIDAR SE EXISTE O ALUNO
-export const validationStudent = async (studentId)=>{
-    const student = await prisma.student.findUnique({
+export const validationStudent = async (stu_name,email)=>{
+    const student = await prisma.student.findFirst({
         where:{
-            id:studentId
+            OR: [
+                { stu_name: stu_name },
+                { email: email }
+            ]
         }
     })
-
-    return student
+    
+    if(student)
+        return { message: "O aluno já existe no sistema", type: "error" }
 }
