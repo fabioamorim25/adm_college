@@ -17,6 +17,9 @@ const WorkDataContext = createContext<ContextAdminProps>({
 
   profName:null,
   setProfName:()=>{},
+
+  studentName:null,
+  setStudentName:()=>{},
 })
 
 // 2°CRIAR O PROVEDOR DO CONTEXTO
@@ -25,9 +28,16 @@ export function WorkDataContextPorvider({children}:any){
   const [subjectName, setSubjectName] = useState<string | null>(null)
   const [courseName,setCourseName] = useState<string | null>(null)
   const [profName, setProfName] = useState<string| null>(null)
+  const [studentName, setStudentName] = useState<string| null>(null)
   
   return(
-    <WorkDataContext.Provider value={{subjectName,setSubjectName, courseName,setCourseName, profName,setProfName}}>
+    <WorkDataContext.Provider value={{
+      subjectName,setSubjectName,
+      courseName,setCourseName,
+      profName,setProfName,
+      studentName,setStudentName
+      }}>
+        
       {children}
     </WorkDataContext.Provider>
   )
