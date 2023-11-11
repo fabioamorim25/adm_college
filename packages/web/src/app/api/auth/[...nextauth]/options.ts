@@ -23,11 +23,12 @@ export const nextAuthOptions: NextAuthOptions = {
         }
       },
       async authorize(credentials, req) {
-        if (!credentials)
-          throw new Error("Credentials are not provided");
-        const { email, password } = credentials;
-
-
+       
+        if (!credentials?.email || !credentials.password)
+           return false
+  
+          const { email, password } = credentials;
+  
         const response = await fetch("http://localhost:5000/SignIn", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -36,7 +37,6 @@ export const nextAuthOptions: NextAuthOptions = {
 
         const user = await response.json();
 
-        console.log('token back', user.token)
         if (user && response.ok) {
           return user
         }
@@ -57,9 +57,9 @@ export const nextAuthOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt"
-  },
+  }, 
   jwt: {
-    secret: 'adssdf', maxAge: 60 * 60 * 24,
+    secret:process.env.NEXTAUTH_SECRET, maxAge: 60 * 60 * 24,
   },
   pages: {
     signIn: "/SignIn"
