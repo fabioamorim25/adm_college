@@ -29,4 +29,21 @@ export const validationStudent = async (stu_name,email)=>{
     
     if(student)
         return { message: "O aluno já existe no sistema", type: "error" }
+
+    return null
+}
+
+
+//VALIDAR SE EXISTE O ALUNO PELO NOME
+export const validationStudentName = async (studentName)=>{
+    const student = await prisma.student.findFirst({
+        where:{
+            stu_name: studentName
+        }
+    })
+    
+    if(!student)
+        return { message: "O aluno não existe no sistema", type: "error" }
+
+    return null
 }
