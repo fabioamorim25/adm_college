@@ -9,10 +9,10 @@ export default function SidebarAdmin() {
         <SidebarButton
           item={{ title: 'Registros', route: '/menu' }}
           children={[
-            { title: 'Registra Professores', route: '/admin/registerProfs' },
             { title: 'Registra Cursos', route: '/admin/registerCourses' },
-            { title: 'Registra Máterias', route: '/admin/registerSubjects' },
-            { title: 'Ação 5', route: '#' },
+            { title: 'Registra Matérias', route: '/admin/registerSubjects' },
+            { title: 'Registra Professores', route: '/admin/registerProfs' },
+            { title: 'Registra Aluno', route: '/admin/registerStudents' },
             // Adicione mais itens
           ]}
         />
