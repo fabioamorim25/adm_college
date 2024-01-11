@@ -107,7 +107,7 @@ $ yarn web
 
 #### - Modelo Logico no Prisma
 <div align= "center">
-  <img title="modelo logico final" src ="./.github/modelDatabase/modeloFinalSequelize.png"/> 
+  <img title="modelo logico final" src ="./.github/modelDatabase/modeloFinalPrisma.png"/> 
 </div>
 <br>
 
@@ -116,13 +116,16 @@ $ yarn web
 As seguintes ferramentas foram usadas na construção do projeto:
 
 #### Front end
-- [React.js](https://pt-br.reactjs.org/)
-- [Axios](https://axios-http.com/docs/intro)
+- [Next.js](https://nextjs.org/)
+- [Next Auth](https://next-auth.js.org/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [Typescript](https://www.typescriptlang.org/)
+
 
 #### Back end
 - [Node.js](https://nodejs.org/en/)
 - [Express js](https://expressjs.com/pt-br/)
-- [Prisma](https://)
+- [Prisma](https://https://www.prisma.io/)
 - [Nodemailer](https://nodemailer.com/about/)
 
 
