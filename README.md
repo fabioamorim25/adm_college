@@ -1,5 +1,9 @@
 # adm_college
 
+<div align = "center">
+  <img src =".github/logo.jpeg" title="logo"/>
+</div>
+
 ### Sobre
 
 <p align="center"> O sistema tem o intuito de ser um controle centralizado para faculdade. Todo o sistema foi desenvolvido e pensado, a partir do modelo de negócio de uma faculdade. Onde foi feito uma lista com todos os requisitos específicos de uma faculdade, como: ter o controle dos alunos, professores, cursos, matérias, histórico escolar e departamento de controle geral</p>
@@ -101,7 +105,7 @@ $ yarn web
   <img title="modelo logico" src ="./.github/modelDatabase/modeloLogico.png"/> 
 </div>
 
-#### - Modelo Logico no Sequelize
+#### - Modelo Logico no Prisma
 <div align= "center">
   <img title="modelo logico final" src ="./.github/modelDatabase/modeloFinalSequelize.png"/> 
 </div>
