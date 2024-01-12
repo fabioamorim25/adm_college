@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Home } from 'lucide-react';
 import FormRegisterStudent from '@/components/FormRegisterStudent';
-
+import FormRegisterAddress from '@/components/FormRegistreAddress';
 
 
 
@@ -22,10 +22,9 @@ export default async function AddStudents() {
         <hr className="w-full mt-2 border-t-4 border-purple-700" />
       </nav> 
 
+
      <FormRegisterStudent/>
-
-     {/* REGISTAR O ENDEREÇO DO ALUNO */}
-
+     <FormRegisterAddress/>
     </main>
   )
 }
