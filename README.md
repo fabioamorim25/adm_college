@@ -18,10 +18,9 @@
 ### Desafios
 
 <div>
-Informações gerais: 
-
-- O sistema possui uma estrutura MONOREPO
-- Possui a imagem geral da aplicação para fazer deploy
+ Informações gerais: 
+  - O sistema possui uma estrutura MONOREPO
+  - Possui a imagem geral da aplicação para fazer deploy
 
 </div>
 
@@ -42,10 +41,43 @@ Informações gerais:
 
 <br>
 
-<br>
 
 ### Features 
+* Autenticação:
+  - [x] Login Padrão: Departamento, Professor, Aluno
+  - [] Sistema de recuperação de conta
+  - [] Login externo
 
+* Features Departamento
+  - [x] Registra Departamento (apenas 1)
+  - [x] Deletar Departamento (apaga todo o sistema)
+  - [x] Editar Departamento
+  - [x] Registra Professor 
+  - [] Editar Professor
+  - [] Deletar Professor
+  - [] Registar curso
+  - [] Editar curso
+  - [] Deletar curso
+  - [x] Associar máteria a um curso
+  - [x] Registra Aluno
+  - [] Editar Aluno
+  - [] Deletar Aluno
+  - [x] Registra máteria
+  - [] Editar máteria
+  - [] Deletar máteria 
+  - [x] Associar máteria a um professor
+  - []
+
+* Features Professor:
+  - [] Registar nota e frequencia do aluno
+  - [] Editar nota e frequencia do aluno
+  - []
+  - []
+
+* Features Aluno
+  - [x] Login do Aluno
+  - [] Registrar Endereço do aluno
+  - []
 
 
 ### Ilustração
