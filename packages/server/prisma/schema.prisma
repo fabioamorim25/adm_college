@@ -75,8 +75,8 @@ model Subject {
 
 model Student {
   id               String  @id @default(uuid())
-  stu_name         String   @unique
-  stu_registration String   @unique
+  stu_name         String  @unique
+  stu_registration String  @unique
   stu_status       Boolean
   stu_period       String
   stu_mother_name  String
@@ -85,8 +85,8 @@ model Student {
   email            String  @unique
   password         String
   role             String  @default("STUDENT")
-  courseName String  
-  course   Course @relation(fields: [courseName], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  courseName       String
+  course           Course  @relation(fields: [courseName], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
@@ -105,7 +105,7 @@ model Address {
   add_complement   String
 
   studentName String
-  student   Student @relation(fields: [studentName], references: [stu_name], onDelete: Cascade, onUpdate: Cascade)
+  student     Student @relation(fields: [studentName], references: [stu_name], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
