@@ -66,6 +66,7 @@
   - [] Editar máteria
   - [] Deletar máteria 
   - [x] Associar máteria a um professor
+  - [x] Registrar Endereço do aluno
   - []
 
 * Features Professor:
