@@ -44,41 +44,41 @@
 
 ### Features 
 * Features Sistema:
-  [x] Login Interno: Departamento, Professor, Aluno
-  [] Sistema de recuperação de conta
-  [] Login Externo
-  [] Temas: Dark e Padrão
+  - [x] Login Interno: Departamento, Professor, Aluno
+  - [] Sistema de recuperação de conta
+  - [] Login Externo
+  - [] Temas: Dark e Padrão
 
 * Features Departamento
-  [x] Registra Departamento (apenas 1)
-  [x] Deletar Departamento (apaga todo o sistema)
-  [x] Editar Departamento
-  [x] Registra Professor 
-  [] Editar Professor
-  [] Deletar Professor
-  [] Registar curso
-  [] Editar curso
-  [] Deletar curso
-  [x] Associar máteria a um curso
-  [x] Registra Aluno
-  [] Editar Aluno
-  [] Deletar Aluno
-  [x] Registra máteria
-  [] Editar máteria
-  [] Deletar máteria 
-  [x] Associar máteria a um professor
-  [x] Registrar Endereço do aluno
-  []
+  - [x] Registra Departamento (apenas 1)
+  - [x] Deletar Departamento (apaga todo o sistema)
+  - [x] Editar Departamento
+  - [x] Registra Professor 
+  - [] Editar Professor
+  - [] Deletar Professor
+  - [] Registar curso
+  - [] Editar curso
+  - [] Deletar curso
+  - [x] Associar máteria a um curso
+  - [x] Registra Aluno
+  - [] Editar Aluno
+  - [] Deletar Aluno
+  - [x] Registra máteria
+  - [] Editar máteria
+  - [] Deletar máteria 
+  - [x] Associar máteria a um professor
+  - [x] Registrar Endereço do aluno
+  - []
 
 * Features Professor:
-  [] Registar nota e frequencia do aluno
-  [] Editar nota e frequencia do aluno
-  []
-  []
+  - [] Registar nota e frequencia do aluno
+  - [] Editar nota e frequencia do aluno
+  - []
+  - []
 
 * Features Aluno
-  [] Registrar Endereço do aluno
-  []
+  - [] Registrar Endereço do aluno
+  - []
 
 
 ### Ilustração
