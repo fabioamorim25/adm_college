@@ -44,9 +44,10 @@
 
 ### Features 
 * Autenticação:
-  - [x] Login Padrão: Departamento, Professor, Aluno
+  - [x] Login Interno: Departamento, Professor, Aluno
   - [] Sistema de recuperação de conta
-  - [] Login externo
+  - [] Login Externo
+  - [] Temas: Dark e Padrão
 
 * Features Departamento
   - [x] Registra Departamento (apenas 1)
@@ -76,7 +77,6 @@
   - []
 
 * Features Aluno
-  - [x] Login do Aluno
   - [] Registrar Endereço do aluno
   - []
 
