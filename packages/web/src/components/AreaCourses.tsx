@@ -28,7 +28,7 @@ interface Imessage {
 export default function AreaCourse() {
 
   const [courses, setCourse] = useState<ICourses[]>([])
-  const [search, setSearch] = useState<ISearch>({name:''});
+  const [search, setSearch] = useState<ISearch>({ name: '' });
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
   const [tab, setTab] = useState(false)
@@ -54,7 +54,7 @@ export default function AreaCourse() {
   }
   // nome recebido do search
   function handleSearchChange(value: string) {
-    return setSearch({name:value});
+    return setSearch({ name: value });
   };
   // filtro dos cursos na tela
   function coursesFilteredSearch() {
@@ -89,7 +89,7 @@ export default function AreaCourse() {
 
       {/* LISTA DE CURSOS------------------------------- */}
       <div className="m-4 my-3 p-6 rounded shadow">
-        {msg.message && 
+        {msg.message &&
           <Alert message={msg.message} type={msg.type} />
         }
 
@@ -97,69 +97,78 @@ export default function AreaCourse() {
         {search.name.length > 0 ? (
           //RETORNE A LISTA FILTRADA (filteredCourses)
           coursesFilteredSearch().map((course) => (
-            <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
-              <div className="flex flex-col">
-                <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
-                <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
+            <div>
+              <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
+                <div className="flex flex-col">
+                  <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
+                  <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
 
-                <div className="flex">
-                  <span className="font-sans italic pt-1 flex text-sm">
-                    <ActiveDisabled status={course.status} />
-                  </span>
-                  <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
-                    <Clock1 strokeWidth={0.75} size={25} className="px-1" />
-                    {course.createdAt}
-                  </span>
+                  <div className="flex">
+                    <span className="font-sans italic pt-1 flex text-sm">
+                      <ActiveDisabled status={course.status} />
+                    </span>
+                    <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
+                      <Clock1 strokeWidth={0.75} size={25} className="px-1" />
+                      {course.createdAt}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <button
-                onClick={() => setTab(!tab)}
-                className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
-              >
-                <span className="px-2">Editar</span>
-                <Pencil strokeWidth={0.75} size={15} />
-              </button>
+                <button
+                  onClick={() => setTab(!tab)}
+                  className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
+                >
+                  <span className="px-2">Editar</span>
+                  <Pencil strokeWidth={0.75} size={15} />
+                </button>
+              </div>
+              {/* PEGAR NOVO NOME DO CURSO*/}
+              {tab && (
+                <main className="h-32 my-1 bg-gray-900">
+                  <FormEditCourse />
+                </main>
+              )}
             </div>
           ))
 
         ) : (
           //RETORNE A LISTA ORIGIAL (courses)
           courses.map((course) => (
-            <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
-              <div className="flex flex-col">
-                <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
-                <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
+            <div>
+              <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
+                <div className="flex flex-col">
+                  <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
+                  <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
 
-                <div className="flex">
-                  <span className="font-sans italic pt-1 flex text-sm">
-                    <ActiveDisabled status={course.status} />
-                  </span>
-                  <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
-                    <Clock1 strokeWidth={0.75} size={25} className="px-1" />
-                    {course.createdAt}
-                  </span>
+                  <div className="flex">
+                    <span className="font-sans italic pt-1 flex text-sm">
+                      <ActiveDisabled status={course.status} />
+                    </span>
+                    <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
+                      <Clock1 strokeWidth={0.75} size={25} className="px-1" />
+                      {course.createdAt}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <button
-                onClick={() => setTab(!tab)}
-                className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
-              >
-                <span className="px-2">Editar</span>
-                <Pencil strokeWidth={0.75} size={15} />
-              </button>
+                <button
+                  onClick={() => setTab(!tab)}
+                  className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
+                >
+                  <span className="px-2">Editar</span>
+                  <Pencil strokeWidth={0.75} size={15} />
+                </button>
+              </div>
+              {/* PEGAR NOVO NOME DO CURSO*/}
+              {tab && (
+                <main className="h-32 my-1 bg-gray-900">
+                  <FormEditCourse />
+                </main>
+              )}
             </div>
           ))
         )}
       </div>
-
-      {/* PEGAR NOVO NOME DO CURSO------------------------- */}
-      {tab && (
-        <main>
-          <FormEditCourse/>
-        </main>
-      )}
     </>
   )
 }
