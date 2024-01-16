@@ -2,28 +2,17 @@
 
 import React, { useEffect, useState } from "react"
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
+import { IRequisite, ISubjects, Imessage } from "admin"//tipagem
+
 import Alert from "./ui/Alert"
 
-
-interface ISubject {
-  sub_name: string
-}
-
-interface IRequisite{
-  preRequisite: string
-  subjectName:any
-}
-interface Imessage {
-  message: string
-  type: string
-}
 
 export function FormMandatorySubject() {
   //curso no contexto
   const { courseName,subjectName } = useWorkDataContext();
   
   //lista de matérias
-  const [subject, setSubjects] = useState<ISubject[]>([])
+  const [subject, setSubjects] = useState<ISubjects[]>([])
   // dados para enviar
   const [data, setData] = useState<IRequisite>({ preRequisite: '', subjectName }) // [preRequisite materias vindas do back] [nameSubject esta no contexto]
 

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Pencil, Clock1 } from 'lucide-react';
+import { ICourses, Imessage } from "admin";//tipagem curso
 
 import ActiveDisabled from "./ui/ActiveDisabled";
 import Alert from "./ui/Alert";
@@ -9,19 +10,9 @@ import Searcher from "./ui/Search";
 import FormEditCourse from "./FormEditCourse";
 
 
-interface ICourses {
-  id: string;
-  cou_name: string;
-  amount: string;
-  status: boolean;
-  createdAt: string;
-}
+
 interface ISearch {
   name: string;
-}
-interface Imessage {
-  message: string;
-  type: string;
 }
 
 

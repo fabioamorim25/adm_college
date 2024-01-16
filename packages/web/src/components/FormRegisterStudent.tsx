@@ -1,31 +1,11 @@
 'use client'
 
 import React, { useEffect, useState } from "react"
+import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
+import { ICourses, IStudent, Imessage } from "admin" //tipagem
+
 import { RefreshCcw } from 'lucide-react'
 import Alert from "./ui/Alert"
-import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
-
-
-interface IStudent {
-  stu_name: string
-  stu_registration: string
-  stu_status: string
-  stu_period: string
-  stu_mother_name: string
-  stu_father_name: string
-  stu_phone: string
-  email: string
-  password: string
-  courseName: string
-}
-interface ICourses {
-  cou_name: string
-}
-interface Imessage {
-  message: string
-  type: string
-}
-
 
 
 function generateRegistration() {
@@ -51,11 +31,10 @@ export default function FormRegisterStudent() {
     })
     const course = await listCourse.json();
     if (course.type === "error") {
-      // return setMsg({
-      //   message: course.message,
-      //   type: course.type
-      // })
-      return console.log(course)
+      return setMsg({
+        message: course.message,
+        type: course.type
+      })
     }
     return setCourses(course);
   }
@@ -244,7 +223,7 @@ export default function FormRegisterStudent() {
           )}
         </select>
 
-        <button className="p-4 py-2 bg-gray-200 rounded-md hover:bg-purple-700">Registra aluno</button>
+        <button className="p-4 py-2 bg-gray-200 mt-4 rounded-md hover:bg-purple-700">Registra aluno</button>
       </form>
     </>
   )

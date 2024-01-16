@@ -1,34 +1,19 @@
 'use client'
 
 import React, { useState } from "react";
-import Alert from "./ui/Alert";
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
+import { ISubjects, Imessage } from "admin";// tipagem
+
+import Alert from "./ui/Alert";
 
 
 
-
-interface ISubjects {
-  sub_name: string,
-  sub_shift: string,
-  sub_start_time: string,
-  sub_stop_time: string,
-  sub_description: string,
-  sub_mandatory: string
-  sub_day: string
-}
-
-interface Imessage {
-  message: string
-  type: string
-}
 
 
 export default function FormRegisterSubject() {
 
   const [data, setData] = useState<ISubjects>({ sub_name: "", sub_shift: "", sub_start_time: "", sub_stop_time: "", sub_description: "", sub_mandatory: "true", sub_day: "" })
-
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
-
   const { setSubjectName } = useWorkDataContext();
 
   //PEGAR OS DADOS DO FORMULARIO

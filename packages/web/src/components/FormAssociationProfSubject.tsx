@@ -1,21 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from "react"
+import { ISubjects, Imessage, Iprof } from "admin";//tipagem
+
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
 import Alert from "./ui/Alert";
-
-
-interface Iprof {
-  profName: string | null
-  subject: string[] | null;
-}
-interface ISubjects {
-  sub_name: string
-}
-interface Imessage{
-  message: string
-  type: string
-}
 
 
 export default function FormAssociationProfSubject() {

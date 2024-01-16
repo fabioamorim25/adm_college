@@ -3,22 +3,8 @@
 import React, { useEffect, useState } from "react";
 
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
+import { ICourses, ISubjectCourse, Imessage } from "admin";//tipagem
 import Alert from "./ui/Alert";
-
-
-interface ISubjectCourse {
-  subjectName: string | null,
-  courseName: string,
-}
-
-interface ICourses {
-  cou_name: string
-}
-
-interface Imessage {
-  message: string
-  type: string
-}
 
 
 export default function FormAssociationSubjectCourse() {

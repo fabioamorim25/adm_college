@@ -4,24 +4,15 @@ import React, { useState } from "react";
 
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider"
 import Alert from "./ui/Alert";
+import { IAddress, Imessage } from "admin";//tipagem
 
-interface IAddress {
-  add_street: string,
-  add_city: string,
-  add_neighborhood: string,
-  add_number: string,
-  add_complement: string,
-  studentName: string | null,
-}
-interface Imessage{
-  message: string|null,
-  type: string,
-}
+
+
 
 export default function FormRegisterAddress() {
   const { studentName } = useWorkDataContext()
   const [data, setData] = useState<IAddress>({ add_street: "", add_city: "", add_neighborhood: "", add_number: "", add_complement: "", studentName: null })
-  const [msg, setMsg] = useState<Imessage>({message:null, type:""})
+  const [msg, setMsg] = useState<Imessage>({message:"", type:""})
 
   //PEGAR OS DADOS DO FORMULARIO
   async function handleRegister(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -36,7 +27,7 @@ export default function FormRegisterAddress() {
 
     if (!data.studentName){
        return setMsg({
-          message:'Cadastre um aluno primeiro',
+          message:'Cadastra um aluno primeiro',
           type:'error'
         })
     }

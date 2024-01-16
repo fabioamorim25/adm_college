@@ -2,30 +2,16 @@
 
 import React, { useState } from "react";
 import { useWorkDataContext } from "@/context/contextAdmin/WorkDataStoreProvider";
+import { IProfs, Imessage } from "admin";//tipagem
 
 import Alert from "./ui/Alert";
 
-
-
-interface IProfs {
-  prof_name: string
-  email: string
-  password: string
-  prof_phone: string
-  prof_status: string
-}
-
-interface Imessage{
-  message: string
-  type: string
-}
 
 export default function FormRegisterProf() {
   
   const {setProfName} = useWorkDataContext()
   const [data, setData] = useState<IProfs>({prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true"})
   const [msg, setMsg] = useState<Imessage>({message:'', type:''});
-  
   
   
   //CADASTRA PROFESSOR (enviar dados para backend)
