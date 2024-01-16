@@ -16,6 +16,65 @@ declare module 'admin' {
     studentName:string | null
     setStudentName: React.Dispatch<SetStateAction <string| null>>
   }
-  
+
+  interface ICourses {
+    id: string;
+    cou_name: string;
+    amount: string;
+    status: boolean;
+    createdAt: string;
+  }
+  interface IStudent {
+    stu_name: string
+    stu_registration: string
+    stu_status: string
+    stu_period: string
+    stu_mother_name: string
+    stu_father_name: string
+    stu_phone: string
+    email: string
+    password: string
+    courseName: string
+  }
+  interface IAddress {
+    add_street: string,
+    add_city: string,
+    add_neighborhood: string,
+    add_number: string,
+    add_complement: string,
+    studentName: string | null,
+  }
+  interface ISubjects {
+    sub_name: string,
+    sub_shift: string,
+    sub_start_time: string,
+    sub_stop_time: string,
+    sub_description: string,
+    sub_mandatory: string
+    sub_day: string
+  }
+  interface Iprof {
+    profName: string | null
+    subject: string[] | null;
+  }
+  interface IProfs {
+    prof_name: string
+    email: string
+    password: string
+    prof_phone: string
+    prof_status: string
+  }
+  interface ISubjectCourse {
+    subjectName: string | null,
+    courseName: string,
+  }
+  interface IRequisite{
+    preRequisite: string
+    subjectName:any
+  }
+  interface Imessage {
+    message: string
+    type: string
+  }
 }
 
