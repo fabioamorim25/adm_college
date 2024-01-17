@@ -1,20 +1,15 @@
 'use client'
 
 import React, { useState } from "react";
-import { Imessage } from "admin";//tipagem
+import { ICourses, Imessage } from "admin";//tipagem
 import { useRouter } from "next/navigation";
 
 import Alert from "./ui/Alert";
 
 
-interface ICourses {
-  cou_name: string
-}
-
 export default function FormRegisterCourse() {
 
-  const [data, setData] = useState<ICourses>({ cou_name: "" })
-
+  const [data, setData] = useState<Partial<ICourses>>({ cou_name: "" })
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
   const router = useRouter()
