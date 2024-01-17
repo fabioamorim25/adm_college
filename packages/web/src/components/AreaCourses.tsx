@@ -22,6 +22,7 @@ export default function AreaCourse() {
   const [search, setSearch] = useState<ISearch>({ name: '' });
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [tab, setTab] = useState(false)
 
 
@@ -62,7 +63,10 @@ export default function AreaCourse() {
     const courseSelect = coursesFilteredSearch().length;
     return courseSelect > 0 ? `${courseSelect} Curso selecionado` : `${totalCourses} Curso`;
   }
-
+  // receber o id do curso selecionado
+  function handleEditClick(courseId: string) {
+    setSelectedCourseId(courseId);
+  };
 
   useEffect(() => {
     ListCourses()
@@ -88,8 +92,8 @@ export default function AreaCourse() {
         {search.name.length > 0 ? (
           //RETORNE A LISTA FILTRADA (filteredCourses)
           coursesFilteredSearch().map((course) => (
-            <div>
-              <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
+            <div key={course.id}>
+              <div className="border-t-2 border-b-2 p-4 flex justify-between items-center">
                 <div className="flex flex-col">
                   <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
                   <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
@@ -100,23 +104,24 @@ export default function AreaCourse() {
                     </span>
                     <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
                       <Clock1 strokeWidth={0.75} size={25} className="px-1" />
-                      {course.createdAt}
+                      {course.updatedAt}
                     </span>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => setTab(!tab)}
+                  onClick={() => handleEditClick(course.id)}
                   className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
                 >
                   <span className="px-2">Editar</span>
                   <Pencil strokeWidth={0.75} size={15} />
                 </button>
               </div>
-              {/* PEGAR NOVO NOME DO CURSO*/}
-              {tab && (
-                <main className="h-32 my-1 bg-gray-900">
-                  <FormEditCourse />
+
+              {/* PEGAR O ID E O NOVO NOME DO CURSO*/}
+              {selectedCourseId === course.id && (
+                <main className="h-24 rounded bg-gray-900">
+                  <FormEditCourse courseId={selectedCourseId} />
                 </main>
               )}
             </div>
@@ -125,8 +130,8 @@ export default function AreaCourse() {
         ) : (
           //RETORNE A LISTA ORIGIAL (courses)
           courses.map((course) => (
-            <div>
-              <div key={course.id} className="border-t-2 border-b-2 p-4 flex justify-between items-center">
+            <div key={course.id}>
+              <div className="border-t-2 border-b-2 p-4 flex justify-between items-center">
                 <div className="flex flex-col">
                   <h1 className="text-purple-700 text-2xl font-bold font-alt">{course.cou_name}</h1>
                   <span className="text-gray-900 py-2">O curso {course.cou_name} possui {course.amount} matérias associadas</span>
@@ -137,23 +142,23 @@ export default function AreaCourse() {
                     </span>
                     <span className="text-green-600 font-sans italic pt-1 flex items-center text-sm rounded-full">
                       <Clock1 strokeWidth={0.75} size={25} className="px-1" />
-                      {course.createdAt}
+                      {course.updatedAt}
                     </span>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => setTab(!tab)}
+                  onClick={() => handleEditClick(course.id)}
                   className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
                 >
                   <span className="px-2">Editar</span>
                   <Pencil strokeWidth={0.75} size={15} />
                 </button>
               </div>
-              {/* PEGAR NOVO NOME DO CURSO*/}
-              {tab && (
-                <main className="h-32 my-1 bg-gray-900">
-                  <FormEditCourse />
+              {/* PEGAR O ID E O NOVO NOME DO CURSO*/}
+              {selectedCourseId === course.id && (
+                <main className="h-24 rounded bg-gray-900">
+                  <FormEditCourse courseId={selectedCourseId} />
                 </main>
               )}
             </div>
