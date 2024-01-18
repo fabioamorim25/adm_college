@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { Pencil, Clock1 } from 'lucide-react';
 import { ICourses, Imessage } from "admin";//tipagem curso
 
-import ActiveDisabled from "./ui/ActiveDisabled";
-import Alert from "./ui/Alert";
-import Searcher from "./ui/Search";
 import FormEditCourse from "./FormEditCourse";
+import ActiveDisabled from "./ui/ActiveDisabled";
+import Searcher from "./ui/Search";
+import Alert from "./ui/Alert";
 
 
 
@@ -23,7 +23,6 @@ export default function AreaCourse() {
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
-  const [tab, setTab] = useState(false)
 
 
   // LISTAR OS CURSOS
@@ -64,8 +63,12 @@ export default function AreaCourse() {
     return courseSelect > 0 ? `${courseSelect} Curso selecionado` : `${totalCourses} Curso`;
   }
   // receber o id do curso selecionado
-  function handleEditClick(courseId: string) {
-    setSelectedCourseId(courseId);
+  function handleEditClick(courseId: string){
+    return setSelectedCourseId(prevId => (prevId === courseId ? null : courseId));
+  };
+  // resultado da edição do curso(vindo do componente filho form)
+  function handleResultadEdit({ message, type }:Imessage){   
+    return setMsg({ message, type });
   };
 
   useEffect(() => {
@@ -111,17 +114,16 @@ export default function AreaCourse() {
 
                 <button
                   onClick={() => handleEditClick(course.id)}
-                  className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto"
-                >
+                  className="flex items-center mb-10 p-1 px-4 bg-gray-700 hover:bg-gray-200 rounded-md text-sm text-white-50 font-alt ml-auto">
                   <span className="px-2">Editar</span>
                   <Pencil strokeWidth={0.75} size={15} />
                 </button>
               </div>
 
-              {/* PEGAR O ID E O NOVO NOME DO CURSO*/}
+              {/* PEGAR NOVO NOME DO CURSO*/}
               {selectedCourseId === course.id && (
                 <main className="h-24 rounded bg-gray-900">
-                  <FormEditCourse courseId={selectedCourseId} />
+                  <FormEditCourse courseId={selectedCourseId} props={handleResultadEdit}/>
                 </main>
               )}
             </div>
@@ -155,10 +157,10 @@ export default function AreaCourse() {
                   <Pencil strokeWidth={0.75} size={15} />
                 </button>
               </div>
-              {/* PEGAR O ID E O NOVO NOME DO CURSO*/}
+              {/* PEGAR NOVO NOME DO CURSO*/}
               {selectedCourseId === course.id && (
                 <main className="h-24 rounded bg-gray-900">
-                  <FormEditCourse courseId={selectedCourseId} />
+                  <FormEditCourse courseId={selectedCourseId} props={handleResultadEdit} />
                 </main>
               )}
             </div>
