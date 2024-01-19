@@ -23,7 +23,7 @@ export const createAddress = async (add_street, add_city, add_neighborhood, add_
                 add_neighborhood: false,
                 add_number: false,
                 add_complement: false,
-                studentName: false
+                studentName: true,
             }
         });
 
@@ -67,7 +67,7 @@ export const editAddress = async (id, data) => {
 
             return { message: 'O Endereço foi editado com sucesso', type: 'success' }
         } else
-            return { message: 'Registro não encontrado', type: 'success' }
+            return { message: 'Registro não encontrado', type: 'error' }
 
     } catch (error) {
         return { message: 'Tivemos um erro ao editar o endereço', type: 'error' }

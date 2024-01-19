@@ -9,22 +9,29 @@ export const addressValidation = yup.object({
     add_neighborhood: yup.string(),
     add_number: yup.string().required('O número da casa é obrigatório'),
     add_complement: yup.string(),
-    studentName:yup.string().required('O nome do aluno é obrigatório'),
+    studentName: yup.string().required('O nome do aluno é obrigatório'),
 });
 
 // VALIDAR SE JÁ EXISTE UM ENDEREÇO CADASTRADO
-export const uniqueAddress = async (add_street,studentName)=>{
-    const address = await prisma.address.findFirst({
-        where:{
-            AND: [
-                { add_street: add_street },
-                { studentName:studentName }
-            ]
-        }
-    })
-    
-    if(address)
-        return { message: "Já existe um endereço para o aluno", type: "error" }
+export const uniqueAddress = async (add_street, studentName) => {
+    try {
+        const address = await prisma.address.findFirst({
+            where: {
+                AND: [
+                    { add_street: add_street },
+                    { studentName: studentName }
+                ]
+            }
+        })
 
-    return null
+        if (address)
+            return { message: "Já existe um endereço para o aluno", type: "error" }
+
+        return null
+
+    } catch (error) {
+        return { message: 'Erro na validação o endereço', type: 'error' }
+    } finally {
+        await prisma.$disconnect();
+    }
 }
