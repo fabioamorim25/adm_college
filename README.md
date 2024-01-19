@@ -56,8 +56,8 @@
   - [x] Registra Professor 
   - [] Editar Professor
   - [] Deletar Professor
-  - [] Registar curso
-  - [] Editar curso
+  - [x] Registar curso
+  - [x] Editar curso
   - [] Deletar curso
   - [x] Associar máteria a um curso
   - [x] Registra Aluno
