@@ -17,13 +17,22 @@ export default function FormAssociationProfSubject() {
 
   //LISTA DE MATÉRIAS
   async function listSubjects() {
-    const response = await fetch('/api/profSubject/listSubjects', {
+    const response = await fetch('/api/profSubject/listNameSubjects', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
     const subjects = await response.json()
+
+    if(subjects.type === 'error'){
+        return setMsg({
+          message: subjects.message,
+          type: subjects.type
+        })
+      }
+    
     return setListSub(subjects)
   }
+  
   useEffect(() => {
     if (profName) {
       listSubjects()

@@ -2,8 +2,8 @@ import {
     createSubjects,
     createSubjectMandatory,
     createAssociateSubjectCourse,
-    listSubjects,
     getSubjectsName,
+    getNameSubjects,
 } from "../repository/subject.Repository";
 
 import {
@@ -115,9 +115,9 @@ export const subjectMandatory = async (req, res) => {
 
 
 // LISTAR TODAS AS MATÉRIAS
-export const getSubjects = async (req, res) => {
+export const listNameSubjects = async (req, res) => {
     try {
-        const subjects = await listSubjects()
+        const subjects = await getNameSubjects()
         return res.status(201).json(subjects)
     } catch (error) {
         return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })

@@ -106,7 +106,7 @@ export const createSubjectMandatory = async(subjectName,preRequisite)=>{
 }
 
 // LISTAR MATÉRIAS
-export const listSubjects = async()=>{
+export const getNameSubjects = async()=>{
     const subjects = await prisma.subject.findMany({
         select:{
             id:false,
@@ -122,6 +122,4 @@ export const listSubjects = async()=>{
         }
     })
     return subjects
-     //filtra o obj para retornar a chave e o valor das matérias
-    //  return subjects.map(subject => ({ sub_name: subject.sub_name }));
 }

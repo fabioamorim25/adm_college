@@ -3,7 +3,7 @@ import {
     subjectMandatory, 
     associateSubjectCourse,
     allCourseSubjectNames,
-    getSubjects,
+    listNameSubjects,
 } from "../controller/subject.Controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
@@ -19,7 +19,7 @@ const subjectRoutes = app=>{
         app.post('/associate_Subject_Course',authTokenValidate,roleAdmin,associateSubjectCourse);
         app.post('/allCourseSubjectNames',authTokenValidate,roleAdmin,allCourseSubjectNames);
 
-        app.get('/getSubjects',authTokenValidate,roleAdmin,getSubjects);
+        app.get('/listNameSubjects',authTokenValidate,roleAdmin,listNameSubjects);
 
      
     
