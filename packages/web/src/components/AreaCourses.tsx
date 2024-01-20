@@ -27,7 +27,7 @@ export default function AreaCourse() {
 
   // LISTAR OS CURSOS
   async function ListCourses() {
-    const response = await fetch('/api/courseSubject/listCourse', {
+    const response = await fetch('/api/getAll/listInfoCourses', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -40,7 +40,7 @@ export default function AreaCourse() {
         type: dataCourse.type
       })
     }
-
+    
     return setCourse(dataCourse)
   }
   // nome recebido do search
