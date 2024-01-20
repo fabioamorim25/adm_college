@@ -56,7 +56,7 @@ export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
 }
 
 // LISTAR TODAS AS MATÉRIAS DE UM CURSO
-export const getSubject = async (courseName) => {
+export const getSubjectsName = async (courseName) => {
     const subjects = await prisma.course_Subject.findMany({
         where: {
           courseName: courseName
