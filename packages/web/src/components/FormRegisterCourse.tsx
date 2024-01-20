@@ -10,6 +10,7 @@ import Alert from "./ui/Alert";
 export default function FormRegisterCourse() {
 
   const [data, setData] = useState<Partial<ICourses>>({ cou_name: "" })
+
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
   const router = useRouter()
