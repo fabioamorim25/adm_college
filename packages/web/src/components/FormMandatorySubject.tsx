@@ -9,8 +9,8 @@ import Alert from "./ui/Alert"
 
 export function FormMandatorySubject() {
   //curso no contexto
-  const { courseName,subjectName } = useWorkDataContext();
-  
+  const { courseName, subjectName } = useWorkDataContext();
+
   //lista de matérias
   const [subject, setSubjects] = useState<ISubjects[]>([])
   // dados para enviar
@@ -21,10 +21,14 @@ export function FormMandatorySubject() {
 
   //1° REQUISIÇÃO PARA PEGAR TODOS AS MATÉRIAS DE UM CURSO (Passar o nome do curso)
   async function getSubjects() {
-    if (!courseName)
-      return console.log("front front", courseName)    
+    if (!courseName) {
+      return setMsg({
+        message: 'Curso não foi definido',
+        type: 'error'
+      })
+    }
 
-    const listSubject = await fetch('/api/courseSubject/listSubject', {
+    const listSubject = await fetch('/api/courseSubject/allCourseSubjectNames', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ courseName: courseName })
@@ -56,29 +60,29 @@ export function FormMandatorySubject() {
     })
     //pegar o resultado da requisição
     const response = await request.json()
-    
-    if(response)
+
+    if (response)
       return setMsg({
-        message:response.message,
-        type:response.type
-    })
+        message: response.message,
+        type: response.type
+      })
   }
 
 
   return (
     <>
       <form onSubmit={onRegisterRequisite} className="m-4 p-6 border rounded shadow">
-        
+
         {subjectName === null ? (
-            <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">A Matéria possui algum pre-requisito para ser cursada: (Não obrigatório)</label>
+          <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">A Matéria possui algum pre-requisito para ser cursada: (Não obrigatório)</label>
         ) : (
-            <label htmlFor="courseName" className="block  font-alt text-gray-800">
-              A Matéria <span className=" text-purple-700 text-lg">{subjectName}</span> possui algum pre-requisito para ser cursada:
+          <label htmlFor="courseName" className="block  font-alt text-gray-800">
+            A Matéria <span className=" text-purple-700 text-lg">{subjectName}</span> possui algum pre-requisito para ser cursada:
           </label>
         )
         }
 
-       {msg.message && <Alert message={msg.message} type={msg.type} />}
+        {msg.message && <Alert message={msg.message} type={msg.type} />}
 
         <div className="mb-4">
           <select
