@@ -50,6 +50,7 @@ export const editCourses = async (id, cou_name, departamentId) => {
                 departamentId: false,
                 createdAt: false,
                 updatedAt: true,
+
             }
         });
 
@@ -76,6 +77,33 @@ export const getCourse = async () => {
         })
 
         return courses
+
+    } catch (error) {
+        return
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+// VER TODOS AS INFORMAÇÕES DOS CURSOS
+export const infoCourses = async () => {
+    try {
+        const infoCountCourses = await prisma.course.findMany({
+            select: {
+                id: true,
+                cou_name: true,
+                createdAt: false,
+                updatedAt: true,
+                departamentId: false,
+                _count: {
+                    select: {
+                        Course_Subject: true,
+                    },
+                },
+            },
+        });
+        
+        return infoCountCourses;
 
     } catch (error) {
         return

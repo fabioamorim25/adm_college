@@ -130,7 +130,7 @@ export default function AreaCourse() {
           ))
 
         ) : (
-          //RETORNE A LISTA ORIGIAL (courses)
+          // RETORNE A LISTA ORIGIAL (courses)
           courses.map((course) => (
             <div key={course.id}>
               <div className="border-t-2 border-b-2 p-4 flex justify-between items-center">
