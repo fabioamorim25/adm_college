@@ -12,7 +12,7 @@ import Alert from "./ui/Alert";
 
 export default function FormRegisterSubject() {
 
-  const [data, setData] = useState<ISubjects>({ sub_name: "", sub_shift: "", sub_start_time: "", sub_stop_time: "", sub_description: "", sub_mandatory: "true", sub_day: "" })
+  const [data, setData] = useState<Partial<ISubjects>>({ sub_name: "", sub_shift: "", sub_start_time: "", sub_stop_time: "", sub_description: "", sub_mandatory: "true", sub_day: "" })
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
   const { setSubjectName } = useWorkDataContext();
 
@@ -43,21 +43,22 @@ export default function FormRegisterSubject() {
         type: response.type
       })
       // matéria para o contexto
-      if (response.type == 'success'){
-        setSubjectName(
-          data.sub_name
-        )
-        setData({
-          sub_name: "",
-          sub_shift: "",
-          sub_start_time: "",
-          sub_stop_time: "",
-          sub_description: "",
-          sub_mandatory: "true",
-          sub_day: ""
-        })
+      if (response.type == 'success') {
+
+        if (data.sub_name !== undefined) {
+          setSubjectName(data.sub_name);
+
+          return setData({
+            sub_name: "",
+            sub_shift: "",
+            sub_start_time: "",
+            sub_stop_time: "",
+            sub_description: "",
+            sub_mandatory: "true",
+            sub_day: ""
+          })
+        }
       }
-       return   
     }
   }
 
