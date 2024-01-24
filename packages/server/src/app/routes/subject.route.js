@@ -4,6 +4,7 @@ import {
     associateSubjectCourse,
     allCourseSubjectNames,
     listNameSubjects,
+    listInfoSubjects,
 } from "../controller/subject.Controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
@@ -20,6 +21,7 @@ const subjectRoutes = app=>{
         app.post('/allCourseSubjectNames',authTokenValidate,roleAdmin,allCourseSubjectNames);
 
         app.get('/listNameSubjects',authTokenValidate,roleAdmin,listNameSubjects);
+        app.get('/listInfoSubjects',authTokenValidate,roleAdmin, listInfoSubjects);
 
      
     

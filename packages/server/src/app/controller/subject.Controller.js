@@ -1,9 +1,12 @@
-import {    
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import {
     createSubjects,
     createSubjectMandatory,
     createAssociateSubjectCourse,
     getSubjectsName,
     getNameSubjects,
+    infoSubjects,
 } from "../repository/subject.Repository";
 
 import {
@@ -87,7 +90,6 @@ export const allCourseSubjectNames = async (req, res) => {
     }
 }
 
-
 //OBRIGATORIEDADE DA MATERIA
 export const subjectMandatory = async (req, res) => {
 
@@ -112,13 +114,44 @@ export const subjectMandatory = async (req, res) => {
     }
 }
 
-
-
 // LISTAR TODAS AS MATÉRIAS
 export const listNameSubjects = async (req, res) => {
     try {
         const subjects = await getNameSubjects()
         return res.status(201).json(subjects)
+    } catch (error) {
+        return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
+    }
+}
+
+// LISTAR INFORMAÇÕES DAS MATÉRIAS
+export const listInfoSubjects = async (req, res) => {
+    try {
+        const info = await infoSubjects()
+
+        const handlingInfo = info.map((subject) => {
+            const { id, sub_name, sub_description, sub_shift, sub_start_time, sub_stop_time, updatedAt, _count } = subject;
+
+            function setStatus() {
+                if (_count.Course_Subject > 0)
+                    return true
+                return false
+            }
+
+            return {
+                id,
+                sub_name,
+                sub_description,
+                sub_shift,
+                amount: _count.Course_Subject,
+                sub_start_time: format(sub_start_time, 'EEEE, HH:mm', { locale: ptBR }),
+                sub_stop_time: format(sub_stop_time, 'HH:mm'),
+                updatedAt: format(updatedAt, 'dd-MM-yyyy HH:mm'),
+                status: setStatus(),
+            }
+        })
+
+        res.status(201).json(handlingInfo)
     } catch (error) {
         return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
     }

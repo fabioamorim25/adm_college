@@ -3,33 +3,33 @@ import { prisma } from '../../lib/prismaClient'
 
 
 // CRIAR O DOCUMENTO E RETONAR O DADO
-export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description,sub_mandatory, departamentId) => {
+export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory, departamentId) => {
     // Converter o valor de sub_mandatory para boolean
     if (sub_mandatory === "true") sub_mandatory = true;
     if (sub_mandatory === "false") sub_mandatory = false;
-   
+
     const subject = await prisma.subject.create({
         data: {
             sub_name,
-            sub_shift,       
+            sub_shift,
             sub_start_time: `${sub_start_time}:00Z`,
-            sub_stop_time: `${sub_stop_time}:00Z`,   
-            sub_description, 
+            sub_stop_time: `${sub_stop_time}:00Z`,
+            sub_description,
             sub_mandatory,
             departament: {
                 connect: {
-                    id:departamentId
+                    id: departamentId
                 }
             }
         },
         select: {
             id: true,
             sub_name: true,
-            sub_shift:true,       
-            sub_start_time:true,  
-            sub_stop_time:true,   
-            sub_description:true, 
-            sub_mandatory:true,
+            sub_shift: true,
+            sub_start_time: true,
+            sub_stop_time: true,
+            sub_description: true,
+            sub_mandatory: true,
             departamentId: true,
         }
     });
@@ -39,16 +39,16 @@ export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_st
 }
 
 // ASSOCIAR UMA MATERIA A UM CURSO
-export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
+export const createAssociateSubjectCourse = async (subjectName, courseName) => {
     const associate = await prisma.course_Subject.create({
-        data:{
+        data: {
             subjectName,
-            courseName    
+            courseName
         },
-        select:{
-            id:true,
-            subjectName:true,
-            courseName:true
+        select: {
+            id: true,
+            subjectName: true,
+            courseName: true
         }
     })
 
@@ -59,67 +59,98 @@ export const createAssociateSubjectCourse = async(subjectName,courseName)=>{
 export const getSubjectsName = async (courseName) => {
     const subjects = await prisma.course_Subject.findMany({
         where: {
-          courseName: courseName
+            courseName: courseName
         },
         select: {
-          subject: {
-            select: {
-                id:false,
-                sub_name:true,
-                sub_shift:false,
-                sub_start_time:false,
-                sub_stop_time:false,
-                sub_description:false,
-                sub_mandatory:false,
-                createdAt:false,
-                updatedAt:false,
-                departamentId:false, 
+            subject: {
+                select: {
+                    id: false,
+                    sub_name: true,
+                    sub_shift: false,
+                    sub_start_time: false,
+                    sub_stop_time: false,
+                    sub_description: false,
+                    sub_mandatory: false,
+                    createdAt: false,
+                    updatedAt: false,
+                    departamentId: false,
+                }
             }
-          }
         }
-      })
-   
+    })
+
     //filtra o obj para retornar a chave e o valor das matérias
     return subjects.map(subject => ({ sub_name: subject.subject.sub_name }));
 }
 
-
 //OBRIGATORIEDADE DA MATERIA
-export const createSubjectMandatory = async(subjectName,preRequisite)=>{
+export const createSubjectMandatory = async (subjectName, preRequisite) => {
     const mandayory = await prisma.subjects_Subjects.create({
-        data:{
-            subject:{
-                connect:{
+        data: {
+            subject: {
+                connect: {
                     sub_name: subjectName
                 }
             },
             preRequisite
         },
-        select:{
-            id:true,
-            subjectName:true,
-            preRequisite:true,
+        select: {
+            id: true,
+            subjectName: true,
+            preRequisite: true,
         }
     })
 
-    return ;
+    return;
 }
 
 // LISTAR MATÉRIAS
-export const getNameSubjects = async()=>{
+export const getNameSubjects = async () => {
     const subjects = await prisma.subject.findMany({
-        select:{
-            id:false,
-            sub_name:true,
-            sub_shift:false,
-            sub_start_time:false,
-            sub_stop_time:false,
-            sub_description:false,
-            sub_mandatory:false,
-            createdAt:false,
-            updatedAt:false,
-            departamentId:false,     
+        select: {
+            id: false,
+            sub_name: true,
+            sub_shift: false,
+            sub_start_time: false,
+            sub_stop_time: false,
+            sub_description: false,
+            sub_mandatory: false,
+            createdAt: false,
+            updatedAt: false,
+            departamentId: false,
         }
     })
     return subjects
+}
+
+// LISTAR INFORMAÇÕES DAS MATÉRIAS
+export const infoSubjects = async () => {
+    try {
+        const subjects = await prisma.subject.findMany({
+            select: {
+                id: true,
+                sub_name: true,
+                sub_shift: true,
+                sub_start_time: true,
+                sub_stop_time: true,
+                sub_description: true,
+                sub_mandatory: false,
+                createdAt: false,
+                updatedAt: true,
+                departamentId: false,
+                _count: {
+                    select: {
+                        Course_Subject: true,
+                    },
+                },
+            },
+        });
+
+        return subjects;
+
+    } catch (error) {
+        return
+    } finally {
+        await prisma.$disconnect();
+    }
 }
