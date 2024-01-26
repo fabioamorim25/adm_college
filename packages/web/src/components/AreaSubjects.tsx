@@ -1,17 +1,21 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { ISubjects, Imessage } from "admin";
+import { Clock1, Pencil } from "lucide-react";
 
+import { ISubjects, Imessage } from "admin";
 import Searcher from "./ui/Search";
 import Alert from "./ui/Alert";
 import ActiveDisabled from "./ui/ActiveDisabled";
-import { Clock1, Pencil } from "lucide-react";
-import FormEditSubject from "./FormEditSubject";
+import ModelFormEditSubject from "./ModelFormEditSubject";
 
 
 interface ISearch {
   name: string;
+}
+interface IModel {
+  open: boolean;
+  modelId: number | null;
 }
 
 
@@ -21,7 +25,9 @@ export default function AreaSubjects() {
   const [subjects, setSubject] = useState<ISubjects[]>([])
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' })
+
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
+  const [model, setModel] = useState<IModel>({ open: false, modelId: null })
 
   // nome recebido do search
   function handleSearchChange(value: string) {
@@ -70,6 +76,13 @@ export default function AreaSubjects() {
     return setMsg({ message, type });
   };
 
+  // MODEL:abrir e fechar modal
+  function openModal(formId: number) {
+    return setModel({ open: true, modelId: formId })
+  };
+  function closeModal() {
+    return setModel({ open: false, modelId: null })
+  };
 
 
   useEffect(() => {
@@ -131,8 +144,27 @@ export default function AreaSubjects() {
               </div>
               {/* PEGAR NOVO NOME DA MATÉRIA*/}
               {selectedSubjectId === subject.id && (
-                <main className="h-24 rounded bg-gray-900">
-                  <FormEditSubject subjectId={selectedSubjectId} props={handleResultadEdit} />
+                <main className="h-10 p-1 rounded bg-gray-900 flex items-center justify-center">
+
+                  <button onClick={() => openModal(1)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar dados da matéria
+                  </button>
+
+                  <button onClick={() => openModal(2)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar Associação com um curso
+                  </button>
+
+                  <button onClick={() => openModal(3)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar Obrigatoriedade com outra matéria
+                  </button>
+
+                  {model.open === true && (
+                    <ModelFormEditSubject subjectId={selectedSubjectId} statusMsg={handleResultadEdit} model={model} onClose={closeModal} />
+                  )}
+
                 </main>
               )}
             </div>
@@ -172,11 +204,31 @@ export default function AreaSubjects() {
                 </button>
               </div>
 
-              {/* PEGAR NOVO NOME DA MATÉRIA*/}
+              {/* COLOCAR NOS DADOS DA MATÉRIA*/}
               {selectedSubjectId === subject.id && (
-                <main className="h-24 rounded bg-gray-900">
-                  <FormEditSubject subjectId={selectedSubjectId} props={handleResultadEdit} />
+                <main className="h-10 p-1 rounded bg-gray-900 flex items-center justify-center">
+
+                  <button onClick={() => openModal(1)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar dados da matéria
+                  </button>
+
+                  <button onClick={() => openModal(2)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar Associação com um curso
+                  </button>
+
+                  <button onClick={() => openModal(3)}
+                    className="flex m-1 p-1 bg-gray-700 hover:bg-purple-600 rounded-md text-sm text-white-50 font-alt ">
+                    Editar Obrigatoriedade com outra matéria
+                  </button>
+
+                  {model.open === true && (
+                    <ModelFormEditSubject subjectId={selectedSubjectId} statusMsg={handleResultadEdit} model={model} onClose={closeModal} />
+                  )}
+
                 </main>
+
               )}
             </div>
           ))
