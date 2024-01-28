@@ -8,7 +8,6 @@ import FormEditSubject from "./FormEditSubject";
 
 interface IFormProps {
   subjectId: string;
-  statusMsg: (res: { message: string; type: string }) => void;
   model: { open: boolean, modelId: number | null };
   onClose: (event?: React.SyntheticEvent) => void;
 }
@@ -16,7 +15,7 @@ interface IFormProps {
 
 Model.setAppElement('main');
 
-export default function ModelFormEditSubject({ subjectId, statusMsg, model, onClose }: IFormProps) {
+export default function ModelFormEditSubject({ subjectId, model, onClose }: IFormProps) {
 
   return (
     <main>
