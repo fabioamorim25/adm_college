@@ -14,13 +14,13 @@ export function FormMandatorySubject() {
   //lista de matérias
   const [subject, setSubjects] = useState<ISubjects[]>([])
   // dados para enviar
-  const [data, setData] = useState<IRequisite>({ preRequisite: '', subjectName }) // [preRequisite materias vindas do back] [nameSubject esta no contexto]
+  const [data, setData] = useState<IRequisite>({ preRequisite: '', subjectName }); // [preRequisite materias vindas do back] [nameSubject esta no contexto]
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
 
   //1° REQUISIÇÃO PARA PEGAR TODOS AS MATÉRIAS DE UM CURSO (Passar o nome do curso)
-  async function getSubjects() {
+  async function getSubjects(courseName: string) {
     if (!courseName) {
       return setMsg({
         message: 'Curso não foi definido',
@@ -36,9 +36,10 @@ export function FormMandatorySubject() {
     const sub = await listSubject.json()
     return setSubjects(sub)
   }
+
   useEffect(() => {
     if (courseName) {
-      getSubjects();
+      getSubjects(courseName);
     }
   }, [courseName]);
 
@@ -46,10 +47,9 @@ export function FormMandatorySubject() {
   //2° REQUSIÇÃO PARA ASSOCIAR A MATÉRIA DO CONTEXTO A UMA MATÉRIA (Passar o nome das duas máterias)
   async function handleRegister(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-    setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value, subjectName }
-    });
+    setData({ preRequisite: e.target.value, subjectName });
   }
+
   async function onRegisterRequisite(event: React.SyntheticEvent) {
     event.preventDefault()
     //REQUISIÇÃO PARA O BACKEND DO NEXT PARA REGISTRA O CURSO
@@ -60,7 +60,6 @@ export function FormMandatorySubject() {
     })
     //pegar o resultado da requisição
     const response = await request.json()
-
     if (response)
       return setMsg({
         message: response.message,
