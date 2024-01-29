@@ -1,7 +1,7 @@
 'use client'
 
 
-import {createContext, useContext, useState} from 'react'
+import { createContext, useContext, useState} from 'react'
 import { ContextAdminProps } from 'admin'
 
 
@@ -26,7 +26,7 @@ const WorkDataContext = createContext<ContextAdminProps>({
 export function WorkDataContextPorvider({children}:any){
   // criar a variavel do dado
   const [subjectName, setSubjectName] = useState<string | null>(null)
-  const [courseName,setCourseName] = useState<string | null>(null)
+  const [courseName,setCourseName] = useState<string | null|undefined>(null)
   const [profName, setProfName] = useState<string| null>(null)
   const [studentName, setStudentName] = useState<string| null>(null)
   
