@@ -14,7 +14,7 @@ export default function FormAssociationSubjectCourse() {
 
   const [courses, setCourses] = useState<ICourses[]>([]);
 
-  const [data, setData] = useState<ISubjectCourse>({ subjectName:"", courseName: "" })
+  const [data, setData] = useState<Partial<ISubjectCourse>>({ subjectName:"", courseName: "" })
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
