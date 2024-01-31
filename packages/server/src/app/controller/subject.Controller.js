@@ -7,6 +7,8 @@ import {
     getSubjectsName,
     getNameSubjects,
     infoSubjects,
+    updatedSubject,
+    getDataSubject,
 } from "../repository/subject.Repository";
 
 import {
@@ -154,5 +156,71 @@ export const listInfoSubjects = async (req, res) => {
         res.status(201).json(handlingInfo)
     } catch (error) {
         return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
+    }
+}
+
+
+// MOSTRA OS DADOS DA MATÉRIA ESCOLHIDA
+export const getSubject = async (req, res) => {
+    const subjectId = req.query.id;
+    try {
+        const subject = await getDataSubject(subjectId)
+
+        const formatResponse = {
+            sub_name: subject.sub_name,
+            sub_description: subject.sub_description,
+            sub_shift: subject.sub_shift,
+            sub_start_time: format(subject.sub_start_time, "yyyy-MM-dd'T'HH:mm"),
+            sub_stop_time: format(subject.sub_stop_time, "yyyy-MM-dd'T'HH:mm"),
+            sub_mandatory: `${subject.sub_mandatory}`,
+        }
+
+        return res.status(200).json(formatResponse)
+    } catch (error) {
+        return res.status(200).json({ message: "Tivemos um erro na listagem dos dados", type: "error" })
+    }
+}
+// EDITAR MATÉRIAS
+export const editSubjects = async (req, res) => {
+    const id = req.query.id;
+    const { departamentId, numberModel, resultData } = req.body;
+
+
+    try {
+        async function filterDataNecessary(numberModel, resultData) {
+
+            if (numberModel === 1) {
+                const { sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory } = resultData;
+
+                const nameUnique = await subjectUnic(sub_name)
+                if (nameUnique) {
+                    return { message: nameUnique.message, type: nameUnique.type }
+                }
+                return { sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory };
+            }
+
+            // if (numberModel === 2) {
+            //     const { subjectId, courseId } = data;
+            //     return { subjectId, courseId };
+            // }
+            // if (numberModel === 3) {
+            //   const {  } = data;
+            //   return {  };
+            // }
+
+            return { message: "Dados invalidos", type: "error" }
+        }
+
+        const data = await filterDataNecessary(numberModel, resultData);
+        if (data.type === "error") {
+            return res.status(404).json(data)
+        }
+
+       
+        const updated = await updatedSubject(id, numberModel, departamentId, data)
+
+        return res.status(200).json(updated)
+    } catch (error) {
+        return res.status(404).json(error)
     }
 }

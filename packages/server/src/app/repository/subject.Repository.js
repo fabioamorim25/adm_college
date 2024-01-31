@@ -154,3 +154,104 @@ export const infoSubjects = async () => {
         await prisma.$disconnect();
     }
 }
+
+// VER DADOS DE UMA MATÉRIA
+export const getDataSubject = async (subjectId) => {
+    try {
+        const subject = await prisma.subject.findUnique({
+            where: {
+                id: subjectId
+            },
+            select: {
+                id: false,
+                sub_name: true,
+                sub_shift: true,
+                sub_start_time: true,
+                sub_stop_time: true,
+                sub_description: true,
+                sub_mandatory: true,
+                createdAt: false,
+                updatedAt: false,
+                departamentId: false,
+            }
+        })
+        return subject
+    } catch (error) {
+        return { message: "Tivemos um erro na listagem dos dados", type: "error" }
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+// EDITAR A MATÉRIA
+export const updatedSubject = async (id, numberModel, departamentId, data) => {
+    try {
+        const updateDataSubject = async (id, departamentId, data) => {
+            if (data.sub_mandatory === "true") data.sub_mandatory = true;
+            if (data.sub_mandatory === "false") data.sub_mandatory = false;
+
+            const update = await prisma.subject.update({
+                where: {
+                    id
+                },
+                data: {
+                    sub_name: data.sub_name,
+                    sub_shift: data.sub_shift,
+                    sub_start_time: `${data.sub_start_time}:00.000Z`,
+                    sub_stop_time: `${data.sub_stop_time}:00.000Z`,
+                    sub_description: data.sub_description,
+                    sub_mandatory: data.sub_mandatory,
+                    departament: {
+                        connect: {
+                            id: departamentId
+                        }
+                    }
+                },
+                select: {
+                    id: true,
+                    sub_name: true,
+                    sub_shift: true,
+                    sub_start_time: true,
+                    sub_stop_time: true,
+                    sub_description: true,
+                    sub_mandatory: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    departamentId: true
+                }
+            });
+
+            if (!update) {
+                return { message: "Erro na edição dos dados", type: "error" };
+            }
+            return { message: "Edição realizada com sucesso", type: "success" };
+        };
+        const updateAssociation = async (id, departamentId, data) => {
+            return
+        }
+        const updateMandatory = async (id, departamentId, data) => {
+            return
+        }
+
+        //1°
+        switch (numberModel) {
+            case 1:
+                return await updateDataSubject(id, departamentId, data)
+                break;
+            case 2:
+                return await updateAssociation(id, resultData)
+                break;
+            case 3:
+                return await updateMandatory(id, resultData)
+                break;
+            default:
+                return { message: "Erro na edição dos dados", type: "error" }
+                break;
+        }
+
+    } catch (error) {
+        return { message: "Tivemos um erro na edição dos dados", type: "error" }
+    } finally {
+        await prisma.$disconnect();
+    }
+}

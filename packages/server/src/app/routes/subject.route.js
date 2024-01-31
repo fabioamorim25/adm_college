@@ -1,30 +1,36 @@
 import {
     create,
-    subjectMandatory, 
+    subjectMandatory,
     associateSubjectCourse,
     allCourseSubjectNames,
     listNameSubjects,
     listInfoSubjects,
+    editSubjects,
+    getSubject,
 } from "../controller/subject.Controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
 import { roleAdmin } from "../middlewares/roleAccessControl";
 
 
-const subjectRoutes = app=>{
+const subjectRoutes = app => {
 
     // app.use(authTokenValidate)
     // app.use(roleAdmin)
-        app.post('/subject/register',authTokenValidate,roleAdmin, create);
-        app.post('/mandatory_Subject',authTokenValidate,roleAdmin,subjectMandatory);
-        app.post('/associate_Subject_Course',authTokenValidate,roleAdmin,associateSubjectCourse);
-        app.post('/allCourseSubjectNames',authTokenValidate,roleAdmin,allCourseSubjectNames);
+    app.post('/subject/register', authTokenValidate, roleAdmin, create);
+    app.post('/mandatory_Subject', authTokenValidate, roleAdmin, subjectMandatory);
+    app.post('/associate_Subject_Course', authTokenValidate, roleAdmin, associateSubjectCourse);
+    app.post('/allCourseSubjectNames', authTokenValidate, roleAdmin, allCourseSubjectNames);
 
-        app.get('/listNameSubjects',authTokenValidate,roleAdmin,listNameSubjects);
-        app.get('/listInfoSubjects',authTokenValidate,roleAdmin, listInfoSubjects);
+    app.get('/listNameSubjects', authTokenValidate, roleAdmin, listNameSubjects);
+    app.get('/listInfoSubjects', authTokenValidate, roleAdmin, listInfoSubjects);
+    app.post('/getSubject', authTokenValidate, roleAdmin, getSubject)
 
-     
-    
+    app.put('/subject/edit', authTokenValidate, roleAdmin, editSubjects);
+
+
+
+
 }
 
 export default subjectRoutes;
