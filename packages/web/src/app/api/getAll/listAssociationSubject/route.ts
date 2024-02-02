@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
   const token = session?.token;
   const { subjectId} = await request.json();
   
-  console.log({'id recebido':subjectId})
 
   if (!token || !subjectId)
     return NextResponse.json({ message: "Metadata invalido", type: "error" })
