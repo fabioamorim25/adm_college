@@ -3,11 +3,13 @@ import Model from "react-modal";
 import { X } from 'lucide-react';
 
 import FormEditSubject from "./FormEditSubject";
+import FormEditMandatorySubject from "./FormEditMandatorySubject";
+import FormEditAssociationSubjectCourse from "./FormEditAssociationSubjectCourse";
 
 
 
 interface IFormProps {
-  subjectId: string;
+  subject: { subjectId: string, name: string };
   model: { open: boolean, modelId: number | null };
   onClose: (event?: React.SyntheticEvent) => void;
 }
@@ -15,7 +17,7 @@ interface IFormProps {
 
 Model.setAppElement('main');
 
-export default function ModelFormEditSubject({ subjectId, model, onClose }: IFormProps) {
+export default function ModelFormEditSubject({ subject, model, onClose }: IFormProps) {
 
   return (
     <main>
@@ -31,17 +33,17 @@ export default function ModelFormEditSubject({ subjectId, model, onClose }: IFor
         </div>
         {/*------------ Dados da matéria------------------------------------------------- */}
         {model.modelId === 1 && (
-          <FormEditSubject subjectId={subjectId} />
+          <FormEditSubject subjectId={subject.subjectId} />
         )
         }
         {/* ----------- Associação com um curso ----------------------------------------- */}
         {model.modelId === 2 && (
-          <></>
+          <FormEditAssociationSubjectCourse subject={subject} />
         )
         }
         {/* ----------- Obrigatoriedade com outra matéria ------------------------------- */}
         {model.modelId === 3 && (
-          <></>
+          <FormEditMandatorySubject />
         )
         }
 

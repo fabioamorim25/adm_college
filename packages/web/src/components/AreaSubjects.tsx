@@ -71,11 +71,6 @@ export default function AreaSubjects() {
   function handleEditClick(subjectId: string) {
     return setSelectedSubjectId(prevId => (prevId === subjectId ? null : subjectId));
   };
-  //FORM FILHO: resultado da edição da matéria (vindo do componente filho form)
-  function handleResultadEdit({ message, type }: Imessage) {
-    return setMsg({ message, type });
-  };
-
   // MODEL:abrir e fechar modal
   function openModal(formId: number) {
     return setModel({ open: true, modelId: formId })
@@ -162,7 +157,7 @@ export default function AreaSubjects() {
                   </button>
 
                   {model.open === true && (
-                    <ModelFormEditSubject subjectId={selectedSubjectId} statusMsg={handleResultadEdit} model={model} onClose={closeModal} />
+                    <ModelFormEditSubject subject={{ subjectId: selectedSubjectId, name: subject.sub_name }} model={model} onClose={closeModal} />
                   )}
 
                 </main>
@@ -224,7 +219,7 @@ export default function AreaSubjects() {
                   </button>
 
                   {model.open === true && (
-                    <ModelFormEditSubject subjectId={selectedSubjectId} statusMsg={handleResultadEdit} model={model} onClose={closeModal} />
+                    <ModelFormEditSubject subject={{ subjectId: selectedSubjectId, name: subject.sub_name}} model={model} onClose={closeModal} />
                   )}
 
                 </main>
