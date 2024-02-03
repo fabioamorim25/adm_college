@@ -43,7 +43,7 @@ export default function FormRegisterCourse() {
     })
     
     if(response.type === 'success')     
-      return router.push('/admin/registerSubjects')
+      return router.push('/registerSubjects')
   }
 
 
