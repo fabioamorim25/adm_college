@@ -7,21 +7,22 @@ export default function SidebarAdmin() {
     <div className=" h-screen w-72 bg-gray-700 text-white-50 p-5">
       <nav>
         <SidebarButton
-          item={{ title: 'Registros', route: '/menu' }}
+          item={{ title: 'Registros', route: '#' }}
           children={[
-            { title: 'Registra Cursos', route: '/admin/registerCourses' },
-            { title: 'Registra Matérias', route: '/admin/registerSubjects' },
-            { title: 'Registra Professores', route: '/admin/registerProfs' },
-            { title: 'Registra Aluno', route: '/admin/registerStudents' },
+            { title: 'Registra Cursos', route: '/registerCourses' },
+            { title: 'Registra Matérias', route: '/registerSubjects' },
+            { title: 'Registra Professores', route: '/registerProfs' },
+            { title: 'Registra Aluno', route: '/registerStudents' },
             // Adicione mais itens
           ]}
         />
 
         <SidebarButton
-          item={{ title: 'Editar', route: '/menu' }}
+          item={{ title: 'Editar', route: '#' }}
           children={[
-            { title: 'Ação 6', route: '#' },
-            { title: 'Ação 7', route: '#' },
+            { title: 'Editar Cursos', route: '/editCourses' },
+            { title: 'Editar Matérias', route: '/editSubjects' },
+            { title: 'Ação', route: '#' },
             // Adicione mais itens de submenu conforme necessário
           ]}
         />
