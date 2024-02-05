@@ -7,22 +7,24 @@ declare module 'admin' {
     subjectName: string | null;
     setSubjectName: React.Dispatch<SetStateAction<string | null>>
 
-    courseName:string | null
-    setCourseName:React.Dispatch<SetStateAction<string | null>>
+    courseName: string | null | undefined;
+    setCourseName: React.Dispatch<React.SetStateAction<string | null | undefined>>;
 
-    profName:string | null
-    setProfName: React.Dispatch<SetStateAction <string| null>>
 
-    studentName:string | null
-    setStudentName: React.Dispatch<SetStateAction <string| null>>
+    profName: string | null
+    setProfName: React.Dispatch<SetStateAction<string | null>>
+
+    studentName: string | null
+    setStudentName: React.Dispatch<SetStateAction<string | null>>
   }
-
+  // TIPAGEM DOS DADOS TABALHADOS PELO ADMIN
   interface ICourses {
     id: string;
     cou_name: string;
     amount: string;
     status: boolean;
     createdAt: string;
+    updatedAt: string;
   }
   interface IStudent {
     stu_name: string
@@ -45,13 +47,17 @@ declare module 'admin' {
     studentName: string | null,
   }
   interface ISubjects {
-    sub_name: string,
-    sub_shift: string,
-    sub_start_time: string,
-    sub_stop_time: string,
-    sub_description: string,
-    sub_mandatory: string
-    sub_day: string
+    id: string;
+    sub_name: string;
+    sub_description: string;
+    sub_shift: string;
+    amount: string;
+    sub_start_time: string;
+    sub_stop_time: string;
+    sub_mandatory: string;
+    sub_day: string;
+    status: boolean;
+    updatedAt: string;
   }
   interface Iprof {
     profName: string | null
@@ -65,13 +71,23 @@ declare module 'admin' {
     prof_status: string
   }
   interface ISubjectCourse {
-    subjectName: string | null,
-    courseName: string,
+    subjectName: string;
+    courseName: string[];
+    association: IAssociationProps[]
   }
-  interface IRequisite{
+  interface IAssociationProps {
+    id: string;
+    course: {
+      id: string;
+      cou_name: string;
+    }
+  }
+  interface IRequisite {
     preRequisite: string
-    subjectName:any
+    subjectName: any
   }
+
+  // TIPAGEM DOS COMPONENTES
   interface Imessage {
     message: string
     type: string
