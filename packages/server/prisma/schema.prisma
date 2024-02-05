@@ -9,16 +9,17 @@ datasource db {
 
 // MODEL DEPARTAMENTO
 model Departament {
-  id        String    @id @default(uuid())
-  dep_name  String
-  email     String    @unique
-  password  String
-  role      String    @default("ADMIN")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Course    Course[]
-  Prof      Prof[]
-  Subject   Subject[]
+  id             String           @id @default(uuid())
+  dep_name       String
+  email          String           @unique
+  password       String
+  role           String           @default("ADMIN")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Course         Course[]
+  Prof           Prof[]
+  Subject        Subject[]
+  Course_Subject Course_Subject[]
 
   @@map("departaments")
 }
@@ -136,6 +137,9 @@ model Course_Subject {
 
   subjectName String
   subject     Subject @relation(fields: [subjectName], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
+
+  departamentId String
+  departament   Departament @relation(fields: [departamentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
