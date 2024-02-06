@@ -7,8 +7,8 @@ declare module 'admin' {
     subjectName: string | null;
     setSubjectName: React.Dispatch<SetStateAction<string | null>>
 
-    courseName: string | null | undefined;
-    setCourseName: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+    courseName: string[] | null | undefined; // Alterar o tipo de courseName para string[] ao invés de string
+    setCourseName: React.Dispatch<SetStateAction<string | string[] | null | undefined>>; // Permitir que setCourseName aceite string | string[] também
 
 
     profName: string | null
@@ -73,7 +73,7 @@ declare module 'admin' {
   interface ISubjectCourse {
     subjectName: string;
     courseName: string[];
-    association: IAssociationProps[]
+    association: IAssociationProps[];
   }
   interface IAssociationProps {
     id: string;
