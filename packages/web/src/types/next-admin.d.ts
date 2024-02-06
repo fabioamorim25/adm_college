@@ -7,8 +7,8 @@ declare module 'admin' {
     subjectName: string | null;
     setSubjectName: React.Dispatch<SetStateAction<string | null>>
 
-    courseName: string[] | null | undefined; // Alterar o tipo de courseName para string[] ao invés de string
-    setCourseName: React.Dispatch<SetStateAction<string | string[] | null | undefined>>; // Permitir que setCourseName aceite string | string[] também
+    courseName: string[] | null | undefined; 
+    setCourseName: React.Dispatch<SetStateAction<string | string[] | null | undefined>>;
 
 
     profName: string | null

@@ -13,8 +13,7 @@ export default function FormAssociationSubjectCourse() {
   const { subjectName, setCourseName } = useWorkDataContext();
 
   const [courses, setCourses] = useState<ICourses[]>([]);
-
-  const [data, setData] = useState<Partial<ISubjectCourse>>({ subjectName:"", courseName: "" })
+  const [data, setData] = useState<Partial<ISubjectCourse>>({ subjectName: "", courseName: undefined })
 
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
@@ -28,7 +27,7 @@ export default function FormAssociationSubjectCourse() {
     })
     const course = await listCourse.json();
 
-    if (course.type === "error"){
+    if (course.type === "error") {
       return setMsg({
         message: course.message,
         type: course.type
@@ -43,27 +42,29 @@ export default function FormAssociationSubjectCourse() {
       getCourses()
     }
   }, [subjectName]);
- 
 
-   
+
+
   //2°PEGAR OS DADOS DO FORMULARIO
-  async function handleRegister(e: React.ChangeEvent<HTMLSelectElement>) { 
-    setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value, subjectName }
-    });
+  async function handleRegister(e: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setData(prev => ({
+      ...prev,
+      [name]: value === "" ? undefined : value
+    }));
   }
 
   //3°CADASTRA ASSOCIAÇÃO (enviar dados para backend)
   async function onRegisterAssociate(event: React.SyntheticEvent) {
     event.preventDefault()
-    if(!data.subjectName){   
-         return setMsg({
-            message: 'Precisa criar uma matéria',
-            type: 'erro'
-          })
+    if (!data.subjectName) {
+      return setMsg({
+        message: 'Precisa criar uma matéria',
+        type: 'erro'
+      })
     }
-     //REQUISIÇÃO PARA O BACKEND DO NEXT PARA REGISTRA O CURSO
-     const request = await fetch("/api/courseSubject/associateSubjectCourse", {
+    //REQUISIÇÃO PARA O BACKEND DO NEXT PARA REGISTRA O CURSO
+    const request = await fetch("/api/courseSubject/associateSubjectCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -73,14 +74,14 @@ export default function FormAssociationSubjectCourse() {
     setCourseName(
       data.courseName
     )
-  
-     //mensagem de alerta
+
+    //mensagem de alerta
     if (response) {
       return setMsg({
         message: response.message,
         type: response.type
       })
-    }   
+    }
   }
 
 
@@ -88,14 +89,14 @@ export default function FormAssociationSubjectCourse() {
     <>
       <form onSubmit={onRegisterAssociate} className="m-4 p-6 border rounded shadow">
         {msg.message && <Alert message={msg.message} type={msg.type} />}
-       
+
         <div className="mb-4">
           {subjectName === null ? (
-              <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a matéria a um curso:</label>
-            ) : (
-              <label htmlFor="courseName" className="block  font-alt text-gray-800">Associar a matéria
-                <span className=" text-purple-700 text-lg"> {subjectName} </span> para um curso:</label>
-            )
+            <label htmlFor="courseName" className="block text-sm font-alt text-gray-800">Associar a matéria a um curso:</label>
+          ) : (
+            <label htmlFor="courseName" className="block  font-alt text-gray-800">Associar a matéria
+              <span className=" text-purple-700 text-lg"> {subjectName} </span> para um curso:</label>
+          )
           }
 
           <select
@@ -107,11 +108,11 @@ export default function FormAssociationSubjectCourse() {
           >
             <option value="">Selecione um curso da lista</option>
             {Array.isArray(courses) && courses.length > 0 ? (
-                courses.map((course, index) => (
-                  <option key={index}>{course.cou_name}</option>
-                ))
+              courses.map((course, index) => (
+                <option key={index}>{course.cou_name}</option>
+              ))
             ) : (
-                <option value=""> carregando a lista de cursos ... </option>
+              <option value=""> carregando a lista de cursos ... </option>
             )}
           </select>
         </div>
