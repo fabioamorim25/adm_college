@@ -6,9 +6,10 @@ import { nextAuthOptions } from "../../auth/[...nextauth]/options";
 export async function POST(request: NextRequest) {
 
   const session = await getServerSession(nextAuthOptions)
-  let data = await request.json();
+  const departamentId = session?.user.id;
+  const { subjectName, courseName } = await request.json();
 
-  const { subjectName, courseName } = data
+  // const = data
 
   try {
 
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Dados invalidos", type: "error" })
     }
 
-    const associate = await fetch("http://localhost:5000/associate_Subject_Course", {
+    const associate = await fetch(`http://localhost:5000/associate_Subject_Course/?departamentId=${departamentId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
