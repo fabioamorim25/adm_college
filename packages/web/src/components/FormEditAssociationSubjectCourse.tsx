@@ -20,7 +20,7 @@ export default function FormEditAssociationSubjectCourse({ subject }: IProps) {
   const [association, setAssociation] = useState<IAssociationProps[]>([])
   const [courses, setCourses] = useState<ICourses[]>([]);
 
-  const [data, setData] = useState<ISubjectCourse>({ subjectName: "", courseName: [], association: [] });
+  const [data, setData] = useState<ISubjectCourse>({ subjectName: subject.name, courseName: [], association: [] });
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' })
 
 
@@ -51,28 +51,27 @@ export default function FormEditAssociationSubjectCourse({ subject }: IProps) {
     setAssociation(associations)
 
     return setData({
-      courseName: associations.map((association: IAssociationProps) => association.course?.cou_name || ""),
       subjectName: subject.name,
+      courseName: associations.map((association: IAssociationProps) => association.course?.cou_name || ""),
       association: associations,
-    })
+    });
   }
 
   const handleRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
 
-    setData((prevData) => {
+    return setData((prevData) => {
       if (checked) // Adiciona ao array se o checkbox estiver marcado
         return { ...prevData, courseName: [...prevData.courseName, value], association };
 
       // Remove do array se o checkbox estiver desmarcado
-      return { ...prevData, courseName: prevData.courseName.filter((name) => name !== value), association };
+      return { ...prevData, courseName: prevData.courseName.filter((name: string) => name !== value), association };
     });
   };
 
 
   async function onRegisterAssociate(event: React.SyntheticEvent) {
     event.preventDefault()
-
     const response = await fetch("/api/edit/editDataSubject", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -80,13 +79,10 @@ export default function FormEditAssociationSubjectCourse({ subject }: IProps) {
     })
 
     const res = await response.json()
-
-    if (res) {
-      return setMsg({
-        message: res.message,
-        type: res.type
-      })
-    }
+    return setMsg({
+      message: res.message,
+      type: res.type
+    })
   }
 
 
