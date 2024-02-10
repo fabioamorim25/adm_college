@@ -9,6 +9,7 @@ import {
     infoSubjects,
     updatedSubject,
     getDataSubject,
+    associationAndCourses,
 } from "../repository/subject.Repository";
 
 import {
@@ -53,6 +54,7 @@ export const create = async (req, res) => {
 
 // ASSOCIAR UMA MATERIA A UM CURSO
 export const associateSubjectCourse = async (req, res) => {
+    const { departamentId } = req.query
     const { subjectName, courseName } = req.body
 
     try {
@@ -68,12 +70,14 @@ export const associateSubjectCourse = async (req, res) => {
 
 
         //MANDAR CRIAR A ASSOCIAÇÃO DA MÁTERIA COM O CURSO
-        await createAssociateSubjectCourse(
+        const response = await createAssociateSubjectCourse(
+            departamentId,
             subjectName,
             courseName
         )
 
-        return res.status(201).json({ message: 'Matéria foi associada ao curso com sucesso', type: 'success' })
+        return res.status(201).json({ message: response.message, type: response.type })
+
     } catch (error) {
         return res.status(404).json({ message: 'Tivemos um erro ao associar a matéria ao curso', type: 'error' })
     }
@@ -159,7 +163,6 @@ export const listInfoSubjects = async (req, res) => {
     }
 }
 
-
 // MOSTRA OS DADOS DA MATÉRIA ESCOLHIDA
 export const getSubject = async (req, res) => {
     const subjectId = req.query.id;
@@ -180,15 +183,38 @@ export const getSubject = async (req, res) => {
         return res.status(200).json({ message: "Tivemos um erro na listagem dos dados", type: "error" })
     }
 }
+
+// MOSTRA ASSOCIAÇÕES DA MATÉRIA ESCOLHIDA
+export const getCoursesAndSubjectAssociation = async (req, res) => {
+
+    const subjectId = req.query.subjectId;
+
+    try {
+        if (!subjectId)
+            return res.status(404).json({ message: "Metadata invalido", type: "error" })
+
+        const data = await associationAndCourses(subjectId)
+
+        const result = {
+            associations: data.associationResults,
+            courses: data.courseResults,
+        }
+
+        return res.status(200).json(result)
+    } catch (error) {
+        return res.status(200).json({ message: "Tivemos um erro na listagem dos dados", type: "error" })
+    }
+}
+
 // EDITAR MATÉRIAS
 export const editSubjects = async (req, res) => {
     const id = req.query.id;
     const { departamentId, numberModel, resultData } = req.body;
 
-
     try {
-        async function filterDataNecessary(numberModel, resultData) {
+        const data = await filterDataNecessary(numberModel, resultData);
 
+        async function filterDataNecessary(numberModel, resultData) {
             if (numberModel === 1) {
                 const { sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory } = resultData;
 
@@ -200,25 +226,22 @@ export const editSubjects = async (req, res) => {
             }
 
             // if (numberModel === 2) {
-            //     const { subjectId, courseId } = data;
-            //     return { subjectId, courseId };
-            // }
+            //   const {  } = resultData;
+            //   return {  };
+            // }            
             // if (numberModel === 3) {
-            //   const {  } = data;
+            //   const {  } = resultData;
             //   return {  };
             // }
 
             return { message: "Dados invalidos", type: "error" }
         }
 
-        const data = await filterDataNecessary(numberModel, resultData);
         if (data.type === "error") {
             return res.status(404).json(data)
         }
 
-       
         const updated = await updatedSubject(id, numberModel, departamentId, data)
-
         return res.status(200).json(updated)
     } catch (error) {
         return res.status(404).json(error)

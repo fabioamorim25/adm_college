@@ -39,21 +39,47 @@ export const createSubjects = async (sub_name, sub_shift, sub_start_time, sub_st
 }
 
 // ASSOCIAR UMA MATERIA A UM CURSO
-export const createAssociateSubjectCourse = async (subjectName, courseName) => {
-    const associate = await prisma.course_Subject.create({
-        data: {
-            subjectName,
-            courseName
-        },
-        select: {
-            id: true,
-            subjectName: true,
-            courseName: true
-        }
+export const createAssociateSubjectCourse = async (departamentId, subjectName, courseName) => {
+
+    const associatePromises = courseName.map(async (courseName) => {
+        const association = await prisma.course_Subject.create({
+            data: {
+                subject: {
+                    connect: {
+                        sub_name: subjectName
+                    }
+                },
+                course: {
+                    connect: {
+                        cou_name: courseName
+                    }
+                },
+                departament: {
+                    connect: {
+                        id: departamentId
+                    }
+                }
+            },
+            select: {
+                id: true,
+                subject: false,
+                subjectName: false,
+                course: false,
+                courseName: false,
+                departament: false,
+                departamentId: false,
+                createdAt: false,
+                updatedAt: false,
+            }
+        })
+        return association
     })
 
-    return associate
-}
+
+    await Promise.all(associatePromises)
+
+    return { message: 'Matéria foi associada ao curso com sucesso', type: 'success' }
+};
 
 // LISTAR TODAS AS MATÉRIAS DE UM CURSO
 export const getSubjectsName = async (courseName) => {
@@ -183,6 +209,76 @@ export const getDataSubject = async (subjectId) => {
     }
 }
 
+export const associationAndCourses = async (subjectId) => {
+
+    try {
+        const [associationResults, courseResults] = await Promise.all([
+            prisma.course_Subject.findMany({
+                where: {
+                    subject: {
+                        id: subjectId
+                    }
+                },
+                select: {
+                    id: true,
+                    courseName: false,
+                    course: {
+                        select: {
+                            id: true,
+                            cou_name: true,
+                            createdAt: false,
+                            updatedAt: false,
+                            departamentId: false,
+                        }
+                    },
+                    subjectName: false,
+                    subject: false,
+                    createdAt: false,
+                    updatedAt: false,
+                }
+            }),
+            prisma.course.findMany({
+                select: {
+                    id: true,
+                    cou_name: true,
+                    updatedAt: true,
+                    createdAt: false,
+                    departamentId: false,
+                }
+            }),
+        ])
+
+        return { associationResults, courseResults }
+
+    } catch (error) {
+        return { message: "Tivemos um erro na listagem dos dados", type: "error" }
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export const deleteAssociationSubjectAndCourse = async (idAssociations) => {
+    try {
+        const deleteAssociationsPromises = idAssociations.map(async (idAssociation) => {
+            return prisma.course_Subject.deleteMany({
+                where: {
+                    id: idAssociation
+                }
+            })
+        })
+
+        await Promise.all(deleteAssociationsPromises)
+        return { message: "Deletado com sucesso", type: "success" }
+
+    } catch (error) {
+        return { message: "Tivemos um erro ao deletar os dados", type: "error" }
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+
+
 // EDITAR A MATÉRIA
 export const updatedSubject = async (id, numberModel, departamentId, data) => {
     try {
@@ -226,27 +322,12 @@ export const updatedSubject = async (id, numberModel, departamentId, data) => {
             }
             return { message: "Edição realizada com sucesso", type: "success" };
         };
-        const updateAssociation = async (id, departamentId, data) => {
-            return
-        }
-        const updateMandatory = async (id, departamentId, data) => {
-            return
-        }
-
         //1°
         switch (numberModel) {
             case 1:
                 return await updateDataSubject(id, departamentId, data)
-                break;
-            case 2:
-                return await updateAssociation(id, resultData)
-                break;
-            case 3:
-                return await updateMandatory(id, resultData)
-                break;
             default:
                 return { message: "Erro na edição dos dados", type: "error" }
-                break;
         }
 
     } catch (error) {
