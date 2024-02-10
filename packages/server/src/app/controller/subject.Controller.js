@@ -262,7 +262,6 @@ export const editSubjects = async (req, res) => {
 
         const updated = await updatedSubject(id, numberModel, departamentId, data)
         return res.status(200).json(updated)
-        // return res.status(200).json(data)
     } catch (error) {
         return res.status(404).json(error)
     }

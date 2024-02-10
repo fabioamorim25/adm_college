@@ -361,8 +361,7 @@ export const updatedSubject = async (id, numberModel, departamentId, data) => {
         }
 
     } catch (error) {
-        console.log(error)
-        // return { message: "Tivemos um erro na edição dos dados", type: "error" }
+        return { message: "Tivemos um erro na edição dos dados", type: "error" }
     } finally {
         await prisma.$disconnect();
     }
