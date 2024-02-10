@@ -322,16 +322,47 @@ export const updatedSubject = async (id, numberModel, departamentId, data) => {
             }
             return { message: "Edição realizada com sucesso", type: "success" };
         };
+        const updateAssociation = async (departamentId, data) => {
+            const { subjectName, item } = data;
+
+            if (data.action === 'create') {
+                const courseName = item.nonDuplicate.map(obj => obj.cou_name);
+                return await createAssociateSubjectCourse(departamentId, subjectName, courseName)
+            }
+            if (data.action === 'delete') {
+                const idAssociations = item.map(obj => obj.id)
+                return await deleteAssociationSubjectAndCourse(idAssociations)
+            }
+            if (data.action === 'deleteAndCreate') {
+                const idAssociations = item.itemsNoLonger.map(obj => obj.id)
+                const nameCourses = item.nonDuplicate.map(obj => obj.cou_name)
+
+                await deleteAssociationSubjectAndCourse(idAssociations)
+                await createAssociateSubjectCourse(departamentId, subjectName, nameCourses)
+                return { message: "Edição realizada com sucesso", type: "success" }
+            }
+
+            return;
+        }
+        // const updateMandatory = async (id, departamentId, data) => {
+        //     return
+        // }
+
         //1°
         switch (numberModel) {
             case 1:
                 return await updateDataSubject(id, departamentId, data)
+            case 2:
+                return await updateAssociation(departamentId, data)
+            case 3:
+                return await updateMandatory(id, data)
             default:
                 return { message: "Erro na edição dos dados", type: "error" }
         }
 
     } catch (error) {
-        return { message: "Tivemos um erro na edição dos dados", type: "error" }
+        console.log(error)
+        // return { message: "Tivemos um erro na edição dos dados", type: "error" }
     } finally {
         await prisma.$disconnect();
     }
