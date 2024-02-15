@@ -43,7 +43,7 @@ export default function ModelFormEditSubject({ subject, model, onClose }: IFormP
         }
         {/* ----------- Obrigatoriedade com outra matéria ------------------------------- */}
         {model.modelId === 3 && (
-          <FormEditMandatorySubject />
+          <FormEditMandatorySubject subject={subject}/>
         )
         }
 
