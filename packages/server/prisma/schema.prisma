@@ -55,21 +55,23 @@ model Prof {
 }
 
 model Subject {
-  id                String              @id @default(uuid())
-  sub_name          String              @unique
-  sub_shift         String
-  sub_start_time    DateTime
-  sub_stop_time     DateTime
-  sub_description   String
-  sub_mandatory     Boolean
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  departamentId     String
-  departament       Departament         @relation(fields: [departamentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  Porf_Subject      Porf_Subject[]
-  Course_Subject    Course_Subject[]
-  Student_Subject   Student_Subject[]
-  Subjects_Subjects Subjects_Subjects[]
+  id              String            @id @default(uuid())
+  sub_name        String            @unique
+  sub_shift       String
+  sub_start_time  DateTime
+  sub_stop_time   DateTime
+  sub_description String
+  sub_mandatory   Boolean
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  departamentId   String
+  departament     Departament       @relation(fields: [departamentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Porf_Subject    Porf_Subject[]
+  Course_Subject  Course_Subject[]
+  Student_Subject Student_Subject[]
+
+  Subjects_Subjects Subjects_Subjects[] @relation("Subject")
+  Subject_Subject   Subjects_Subjects[] @relation("PrerequisiteSubjects")
 
   @@map("subjects")
 }
@@ -171,10 +173,11 @@ model Student_Subject {
 model Subjects_Subjects {
   id String @id @default(uuid())
 
-  preRequisite String
+  preRequisite        String
+  preRequisiteSubject Subject @relation("PrerequisiteSubjects", fields: [preRequisite], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
 
   subjectName String
-  subject     Subject @relation(fields: [subjectName], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
+  subject     Subject @relation("Subject", fields: [subjectName], references: [sub_name], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
