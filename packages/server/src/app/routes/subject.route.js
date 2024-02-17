@@ -8,6 +8,7 @@ import {
     editSubjects,
     getSubject,
     getCoursesAndSubjectAssociation,
+    getSubjectAndRequirements,
 } from "../controller/subject.Controller";
 
 import authTokenValidate from "../middlewares/auth.tokenValidate";
@@ -27,6 +28,7 @@ const subjectRoutes = app => {
     app.get('/listInfoSubjects', authTokenValidate, roleAdmin, listInfoSubjects);
     app.post('/getSubject', authTokenValidate, roleAdmin, getSubject)
     app.post('/listSubjectAssociation', authTokenValidate, roleAdmin,getCoursesAndSubjectAssociation)
+    app.post('/getSubjectAndRequirements',authTokenValidate,roleAdmin,getSubjectAndRequirements)
 
     app.put('/subject/edit', authTokenValidate, roleAdmin, editSubjects);
 

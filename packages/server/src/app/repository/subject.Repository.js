@@ -276,8 +276,98 @@ export const deleteAssociationSubjectAndCourse = async (idAssociations) => {
         await prisma.$disconnect();
     }
 }
+// LISTAR MATÉRIAS E REQUISITOS DA MATÉRIA
+export const listSubjectAndRequirements = async (subjectName) => {
+    try {
+        const [subjects, Requirements] = await Promise.all([
+            prisma.subject.findMany({
+                select: {
+                    id: true,
+                    sub_name: true
+                }
+            }),
+            prisma.subjects_Subjects.findMany({
+                where: {
+                    subjectName
+                },
+                select: {
+                    id: true,
+                    preRequisite: true,
+                    subject: false,
+                    subjectName: false,
+                    createdAt: false,
+                    updatedAt: false,
+                }
+            })
+        ])
 
+        return { subjects, Requirements }
 
+    } catch (error) {
+        return res.status(404).json({ message: "Erro ao carregar os dados", type: "error" })
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export const createPreRequisite = async (departamentId, subjectName, newPreRequisite) => {
+    try {
+        const createPromises = newPreRequisite.map(async (preRequisite) => {
+            const create = await prisma.subjects_Subjects.create({
+                data: {
+                    subject: {
+                        connect: {
+                            sub_name: subjectName
+                        }
+                    },
+                    preRequisiteSubject: {
+                        connect: {
+                            sub_name: preRequisite
+                        }
+                    },
+                    departament: {
+                        connect: {
+                            id: departamentId
+                        }
+                    }
+                },
+                select: {
+                    id: true,
+                    preRequisite: false,
+                    preRequisiteSubject: false,
+                    subject: false,
+                    subjectName: false,
+                    createdAt: false,
+                    updatedAt: false,
+                }
+            });
+
+            return create;
+        });
+
+        await Promise.all(createPromises);
+        return { message: 'Pré requisito definido com sucesso', type: 'success' }
+    } catch (error) {
+        return { message: "Tivemos um erro no registro do pré requisito", type: "error" }
+    }
+}
+
+export const deleteSubjectMandatory = async (idRequisite) => {
+    try {
+        const deletePreRequisitePromise = idRequisite.map(async (id) => {
+            return prisma.subjects_Subjects.deleteMany({
+                where: {
+                    id: id
+                }
+            })
+        })
+
+        await Promise.all(deletePreRequisitePromise)
+        return { message: "Deletado com sucesso", type: "success" }
+    } catch (error) {
+        return { message: "Tivemos um erro ao deletar o pré requisito", type: "error" }
+    }
+}
 
 // EDITAR A MATÉRIA
 export const updatedSubject = async (id, numberModel, departamentId, data) => {
@@ -344,9 +434,28 @@ export const updatedSubject = async (id, numberModel, departamentId, data) => {
 
             return;
         }
-        // const updateMandatory = async (id, departamentId, data) => {
-        //     return
-        // }
+        const updateMandatory = async (departamentId, data) => {
+            const { subjectName, item } = data;
+
+            if (data.action === 'create') {
+                const newPreRequisite = item.nonDuplicate
+                return await createPreRequisite(departamentId, subjectName, newPreRequisite)
+            }
+            if (data.action === 'delete') {
+                const idRequisite = item.map(id => id.idRequired)
+                return await deleteSubjectMandatory(idRequisite)
+            }
+            if (data.action === 'deleteAndCreate') {
+                const idRequisite = item.itemsNoLonger.map(id => id.idRequired)
+                const newPreRequisite = item.nonDuplicate
+
+                await deleteSubjectMandatory(idRequisite)
+                await createPreRequisite(departamentId, subjectName, newPreRequisite)
+                return { message: "Edição realizada com sucesso", type: "success" }
+            }
+
+            return;
+        }
 
         //1°
         switch (numberModel) {
@@ -355,7 +464,7 @@ export const updatedSubject = async (id, numberModel, departamentId, data) => {
             case 2:
                 return await updateAssociation(departamentId, data)
             case 3:
-                return await updateMandatory(id, data)
+                return await updateMandatory(departamentId, data)
             default:
                 return { message: "Erro na edição dos dados", type: "error" }
         }

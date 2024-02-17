@@ -10,6 +10,7 @@ import {
     updatedSubject,
     getDataSubject,
     associationAndCourses,
+    listSubjectAndRequirements,
 } from "../repository/subject.Repository";
 
 import {
@@ -129,7 +130,6 @@ export const listNameSubjects = async (req, res) => {
         return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
     }
 }
-
 // LISTAR INFORMAÇÕES DAS MATÉRIAS
 export const listInfoSubjects = async (req, res) => {
     try {
@@ -162,7 +162,6 @@ export const listInfoSubjects = async (req, res) => {
         return res.status(404).json({ message: "Error no servidor. Por favor tente mais tarde", type: "error" })
     }
 }
-
 // MOSTRA OS DADOS DA MATÉRIA ESCOLHIDA
 export const getSubject = async (req, res) => {
     const subjectId = req.query.id;
@@ -183,7 +182,6 @@ export const getSubject = async (req, res) => {
         return res.status(200).json({ message: "Tivemos um erro na listagem dos dados", type: "error" })
     }
 }
-
 // MOSTRA ASSOCIAÇÕES DA MATÉRIA ESCOLHIDA
 export const getCoursesAndSubjectAssociation = async (req, res) => {
 
@@ -206,15 +204,27 @@ export const getCoursesAndSubjectAssociation = async (req, res) => {
     }
 }
 
+//MOSTRA LISTA DE MATÉRIA E DADOS DE MATÉRIAS OBRIGATORIAS
+export const getSubjectAndRequirements = async (req, res) => {
+    const { subjectName } = req.body;
+
+    try {
+        const list = await listSubjectAndRequirements(subjectName)
+        return res.status(200).json(list)
+    } catch (error) {
+        return { message: "Tivemos um erro na listagem dos dados", type: "error" }
+    }
+}
+
 // EDITAR MATÉRIAS
 export const editSubjects = async (req, res) => {
     const id = req.query.id;
     const { departamentId, numberModel, resultData } = req.body;
 
     try {
-        const data = await filterDataNecessary(numberModel, resultData);
 
-        async function filterDataNecessary(numberModel, resultData) {
+        async function filterModelData(numberModel, resultData) {
+
             if (numberModel === 1) {
                 const { sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory } = resultData;
 
@@ -224,43 +234,52 @@ export const editSubjects = async (req, res) => {
                 }
                 return { sub_name, sub_shift, sub_start_time, sub_stop_time, sub_description, sub_mandatory };
             }
-
             if (numberModel === 2) {
                 const { subjectName, itemAnalysis } = resultData;
                 const item = {
                     itemsNoLonger: itemAnalysis.itemsNoLongerExist.map(course => ({ id: course.id })),
                     nonDuplicate: itemAnalysis.nonDuplicateItems.map(courses => courses.course)
                 }
-
-                //1° se nao tiver um item no itemsNoLongerExist mais tem um item nonDuplicateItems [create]
-                if (itemAnalysis.itemsNoLongerExist.length === 0 && itemAnalysis.nonDuplicateItems.length > 0) {
-                    return { subjectName, item, action: 'create' };
-                }
-                //2° se tiver um item no itemsNoLongerExist e não tiver um item nonDuplicateItems [delete]
-                if (itemAnalysis.itemsNoLongerExist.length > 0 && itemAnalysis.nonDuplicateItems.length === 0) {
-                    return { item: item.itemsNoLonger, action: 'delete' };
-                }
-                //3° se tiver um item no itemsNoLongerExist e um item nonDuplicateItems [update]
-                if (itemAnalysis.itemsNoLongerExist.length >= itemAnalysis.nonDuplicateItems.length) {
-                    return { subjectName, item, action: 'deleteAndCreate' };
-                }
-                
-                return { message: "Invalidos", type: "error" }
+                return await organizeDataAndAction(subjectName, item, itemAnalysis)
             }
-            
-            // if (numberModel === 3) {
-            //   const {  } = resultData;
-            //   return {  };
-            // }
+            if (numberModel === 3) {
+                const { subjectName, itemAnalysis } = resultData;
+                const item = {
+                    itemsNoLonger: itemAnalysis.itemsNoLongerExist.map(required => ({ idRequired: required.id })),
+                    nonDuplicate: itemAnalysis.nonDuplicateItems.map(required => required.sub_name)
+                }
+                return await organizeDataAndAction(subjectName, item, itemAnalysis)
+            }
 
             return { message: "Dados invalidos", type: "error" }
         }
+        async function organizeDataAndAction(subjectName, item, itemAnalysis) {
+            //1° se nao tiver um item no itemsNoLongerExist mais tem um item nonDuplicateItems [create]
+            if (itemAnalysis.itemsNoLongerExist.length === 0 && itemAnalysis.nonDuplicateItems.length > 0) {
+                return { subjectName, item, action: 'create' };
+            }
+            //2° se tiver um item no itemsNoLongerExist e não tiver um item nonDuplicateItems [delete]
+            if (itemAnalysis.itemsNoLongerExist.length > 0 && itemAnalysis.nonDuplicateItems.length === 0) {
+                return { item: item.itemsNoLonger, action: 'delete' };
+            }
+            //3° se tiver um item no itemsNoLongerExist e um item nonDuplicateItems [update]
+            if (itemAnalysis.itemsNoLongerExist.length >= itemAnalysis.nonDuplicateItems.length 
+                || itemAnalysis.itemsNoLongerExist.length <= itemAnalysis.nonDuplicateItems.length) {
+                return { subjectName, item, action: 'deleteAndCreate' };
+            }
 
+            return { message: "Invalidos", type: "error" }
+        }
+
+
+        const data = await filterModelData(numberModel, resultData);
         if (data.type === "error") {
             return res.status(404).json(data)
         }
 
+
         const updated = await updatedSubject(id, numberModel, departamentId, data)
+
         return res.status(200).json(updated)
     } catch (error) {
         return res.status(404).json(error)
