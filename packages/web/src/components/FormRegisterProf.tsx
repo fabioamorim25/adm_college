@@ -10,7 +10,7 @@ import Alert from "./ui/Alert";
 export default function FormRegisterProf() {
 
   const { setProfName } = useWorkDataContext()
-  const [data, setData] = useState<IProfs>({ prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true" })
+  const [data, setData] = useState<Partial<IProfs>>({ prof_name: "", email: "", password: "", prof_phone: "", prof_status: "true" })
   const [msg, setMsg] = useState<Imessage>({ message: '', type: '' });
 
 
@@ -33,9 +33,9 @@ export default function FormRegisterProf() {
         message: response.message,
         type: response.type
       })
-    
+
       setProfName(data.prof_name)
-    
+
       return setData({
         prof_name: "",
         email: "",
