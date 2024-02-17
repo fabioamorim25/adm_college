@@ -7,12 +7,12 @@ declare module 'admin' {
     subjectName: string | null;
     setSubjectName: React.Dispatch<SetStateAction<string | null>>
 
-    courseName: string[] | null | undefined; 
+    courseName: string[] | null | undefined;
     setCourseName: React.Dispatch<SetStateAction<string | string[] | null | undefined>>;
 
 
     profName: string | null
-    setProfName: React.Dispatch<SetStateAction<string | null>>
+    setProfName: React.Dispatch<SetStateAction<string | string[] | null | undefined>>;
 
     studentName: string | null
     setStudentName: React.Dispatch<SetStateAction<string | null>>
@@ -64,12 +64,14 @@ declare module 'admin' {
     subject: string[] | null;
   }
   interface IProfs {
-    prof_name: string
-    email: string
-    password: string
-    prof_phone: string
-    prof_status: string
+    id: string;
+    prof_name: string;
+    email: string;
+    password: string;
+    prof_phone: string;
+    prof_status: string;
   }
+
   interface ISubjectCourse {
     subjectName: string;
     courseName: string[];
@@ -82,9 +84,16 @@ declare module 'admin' {
       cou_name: string;
     }
   }
+
+  interface IRequiredProps {
+    [x: string]: string;
+    id: string;
+    sub_name: string;
+  }
   interface IRequisite {
-    preRequisite: string
-    subjectName: any
+    subjectName: sting;
+    preRequisite: string[];
+    requireds: string[];
   }
 
   // TIPAGEM DOS COMPONENTES
