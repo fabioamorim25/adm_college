@@ -5,6 +5,7 @@ import { format } from "date-fns"
 import {
     assignSubjectTeacher,
     createProfs,
+    getDataProf,
     getListProfs
 } from "../repository/prof.Repository";
 import {
@@ -101,3 +102,16 @@ export const listProf = async (req, res) => {
     }
 
 }
+
+export const getProf = async (req, res) => {
+    const profId = await req.query.id;
+
+    try {
+
+        const prof = await getDataProf(profId)
+        return res.status(200).json(prof)
+    } catch (error) {
+        return res.status(404).json({ message: "Error nos dados do professore", type: "error" })
+    }
+}
+

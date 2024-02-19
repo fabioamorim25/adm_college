@@ -78,7 +78,35 @@ export const getListProfs = async () => {
         })
         return prof;
     } catch (error) {
-
         return res.status(404).json({ message: "Error na listagem dos professores", type: "error" })
+    }
+}
+export const getDataProf = async (profId) => {
+    try {
+        const prof = await prisma.prof.findUnique({
+            where: {
+                id: profId
+            },
+            select: {
+                id: false,
+                email: true,
+                password: false,
+                role: false,
+                prof_phone: true,
+                prof_status: true,
+                prof_name: true,
+                _count: false,
+                Porf_Subject: false,
+                departament: false,
+                departamentId: false,
+                updatedAt: false,
+                createdAt: false,
+            }
+        })
+
+        return prof
+
+    } catch (error) {
+        return res.status(404).json({ message: "Error nos dados do professore", type: "error" })
     }
 }
