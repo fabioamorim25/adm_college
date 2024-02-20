@@ -50,11 +50,12 @@
   - [] Temas: Dark e Padrão
 
 * Features Departamento
+  - [] Painel administrativo
   - [x] Registra Departamento (apenas 1)
   - [x] Deletar Departamento (apaga todo o sistema)
   - [x] Editar Departamento
   - [x] Registra Professor 
-  - [] Editar Professor
+  - [x] Editar Professor
   - [] Deletar Professor
   - [x] Registar curso
   - [x] Editar curso
@@ -64,7 +65,7 @@
   - [] Editar Aluno
   - [] Deletar Aluno
   - [x] Registra máteria
-  - [] Editar máteria
+  - [x] Editar máteria
   - [] Deletar máteria 
   - [x] Associar máteria a um professor
   - [x] Registrar Endereço do aluno
