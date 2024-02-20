@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import Alert from "./ui/Alert";
 import Searcher from "./ui/Search";
 import ActiveDisabled from "./ui/ActiveDisabled";
+import ModelEditProf from "./ModelEditProf";
 
 import { Clock1, Pencil } from "lucide-react";
-import ModelEditProf from "./ModelEditProf";
 
 
 
@@ -29,7 +29,6 @@ export default function AreaProf() {
     })
 
     const res = await response.json()
-    
     if (res.type === 'error')
       return setMsg({ message: res.message, type: res.type })
 
@@ -172,7 +171,6 @@ export default function AreaProf() {
                     <Pencil strokeWidth={0.75} size={15} />
                   </button>
                 </div>
-                
                 {/* PASSAR DADOS PARA O MODEL FORM */}
                 {selectedProfId === prof.id && (
                   <main className="h-10 p-1 rounded bg-gray-900 flex items-center justify-center">
