@@ -6,7 +6,9 @@ import {
     assignSubjectTeacher,
     createProfs,
     getDataProf,
-    getListProfs
+    getListProfs,
+    listSubjectsAndSubjectProf,
+    updateProfData
 } from "../repository/prof.Repository";
 import {
     checkAssociateSubjectProf,
@@ -16,7 +18,7 @@ import {
 
 export const create = async (req, res) => {
 
-    let { prof_name, prof_status, email, password, prof_phone, departamentId } = req.body
+    const { prof_name, prof_status, email, password, prof_phone, departamentId } = await req.body;
 
     try {
         //1° VALIDAR OS DADOS RECEBIDOS
@@ -37,17 +39,19 @@ export const create = async (req, res) => {
 
         //2° CRIPTOGRAFAR A SENHA
         const hashPassword = await bcrypt.hash(password, 10);
-        password = hashPassword;
 
-        //3° MANDAR CRIAR O DEPARTAMENTO
-        await createProfs(
+
+        const info = {
             prof_name,
-            prof_status,
+            prof_status: prof_status === "true",
             email,
-            password,
+            password: hashPassword,
             prof_phone,
             departamentId
-        )
+        }
+
+        //3° MANDAR CRIAR O DEPARTAMENTO
+        await createProfs(info)
 
         return res.status(201).json({ message: "Professor salvo com sucesso", type: "success" })
 
@@ -109,9 +113,57 @@ export const getProf = async (req, res) => {
     try {
 
         const prof = await getDataProf(profId)
-        return res.status(200).json(prof)
+        const data = {
+            ...prof,
+            prof_status: prof.prof_status ? "true" : "false",
+        }
+
+        return res.status(200).json(data)
     } catch (error) {
-        return res.status(404).json({ message: "Error nos dados do professore", type: "error" })
+        return res.status(404).json({ message: "Error nos dados do professor", type: "error" })
     }
 }
 
+export const editDataProf = async (req, res) => {
+    try {
+        const { departamentId, data: { email, prof_name, prof_phone, prof_status } } = await req.body;
+        const { id } = await req.query;
+
+        if (!email || !prof_name || !prof_phone || !prof_status || !departamentId || !id)
+            return res.status(404).json({ message: "MetaDatas invalidos", type: "error" })
+
+
+        const info = {
+            email,
+            prof_name,
+            prof_phone,
+            prof_status: prof_status === "true",
+            departamentId,
+        }
+
+
+        await updateProfData(id, info)
+
+        return res.status(200).json({ message: "Dados atualizados com sucesso", type: "success" })
+
+    } catch (error) {
+        return res.status(404).json({ message: "Error ao edita os dados do professor", type: "error" })
+    }
+}
+
+export const getSubjectsAndSubjectsFromProf = async (req, res) => {
+    const profName = await req.query.name;
+
+    if (!profName)
+        return res.status(404).json({ message: "MetaDatas invalidos", type: "error" })
+
+    try {
+
+        const subjectsProf = await listSubjectsAndSubjectProf(profName)
+        return res.status(200).json(subjectsProf)
+
+    } catch (error) {
+        return res.status(404).json(error)
+        // return res.status(404).json({ message: "Tivemos um error na listagem dos dados", type: "error" })
+    }
+}

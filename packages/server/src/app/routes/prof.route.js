@@ -1,6 +1,8 @@
 import {
     create,
+    editDataProf,
     getProf,
+    getSubjectsAndSubjectsFromProf,
     listProf,
     subjectPorf
 } from "../controller/prof.Controller";
@@ -16,7 +18,8 @@ const profRoutes = app => {
 
     app.get('/listInfoProf', authTokenValidate, roleAdmin, listProf)
     app.post('/getProf', authTokenValidate, roleAdmin, getProf)
-    
+    app.put('/prof/edit', authTokenValidate, roleAdmin, editDataProf)
+    app.post('/listSubjectsProf',authTokenValidate,roleAdmin,getSubjectsAndSubjectsFromProf)
 
 
 }
