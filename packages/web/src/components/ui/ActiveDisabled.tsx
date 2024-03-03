@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IStatus {
-  status: Boolean
+  status: Boolean | string
 }
 
 
@@ -17,8 +17,5 @@ export default function ActiveDisabled({ status }: IStatus) {
         <span>status</span>
       </div>
     </>
-
-
-
   )
 }
