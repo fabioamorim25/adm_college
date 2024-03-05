@@ -37,7 +37,7 @@ export default function ModelEditProf({ prof, model, onClose }: IFormProps) {
 
         {/*------------ Matérias associadas ao professor------------------- */}
         {model.modelId === 2 && (
-          <FormEditAssociationProfSubject />
+          <FormEditAssociationProfSubject profName={prof.profName} />
         )}
       </Model>
     </main>
